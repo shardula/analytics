@@ -59,6 +59,12 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 .sec-sym{font-size:10px;color:var(--muted)}
 .sec-chg{font-size:14px;font-weight:bold}
 .footer{text-align:center;padding:8px;color:var(--muted);font-size:11px}
+.stale-banner{display:none;background:rgba(248,81,73,.12);border:1px solid var(--red);border-radius:6px;margin:10px 16px 0;padding:8px 14px;font-size:13px;color:var(--red);text-align:center}
+.stale-banner.show{display:block}
+.health-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle}
+.health-dot.ok{background:var(--green);box-shadow:0 0 5px var(--green);animation:pulse 2s infinite}
+.health-dot.warn{background:var(--yellow)}
+.health-dot.err{background:var(--red)}
 .cfg-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px;font-family:inherit}
 .cfg-panel{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;width:340px;z-index:200}
 .cfg-panel h3{margin-bottom:10px;color:var(--blue)}
@@ -93,6 +99,7 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 <header>
   <h1>📊 MARKET DASHBOARD</h1>
   <div class="status">
+    <span id="health-indicator"><span class="health-dot warn" id="health-dot"></span><span id="health-text">Checking...</span></span>
     <span id="mkt-status"><span class="dot off"></span>LOADING</span>
     <span id="last-upd" style="color:var(--muted)">--</span>
     <span style="color:var(--muted)">↻<span id="cd">60</span>s</span>
@@ -100,6 +107,9 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
   </div>
 </header>
 
+<div id="stale-banner" class="stale-banner">
+  ⚠️ Scanner data is stale — last update: <span id="stale-time">--</span>. Scanner may be down. Check: <code>ps aux | grep my_analytics</code> on HA machine.
+</div>
 <div class="overlay" id="overlay" onclick="closeCfg()"></div>
 <div class="cfg-panel" id="cfg-panel">
   <h3>⚙ Config</h3>
@@ -425,6 +435,43 @@ function render() {
   html += sectorCard();
   html += alertsCard();
   html += flowCard();
+
+  // Health check — stale data detection
+  var banner = document.getElementById('stale-banner');
+  var dot    = document.getElementById('health-dot');
+  var htxt   = document.getElementById('health-text');
+  var ts     = data.meta && data.meta.timestamp;
+  var isOpen = data.meta && data.meta.market_open;
+
+  if (ts) {
+    // Parse ET timestamp from my_analytics.py format: "2026-07-12 09:30:00 ET"
+    var tsClean = ts.replace(' ET', '');
+    var tsDate  = new Date(tsClean);
+    var ageMs   = Date.now() - tsDate.getTime();
+    var ageMins = Math.round(ageMs / 60000);
+
+    if (!isOpen) {
+      // Market closed — stale is expected, no warning
+      dot.className  = 'health-dot warn';
+      htxt.textContent = 'CLOSED';
+      banner.className = 'stale-banner';
+    } else if (ageMins <= 5) {
+      // Fresh data — all good
+      dot.className  = 'health-dot ok';
+      htxt.textContent = 'LIVE (' + ageMins + 'm ago)';
+      banner.className = 'stale-banner';
+    } else {
+      // Stale during market hours — show warning
+      dot.className  = 'health-dot err';
+      htxt.textContent = 'STALE';
+      document.getElementById('stale-time').textContent = ageMins + ' min ago (' + ts + ')';
+      banner.className = 'stale-banner show';
+    }
+  } else {
+    dot.className  = 'health-dot warn';
+    htxt.textContent = 'No data';
+    banner.className = 'stale-banner';
+  }
 
   document.getElementById('grid').innerHTML = html ||
     el('div', 'card span-full', el('div', 'empty', 'No data — scanner not running'));
