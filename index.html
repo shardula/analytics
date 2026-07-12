@@ -436,39 +436,65 @@ function render() {
   html += alertsCard();
   html += flowCard();
 
-  // Health check — stale data detection
+  // Health check — stale data detection with session awareness
   var banner = document.getElementById('stale-banner');
   var dot    = document.getElementById('health-dot');
   var htxt   = document.getElementById('health-text');
   var ts     = data.meta && data.meta.timestamp;
   var isOpen = data.meta && data.meta.market_open;
+  var session = data.meta && data.meta.session; // PRE, POST, or undefined
 
   if (ts) {
-    // Parse ET timestamp from my_analytics.py format: "2026-07-12 09:30:00 ET"
     var tsClean = ts.replace(' ET', '');
     var tsDate  = new Date(tsClean);
     var ageMs   = Date.now() - tsDate.getTime();
     var ageMins = Math.round(ageMs / 60000);
 
-    if (!isOpen) {
-      // Market closed — stale is expected, no warning
-      dot.className  = 'health-dot warn';
+    // Stale threshold varies by session
+    // Regular market: 5 min | Extended hours: 20 min | Closed: no check
+    var staleThresh = isOpen ? 5 : (session === 'PRE' || session === 'POST') ? 20 : 9999;
+
+    if (!isOpen && session !== 'PRE' && session !== 'POST') {
+      // Fully closed overnight
+      dot.className    = 'health-dot warn';
       htxt.textContent = 'CLOSED';
       banner.className = 'stale-banner';
-    } else if (ageMins <= 5) {
-      // Fresh data — all good
-      dot.className  = 'health-dot ok';
+    } else if (session === 'PRE') {
+      if (ageMins <= staleThresh) {
+        dot.className    = 'health-dot ok';
+        htxt.textContent = 'PRE-MKT (' + ageMins + 'm ago)';
+        banner.className = 'stale-banner';
+      } else {
+        dot.className    = 'health-dot err';
+        htxt.textContent = 'PRE STALE';
+        document.getElementById('stale-time').textContent = ageMins + ' min ago (' + ts + ')';
+        banner.className = 'stale-banner show';
+      }
+    } else if (session === 'POST') {
+      if (ageMins <= staleThresh) {
+        dot.className    = 'health-dot ok';
+        htxt.textContent = 'AFTER-MKT (' + ageMins + 'm ago)';
+        banner.className = 'stale-banner';
+      } else {
+        dot.className    = 'health-dot err';
+        htxt.textContent = 'POST STALE';
+        document.getElementById('stale-time').textContent = ageMins + ' min ago (' + ts + ')';
+        banner.className = 'stale-banner show';
+      }
+    } else if (ageMins <= staleThresh) {
+      // Fresh regular market data
+      dot.className    = 'health-dot ok';
       htxt.textContent = 'LIVE (' + ageMins + 'm ago)';
       banner.className = 'stale-banner';
     } else {
-      // Stale during market hours — show warning
-      dot.className  = 'health-dot err';
+      // Stale during regular market hours — critical warning
+      dot.className    = 'health-dot err';
       htxt.textContent = 'STALE';
       document.getElementById('stale-time').textContent = ageMins + ' min ago (' + ts + ')';
       banner.className = 'stale-banner show';
     }
   } else {
-    dot.className  = 'health-dot warn';
+    dot.className    = 'health-dot warn';
     htxt.textContent = 'No data';
     banner.className = 'stale-banner';
   }
