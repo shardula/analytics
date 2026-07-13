@@ -199,7 +199,7 @@ function chgClass(v) { return !v ? 'chg-flat' : v > 0 ? 'chg-pos' : 'chg-neg'; }
 function arrow(v) { return !v ? '→' : v > 0 ? '▲' : '▼'; }
 function timeAgo(s) {
   if (!s) return '--';
-  var clean = s.toString().replace(' ET','').replace(' ','T');
+  var clean = s.toString().replace(' ET','').replace(/\s+/g,'T') + '-04:00';
   var diff = (Date.now() - new Date(clean).getTime()) / 1000;
   if (isNaN(diff) || diff < 0) return '--';
   if (diff < 60) return Math.round(diff) + 's ago';
