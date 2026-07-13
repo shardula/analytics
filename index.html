@@ -322,7 +322,7 @@ function symbolCard(sym, info) {
   var scoreCls = score >= 6 ? 'g' : score >= 4 ? 'y' : 'r';
 
   return el('div', cardCls,
-    el('div', 'card-hdr', el('span', null, sym) + el('span', null, timeAgo(info.updated_at))) +
+    el('div', 'card-hdr', el('span', null, sym) + el('span', null, timeAgo((info.updated_at||'').replace(' ET','').replace(' ','T')))) +
     el('div', 'sym-row',
       el('span', 'price-big', '$' + fmt(price)) +
       el('span', chgClass(chgPct), arrow(chgPct) + ' ' + fmt(Math.abs(chgPct), 2) + '%')
