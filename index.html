@@ -199,7 +199,9 @@ function chgClass(v) { return !v ? 'chg-flat' : v > 0 ? 'chg-pos' : 'chg-neg'; }
 function arrow(v) { return !v ? '→' : v > 0 ? '▲' : '▼'; }
 function timeAgo(s) {
   if (!s) return '--';
-  var diff = (Date.now() - new Date(s).getTime()) / 1000;
+  var clean = s.toString().replace(' ET','').replace(' ','T');
+  var diff = (Date.now() - new Date(clean).getTime()) / 1000;
+  if (isNaN(diff) || diff < 0) return '--';
   if (diff < 60) return Math.round(diff) + 's ago';
   if (diff < 3600) return Math.round(diff / 60) + 'm ago';
   return Math.round(diff / 3600) + 'h ago';
@@ -420,7 +422,7 @@ function render() {
   var cfg      = getCfg();
   var filter   = cfg.symbols || [];
   var symbols  = data.symbols || {};
-  var ts       = data.meta && data.meta.timestamp;
+  var ts       = data.meta && data.meta.timestamp ? data.meta.timestamp.replace(' ET','').replace(' ','T') : null;
   var isOpen   = data.meta && data.meta.market_open;
 
   document.getElementById('mkt-status').innerHTML =
@@ -440,12 +442,12 @@ function render() {
   var banner = document.getElementById('stale-banner');
   var dot    = document.getElementById('health-dot');
   var htxt   = document.getElementById('health-text');
-  var ts     = data.meta && data.meta.timestamp;
+  var ts     = data.meta && data.meta.timestamp ? data.meta.timestamp.replace(' ET','').replace(' ','T') : null;
   var isOpen = data.meta && data.meta.market_open;
   var session = data.meta && data.meta.session; // PRE, POST, or undefined
 
   if (ts) {
-    var tsClean = ts.replace(' ET', '');
+    var tsClean = ts + '-04:00';
     var tsDate  = new Date(tsClean);
     var ageMs   = Date.now() - tsDate.getTime();
     var ageMins = Math.round(ageMs / 60000);
