@@ -524,7 +524,7 @@ function fixScoreBars() {
 
 // ─── Data fetch ──────────────────────────────────────────────────────────────
 function loadData() {
-  fetch('https://raw.githubusercontent.com/shardula/analytics/main/tick.json?t=' + Date.now())
+  fetch('https://api.github.com/repos/shardula/analytics/contents/tick.json?t=' + Date.now()).then(r=>r.json()).then(d=>fetch('data:application/json;base64,' + d.content.replace(/\n/g,'')))
     .then(function(r) { return r.ok ? r.json() : null; })
     .then(function(d) { if (d) { data = d; render(); } })
     .catch(function(e) { console.error('Fetch failed:', e); });
