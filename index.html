@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard</title>
+<title>Scalp Dashboard</title>
 <style>
 :root{--bg:#0d1117;--card:#161b22;--panel:#0f141a;--border:#30363d;--green:#3fb950;--red:#f85149;--yellow:#d29922;--blue:#58a6ff;--purple:#bc8cff;--text:#e6edf3;--muted:#8b949e}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -21,7 +21,10 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
 .card.setup-long{border-color:var(--green)}
 .card.setup-short{border-color:var(--red)}
-.card-hdr{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;justify-content:space-between}
+.card-hdr{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.sess-tag{padding:2px 7px;border-radius:4px;font-size:10px;font-weight:bold;letter-spacing:0.5px}
+.sess-ah{background:rgba(88,166,255,.15);color:var(--blue);border:1px solid var(--blue)}
+.sess-pre{background:rgba(210,153,34,.15);color:var(--yellow);border:1px solid var(--yellow)}
 .sym-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
 .price-big{font-size:34px;font-weight:bold}
 .chg-pos{color:var(--green);font-size:18px}.chg-neg{color:var(--red);font-size:18px}.chg-flat{color:var(--muted);font-size:18px}
@@ -108,7 +111,7 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 <div id="login-screen" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
   <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:32px;width:300px;text-align:center;">
     <div style="font-size:24px;margin-bottom:8px;">📊</div>
-    <div style="color:var(--blue);font-size:15px;font-weight:bold;margin-bottom:4px;">Dashboard</div>
+    <div style="color:var(--blue);font-size:15px;font-weight:bold;margin-bottom:4px;">Scalp Dashboard</div>
     <div style="color:var(--muted);font-size:12px;margin-bottom:20px;">Enter password to continue</div>
     <input id="pass-input" type="password" placeholder="Password"
       style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:6px;font-size:14px;font-family:inherit;margin-bottom:8px;outline:none;">
@@ -120,7 +123,7 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 
 <div id="main-content" style="display:none;">
 <header>
-  <h1>📊 DASHBOARD</h1>
+  <h1>📊 SCALP DASHBOARD</h1>
   <div class="status">
     <span id="health-indicator"><span class="health-dot warn" id="health-dot"></span><span id="health-text">Checking...</span></span>
     <span id="mkt-status"><span class="dot off"></span>LOADING</span>
@@ -405,7 +408,16 @@ function symbolCard(sym, info) {
   var scoreCls = score >= reqScore ? 'g' : 'y';
 
   return el('div', cardCls,
-    el('div', 'card-hdr', el('span', null, sym) + el('span', null, timeAgo(info.updated_at))) +
+    el('div', 'card-hdr',
+      el('span', null, sym) +
+      (function(){
+        var sess = info.session || (data.meta && data.meta.session) || '';
+        var tag = sess === 'AH'  ? el('span','sess-tag sess-ah','AH') :
+                  sess === 'PRE' ? el('span','sess-tag sess-pre','PRE') : '';
+        return tag;
+      })() +
+      el('span', null, timeAgo(info.updated_at))
+    ) +
     el('div', 'sym-row',
       el('span', 'price-big', '$' + fmt(price)) +
       el('span', chgClass(chgPct), arrow(chgPct) + ' ' + fmt(Math.abs(chgPct), 2) + '%')
