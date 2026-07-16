@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-07-16 14:59:11 ET",
+    "timestamp": "2026-07-16 15:00:12 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -18,11 +18,11 @@
     "AMD": {
       "price": {
         "last": 529.2,
-        "bid": 495.39,
-        "ask": 495.91,
-        "spread": 0.52,
-        "chg_pct": -6.28,
-        "volume": 18120597,
+        "bid": 495.1,
+        "ask": 495.54,
+        "spread": 0.44,
+        "chg_pct": -6.39,
+        "volume": 18146315,
         "session_high": 558.89,
         "session_low": 509.57,
         "session_mid": 534.23
@@ -212,11 +212,19 @@
       },
       "regime": {
         "name": "POST_SELLOFF_CHOP",
-        "note": "Day -6.3%, price 40% off low -- mean-reverting chop; counter-trend entries need a level",
+        "note": "Day -6.4%, price 40% off low -- mean-reverting chop; counter-trend entries need a level",
         "score_adj": 1
       },
       "eod": {
-        "active": false
+        "active": true,
+        "forces_count": 2,
+        "short_covering": true,
+        "options_pinning": null,
+        "closing_programs": true,
+        "price_recovery": 0,
+        "score_adj": 2,
+        "is_friday_opex": false,
+        "note": "F1 short-covering: day -4.9% | F3 closing programs: vol 923 vs 287 + price rising"
       },
       "scalp": {
         "imbalance": {
@@ -228,7 +236,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.52,
+          "value": 0.44,
           "state": "THIN"
         },
         "levels": {
@@ -261,7 +269,7 @@
       },
       "algo": {
         "score": 7,
-        "required_score": 7,
+        "required_score": 9,
         "long_signals": 1,
         "short_signals": 6,
         "checks": {
@@ -282,7 +290,7 @@
         "pattern": "SHORT|POST_SELLOFF_CHOP|options:OPT_BIAS_SHORT",
         "pattern_adj": 0,
         "regime_adj": 1,
-        "eod_adj": 0,
+        "eod_adj": 2,
         "signals_blocked": false,
         "signals_blocked_reason": null
       },
@@ -312,16 +320,16 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-07-16 14:59:11 ET"
+      "updated_at": "2026-07-16 15:00:12 ET"
     },
     "TSLA": {
       "price": {
         "last": 394.31,
-        "bid": 389.86,
-        "ask": 389.92,
-        "spread": 0.06,
-        "chg_pct": -1.17,
-        "volume": 22178421,
+        "bid": 390.02,
+        "ask": 390.15,
+        "spread": 0.13,
+        "chg_pct": -1.12,
+        "volume": 22215790,
         "session_high": 406.59,
         "session_low": 390.66,
         "session_mid": 398.62
@@ -513,7 +521,15 @@
         "score_adj": 1
       },
       "eod": {
-        "active": false
+        "active": true,
+        "forces_count": 0,
+        "short_covering": false,
+        "options_pinning": null,
+        "closing_programs": false,
+        "price_recovery": 0,
+        "score_adj": 0,
+        "is_friday_opex": false,
+        "note": "EOD window -- forces weak"
       },
       "scalp": {
         "imbalance": {
@@ -525,7 +541,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.06,
+          "value": 0.13,
           "state": "NORMAL"
         },
         "levels": {
@@ -604,7 +620,7 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-07-16 14:59:11 ET"
+      "updated_at": "2026-07-16 15:00:12 ET"
     }
   },
   "futures": {
@@ -614,19 +630,19 @@
   },
   "sector": {
     "SOXX": {
-      "price": 529.06,
-      "chg_pct": -4.72
+      "price": 529.22,
+      "chg_pct": -4.69
     },
     "SMH": {
-      "price": 567.65,
-      "chg_pct": -3.91
+      "price": 567.76,
+      "chg_pct": -3.89
     },
     "QQQ": {
-      "price": 706.48,
-      "chg_pct": -1.57
+      "price": 706.43,
+      "chg_pct": -1.58
     },
     "SPY": {
-      "price": 750.5,
+      "price": 750.52,
       "chg_pct": -0.57
     },
     "VIX": {
