@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-07-17 09:54:54 ET",
+    "timestamp": "2026-07-17 09:55:57 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -18,11 +18,11 @@
     "AMD": {
       "price": {
         "last": 500.9,
-        "bid": 463.09,
-        "ask": 463.73,
-        "spread": 0.64,
-        "chg_pct": -7.45,
-        "volume": 3969619,
+        "bid": 464.55,
+        "ask": 465.49,
+        "spread": 0.94,
+        "chg_pct": -7.08,
+        "volume": 4180680,
         "session_high": 518.74,
         "session_low": 491.8,
         "session_mid": 505.27
@@ -94,24 +94,24 @@
         "put_wall_oi": 6316.0,
         "gamma_flip": 407.5,
         "pc_ratio": 0.8,
-        "atm_iv": 97.5,
+        "atm_iv": 95.3,
         "imbalance_pct": 18.5,
         "imbalance_bias": "CALL_HEAVY +19%",
         "top_calls": [
           {
             "strike": 515.0,
             "oi": 4442.0,
-            "vol": 5.0
+            "vol": 14.0
           },
           {
             "strike": 505.0,
             "oi": 2045.0,
-            "vol": 37.0
+            "vol": 177.0
           },
           {
             "strike": 502.5,
             "oi": 995.0,
-            "vol": 2.0
+            "vol": 7.0
           },
           {
             "strike": 517.5,
@@ -121,14 +121,14 @@
           {
             "strike": 500.0,
             "oi": 784.0,
-            "vol": 209.0
+            "vol": 349.0
           }
         ],
         "top_puts": [
           {
             "strike": 500.0,
             "oi": 1881.0,
-            "vol": 44.0
+            "vol": 52.0
           },
           {
             "strike": 505.0,
@@ -138,17 +138,17 @@
           {
             "strike": 490.0,
             "oi": 1099.0,
-            "vol": 27.0
+            "vol": 58.0
           },
           {
             "strike": 510.0,
             "oi": 971.0,
-            "vol": 7.0
+            "vol": 9.0
           },
           {
             "strike": 495.0,
             "oi": 660.0,
-            "vol": 2.0
+            "vol": 7.0
           }
         ],
         "total_call_oi": 75715.0,
@@ -212,7 +212,7 @@
       },
       "regime": {
         "name": "POST_SELLOFF_CHOP",
-        "note": "Day -7.5%, price 34% off low -- mean-reverting chop; counter-trend entries need a level",
+        "note": "Day -7.1%, price 34% off low -- mean-reverting chop; counter-trend entries need a level",
         "score_adj": 1
       },
       "eod": {
@@ -228,7 +228,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.64,
+          "value": 0.94,
           "state": "THIN"
         },
         "levels": {
@@ -256,26 +256,54 @@
         "momentum_burst": null
       },
       "algo": {
-        "score": 6,
+        "score": 7,
         "required_score": 6,
         "long_signals": 3,
-        "short_signals": 3,
+        "short_signals": 4,
         "checks": {
           "vwap": "SELL_BIAS",
           "rsi": "NEUTRAL_65",
           "macd": "BULLISH",
           "obv": "CONFIRMED",
           "options": "OPT_NEUTRAL",
-          "nq": "NQ_FLAT",
+          "nq": "NQ_FALLING",
           "sector": "ALIGNED_BEAR",
           "bb": "BB_UPPER_TOUCH",
           "bar_ctx": "BARS_BULLISH",
           "sentiment": "SENTIMENT_NEUTRAL"
         },
-        "direction": "NEUTRAL",
-        "setup": null,
-        "narrative": null,
-        "pattern": "NEUTRAL|POST_SELLOFF_CHOP|vwap:SELL_BIAS",
+        "direction": "SHORT",
+        "setup": {
+          "direction": "SHORT",
+          "entry": 500.9,
+          "stop": 502.05,
+          "t1": 498.6,
+          "t2": 450.0,
+          "rr": 2.0,
+          "stop_dist": 1.15,
+          "atr": 1.5307
+        },
+        "narrative": {
+          "recommendation": "SHORT (MEDIUM CONFIDENCE)",
+          "confidence": "MEDIUM",
+          "score": "7/10",
+          "regime": "POST_SELLOFF_CHOP",
+          "explanation": "SHORT -- 4 aligned factors. Entry $500.9, stop $502.05, T1 $498.6, T2 $450.0 (R/R 2.0).",
+          "key_factors": [
+            "price $500.90 below VWAP $503.67",
+            "NQ futures falling",
+            "SOXX -5.4% QQQ -2.4% falling",
+            "BB upper touch (0.98)",
+            "Entry quality: upper band",
+            "Options: Near max pain $505.0 (within $5) -> pinning likely",
+            "Bars: 1 consecutive up bars | vol EXPANDING (2.0x) | momentum +3/9",
+            "Sentiment: Adanos Buy 62/100 | WSB 91 mentions 59% bull | Insider MSPR -93.4 (202"
+          ],
+          "warnings": [
+            "Regime POST_SELLOFF_CHOP: Day -7.1%, price 34% off low -- mean-reverting chop; counter-trend entries need a level"
+          ]
+        },
+        "pattern": "SHORT|POST_SELLOFF_CHOP|vwap:SELL_BIAS",
         "pattern_adj": 0,
         "regime_adj": 1,
         "eod_adj": 0,
@@ -308,16 +336,16 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-07-17 09:54:54 ET"
+      "updated_at": "2026-07-17 09:55:56 ET"
     },
     "TSLA": {
       "price": {
         "last": 391.17,
-        "bid": 378.32,
-        "ask": 378.49,
-        "spread": 0.17,
-        "chg_pct": -3.24,
-        "volume": 4168441,
+        "bid": 378.59,
+        "ask": 378.83,
+        "spread": 0.24,
+        "chg_pct": -3.17,
+        "volume": 4322071,
         "session_high": 395.31,
         "session_low": 385.32,
         "session_mid": 390.31
@@ -389,61 +417,61 @@
         "put_wall_oi": 6466.0,
         "gamma_flip": 387.5,
         "pc_ratio": 0.65,
-        "atm_iv": 65.6,
+        "atm_iv": 65.9,
         "imbalance_pct": 11.1,
         "imbalance_bias": "BALANCED (+11%)",
         "top_calls": [
           {
             "strike": 400.0,
             "oi": 7439.0,
-            "vol": 575.0
+            "vol": 811.0
           },
           {
             "strike": 410.0,
             "oi": 5633.0,
-            "vol": 282.0
+            "vol": 447.0
           },
           {
             "strike": 395.0,
             "oi": 4542.0,
-            "vol": 238.0
+            "vol": 308.0
           },
           {
             "strike": 405.0,
             "oi": 3310.0,
-            "vol": 95.0
+            "vol": 127.0
           },
           {
             "strike": 402.5,
             "oi": 2558.0,
-            "vol": 47.0
+            "vol": 71.0
           }
         ],
         "top_puts": [
           {
             "strike": 400.0,
             "oi": 5076.0,
-            "vol": 46.0
+            "vol": 52.0
           },
           {
             "strike": 380.0,
             "oi": 3921.0,
-            "vol": 279.0
+            "vol": 431.0
           },
           {
             "strike": 390.0,
             "oi": 2725.0,
-            "vol": 173.0
+            "vol": 346.0
           },
           {
             "strike": 375.0,
             "oi": 2694.0,
-            "vol": 129.0
+            "vol": 190.0
           },
           {
             "strike": 405.0,
             "oi": 1959.0,
-            "vol": 0
+            "vol": 2.0
           }
         ],
         "total_call_oi": 126468.0,
@@ -523,7 +551,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.17,
+          "value": 0.24,
           "state": "NORMAL"
         },
         "levels": {
@@ -550,17 +578,17 @@
         "momentum_burst": null
       },
       "algo": {
-        "score": 6,
+        "score": 7,
         "required_score": 6,
         "long_signals": 4,
-        "short_signals": 2,
+        "short_signals": 3,
         "checks": {
           "vwap": "BUY_BIAS",
           "rsi": "NEUTRAL_58",
           "macd": "BULLISH",
           "obv": "BULLISH_DIV",
           "options": "OPT_BIAS_SHORT",
-          "nq": "NQ_FLAT",
+          "nq": "NQ_FALLING",
           "sector": "QQQ_BEAR",
           "bb": "BB_MID_0.72",
           "bar_ctx": "BARS_MILD_BULL",
@@ -602,34 +630,34 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-07-17 09:54:54 ET"
+      "updated_at": "2026-07-17 09:55:57 ET"
     }
   },
   "futures": {
-    "nq_price": 28631.25,
-    "nq_trend": "FLAT",
+    "nq_price": 28444.75,
+    "nq_trend": "FALLING",
     "nq_conid": 770561204
   },
   "sector": {
     "SOXX": {
-      "price": 501.04,
-      "chg_pct": -5.55
+      "price": 501.8,
+      "chg_pct": -5.41
     },
     "SMH": {
-      "price": 539.62,
-      "chg_pct": -5.15
+      "price": 540.15,
+      "chg_pct": -5.06
     },
     "QQQ": {
-      "price": 688.11,
-      "chg_pct": -2.53
+      "price": 688.84,
+      "chg_pct": -2.42
     },
     "SPY": {
-      "price": 741.3,
-      "chg_pct": -1.25
+      "price": 742.21,
+      "chg_pct": -1.13
     },
     "VIX": {
-      "price": 19.34,
-      "chg_pct": 15.6
+      "price": 19.1,
+      "chg_pct": 14.17
     }
   },
   "macro": {
@@ -641,9 +669,28 @@
     "risk_on": false
   },
   "unusual_flow": [],
-  "alerts": [],
+  "alerts": [
+    {
+      "time": "09:55",
+      "symbol": "AMD",
+      "type": "SHORT",
+      "direction": "SHORT",
+      "price": 500.9,
+      "score": 7,
+      "required_score": 6,
+      "regime": "POST_SELLOFF_CHOP",
+      "entry": 500.9,
+      "stop": 502.05,
+      "t1": 498.6,
+      "t2": 450.0,
+      "rr": 2.0,
+      "confidence": "MEDIUM",
+      "entry_quality": "upper band",
+      "reason": "price $500.90 below VWAP $503.67 | NQ futures falling | SOXX -5.4% QQQ -2.4% falling"
+    }
+  ],
   "learning": {
-    "journal_records": 2,
+    "journal_records": 3,
     "pattern_stats": {
       "SHORT|NORMAL|vwap:BUY_BIAS": {
         "wins": 1,
