@@ -153,7 +153,7 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 <div class="grid" id="grid">
   <div class="card span-full"><div class="empty">Loading…</div></div>
 </div>
-<div class="footer">Data from HA machine → GitHub every 60s · Page refreshes every 60s · Open Claude → "[SYMBOL] check" when setup detected</div>
+<div class="footer">Data from HA machine → GitHub every 30s · Page refreshes every 20s · Open Claude → "[SYMBOL] check" when setup detected</div>
 
 <script>
 // ─── Auth ────────────────────────────────────────────────────────────────────
@@ -571,7 +571,7 @@ var cd = 60;
 setInterval(function() {
   cd--;
   document.getElementById('cd').textContent = cd;
-  if (cd <= 0) { cd = 60; loadData(); }
+  if (cd <= 0) { cd = 20; loadData(); }
 }, 1000);
 loadData();
 </script>
