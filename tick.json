@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-09-22 09:58:22 ET",
+    "timestamp": "2026-09-22 09:58:53 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -17,12 +17,12 @@
   "symbols": {
     "AMD": {
       "price": {
-        "last": 614.28,
+        "last": 615.41,
         "bid": 613.26,
-        "ask": 614.88,
-        "spread": 1.62,
-        "chg_pct": 1.18,
-        "volume": 3837457,
+        "ask": 615.99,
+        "spread": 2.73,
+        "chg_pct": 1.36,
+        "volume": 3922398,
         "session_high": 617.04,
         "session_low": 606.12,
         "session_mid": 611.58
@@ -32,7 +32,7 @@
         "upper": 619.44,
         "lower": 609.08,
         "slope": 0.0138,
-        "vs_vwap": 0.02,
+        "vs_vwap": 1.15,
         "above_vwap": true
       },
       "indicators": {
@@ -86,7 +86,7 @@
       },
       "options": {
         "expiry": "2026-09-25",
-        "spot": 615.12,
+        "spot": 615.41,
         "max_pain": 545.0,
         "call_wall": 570.0,
         "call_wall_oi": 7841.0,
@@ -94,24 +94,24 @@
         "put_wall_oi": 3908.0,
         "gamma_flip": 500.0,
         "pc_ratio": 1.12,
-        "atm_iv": 58.8,
+        "atm_iv": 59.0,
         "imbalance_pct": 41.4,
         "imbalance_bias": "CALL_HEAVY +41%",
         "top_calls": [
           {
             "strike": 600.0,
             "oi": 5567.0,
-            "vol": 38.0
+            "vol": 59.0
           },
           {
             "strike": 620.0,
             "oi": 2293.0,
-            "vol": 294.0
+            "vol": 390.0
           },
           {
             "strike": 635.0,
             "oi": 2197.0,
-            "vol": 29.0
+            "vol": 77.0
           },
           {
             "strike": 602.5,
@@ -121,34 +121,34 @@
           {
             "strike": 627.5,
             "oi": 1750.0,
-            "vol": 43.0
+            "vol": 77.0
           }
         ],
         "top_puts": [
           {
             "strike": 600.0,
             "oi": 3603.0,
-            "vol": 1484.0
+            "vol": 1632.0
           },
           {
             "strike": 607.5,
             "oi": 1576.0,
-            "vol": 216.0
+            "vol": 261.0
           },
           {
             "strike": 610.0,
             "oi": 1160.0,
-            "vol": 366.0
+            "vol": 454.0
           },
           {
             "strike": 605.0,
             "oi": 732.0,
-            "vol": 384.0
+            "vol": 449.0
           },
           {
             "strike": 615.0,
             "oi": 423.0,
-            "vol": 91.0
+            "vol": 116.0
           }
         ],
         "total_call_oi": 105127.0,
@@ -157,9 +157,9 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 69.28,
+        "max_pain_dist": 70.41,
         "max_pain_direction": "ABOVE",
-        "put_wall_dist": 84.28,
+        "put_wall_dist": 85.41,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.12,
         "bias": "NEUTRAL",
@@ -170,16 +170,16 @@
           "call_wall": 570.0,
           "put_wall": 530.0,
           "gamma_flip": 500.0,
-          "current": 614.28,
+          "current": 615.41,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
-          "$69 ABOVE max pain -> gravity DOWN toward $545.0",
-          "Put Wall $530.0 ($84 below)",
+          "$70 ABOVE max pain -> gravity DOWN toward $545.0",
+          "Put Wall $530.0 ($85 below)",
           "Above gamma flip $500.0 -> long gamma, MM stabilizing",
           "Call imbalance +41% -> call buying floor"
         ],
-        "summary": "$69 ABOVE max pain -> gravity DOWN toward $545.0 | Put Wall $530.0 ($84 below) | Above gamma flip $500.0 -> long gamma, MM stabilizing | Call imbalance +41% -> call buying floor"
+        "summary": "$70 ABOVE max pain -> gravity DOWN toward $545.0 | Put Wall $530.0 ($85 below) | Above gamma flip $500.0 -> long gamma, MM stabilizing | Call imbalance +41% -> call buying floor"
       },
       "bar_ctx": {
         "bias": "MILD_BEAR",
@@ -227,7 +227,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.26,
+          "value": 0.33,
           "state": "NORMAL"
         },
         "levels": {
@@ -235,13 +235,13 @@
             "level": 615.0,
             "type": "PUT_WALL",
             "oi": 423.0,
-            "dist": 0.72
+            "dist": -0.41
           },
           "next": {
-            "level": 610.0,
-            "type": "PUT_WALL",
-            "oi": 1160.0,
-            "dist": -4.28
+            "level": 620.0,
+            "type": "CALL_WALL",
+            "oi": 2293.0,
+            "dist": 4.59
           },
           "at_wall": false,
           "signal": null
@@ -255,9 +255,9 @@
         "momentum_burst": null
       },
       "algo": {
-        "score": 2,
+        "score": 3,
         "required_score": 5,
-        "long_signals": 0,
+        "long_signals": 1,
         "short_signals": 2,
         "checks": {
           "vwap": "NEUTRAL",
@@ -266,7 +266,7 @@
           "obv": "CONFIRMED",
           "options": "OPT_NEUTRAL",
           "nq": "NQ_UNAVAILABLE",
-          "sector": "MIXED_SECTOR",
+          "sector": "ALIGNED_BULL",
           "bb": "BB_MID_0.49",
           "bar_ctx": "BARS_MILD_BEAR",
           "sentiment": "SENTIMENT_NEUTRAL"
@@ -307,16 +307,16 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-09-22 09:58:22 ET"
+      "updated_at": "2026-09-22 09:58:53 ET"
     },
     "TSLA": {
       "price": {
-        "last": 375.54,
+        "last": 375.78,
         "bid": 374.7,
         "ask": 378,
         "spread": 3.3,
-        "chg_pct": -0.57,
-        "volume": 4178978,
+        "chg_pct": -0.51,
+        "volume": 4233641,
         "session_high": 379,
         "session_low": 372.92,
         "session_mid": 375.96
@@ -326,8 +326,8 @@
         "upper": 377.92,
         "lower": 373.32,
         "slope": 0.0126,
-        "vs_vwap": -0.08,
-        "above_vwap": false
+        "vs_vwap": 0.16,
+        "above_vwap": true
       },
       "indicators": {
         "rsi": 44.5,
@@ -451,9 +451,9 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 13.04,
+        "max_pain_dist": 13.28,
         "max_pain_direction": "ABOVE",
-        "put_wall_dist": 25.54,
+        "put_wall_dist": 25.78,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.18,
         "bias": "LONG",
@@ -464,7 +464,7 @@
           "call_wall": 367.5,
           "put_wall": 350.0,
           "gamma_flip": 367.5,
-          "current": 375.54,
+          "current": 375.78,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
@@ -520,7 +520,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.06,
+          "value": 0.14,
           "state": "NORMAL"
         },
         "levels": {
@@ -528,13 +528,13 @@
             "level": 375.0,
             "type": "PUT_WALL",
             "oi": 2173.0,
-            "dist": -0.54
+            "dist": -0.78
           },
           "next": {
             "level": 380.0,
             "type": "CALL_WALL",
             "oi": 12756.0,
-            "dist": 4.46
+            "dist": 4.22
           },
           "at_wall": false,
           "signal": null
@@ -598,7 +598,7 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-09-22 09:58:22 ET"
+      "updated_at": "2026-09-22 09:58:53 ET"
     }
   },
   "futures": {
@@ -608,24 +608,24 @@
   },
   "sector": {
     "SOXX": {
-      "price": 560.65,
-      "chg_pct": 0.23
+      "price": 561.29,
+      "chg_pct": 0.35
     },
     "SMH": {
-      "price": 597.6,
-      "chg_pct": 0.26
+      "price": 598.22,
+      "chg_pct": 0.37
     },
     "QQQ": {
-      "price": 744.66,
-      "chg_pct": 0.43
+      "price": 744.77,
+      "chg_pct": 0.45
     },
     "SPY": {
       "price": 774.61,
       "chg_pct": 0.14
     },
     "VIX": {
-      "price": 14.69,
-      "chg_pct": -1.21
+      "price": 14.73,
+      "chg_pct": -0.94
     }
   },
   "macro": {
