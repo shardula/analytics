@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-10-01 09:46:20 ET",
+    "timestamp": "2026-10-01 09:46:50 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -17,12 +17,12 @@
   "symbols": {
     "AMD": {
       "price": {
-        "last": 610.45,
-        "bid": 609.28,
-        "ask": 611.36,
-        "spread": 2.08,
-        "chg_pct": -0.58,
-        "volume": 916420,
+        "last": 610.1,
+        "bid": 603.51,
+        "ask": 610.64,
+        "spread": 7.13,
+        "chg_pct": -0.63,
+        "volume": 947346,
         "session_high": 618.72,
         "session_low": 606.84,
         "session_mid": 612.78
@@ -32,7 +32,7 @@
         "upper": 618.86,
         "lower": 608.06,
         "slope": 0.1655,
-        "vs_vwap": -3.01,
+        "vs_vwap": -3.36,
         "above_vwap": false
       },
       "indicators": {
@@ -157,10 +157,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 17.95,
+        "max_pain_dist": 17.6,
         "max_pain_direction": "ABOVE",
-        "call_wall_dist": 27.05,
-        "put_wall_dist": 60.45,
+        "call_wall_dist": 27.4,
+        "put_wall_dist": 60.1,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.42,
         "bias": "NEUTRAL",
@@ -171,7 +171,7 @@
           "call_wall": 637.5,
           "put_wall": 550.0,
           "gamma_flip": 515.0,
-          "current": 610.45,
+          "current": 610.1,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
@@ -229,7 +229,7 @@
           "signal": null
         },
         "spread": {
-          "value": 1.1,
+          "value": 1.16,
           "state": "THIN"
         },
         "levels": {
@@ -237,16 +237,16 @@
             "level": 610.0,
             "type": "PUT_WALL",
             "oi": 1886.0,
-            "dist": -0.45
+            "dist": -0.1
           },
           "next": {
             "level": 615.0,
             "type": "CALL_WALL",
             "oi": 1642.0,
-            "dist": 4.55
+            "dist": 4.9
           },
           "at_wall": true,
-          "signal": "AT PUT_WALL $610.0 (-0.45)"
+          "signal": "AT PUT_WALL $610.0 (-0.10)"
         },
         "level_tests": {
           "$610": 3,
@@ -305,16 +305,16 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-01 09:46:20 ET"
+      "updated_at": "2026-10-01 09:46:50 ET"
     },
     "TSLA": {
       "price": {
-        "last": 356.06,
-        "bid": 355,
+        "last": 355.74,
+        "bid": 355.68,
         "ask": 356.83,
-        "spread": 1.83,
-        "chg_pct": -0.32,
-        "volume": 1156855,
+        "spread": 1.15,
+        "chg_pct": -0.41,
+        "volume": 1248184,
         "session_high": 358.37,
         "session_low": 355.38,
         "session_mid": 356.87
@@ -324,7 +324,7 @@
         "upper": 357.94,
         "lower": 355.34,
         "slope": 0.0104,
-        "vs_vwap": -0.58,
+        "vs_vwap": -0.9,
         "above_vwap": false
       },
       "indicators": {
@@ -449,10 +449,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -3.94,
+        "max_pain_dist": -4.26,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 3.94,
-        "put_wall_dist": 66.06,
+        "call_wall_dist": 4.26,
+        "put_wall_dist": 65.74,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 0.99,
         "bias": "SHORT",
@@ -463,7 +463,7 @@
           "call_wall": 360.0,
           "put_wall": 290.0,
           "gamma_flip": 355.0,
-          "current": 356.06,
+          "current": 355.74,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
@@ -520,7 +520,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.39,
+          "value": 0.34,
           "state": "NORMAL"
         },
         "levels": {
@@ -528,13 +528,13 @@
             "level": 355.0,
             "type": "CALL_WALL",
             "oi": 8005.0,
-            "dist": -1.06
+            "dist": -0.74
           },
           "next": {
             "level": 360.0,
             "type": "CALL_WALL",
             "oi": 17468.0,
-            "dist": 3.94
+            "dist": 4.26
           },
           "at_wall": false,
           "signal": null
@@ -546,12 +546,12 @@
         "momentum_burst": null
       },
       "algo": {
-        "score": 3,
+        "score": 4,
         "required_score": 5,
         "long_signals": 2,
-        "short_signals": 1,
+        "short_signals": 2,
         "checks": {
-          "vwap": "NEUTRAL",
+          "vwap": "SELL_BIAS",
           "rsi": "NEUTRAL_48",
           "macd": "NEUTRAL",
           "obv": "CONFIRMED",
@@ -562,10 +562,10 @@
           "bar_ctx": "BARS_BULLISH",
           "sentiment": "SENTIMENT_NEUTRAL"
         },
-        "direction": "LONG",
+        "direction": "NEUTRAL",
         "setup": null,
         "narrative": null,
-        "pattern": "LONG|NORMAL|options:OPT_BIAS_SHORT",
+        "pattern": "NEUTRAL|NORMAL|vwap:SELL_BIAS",
         "pattern_adj": 0,
         "regime_adj": 0,
         "eod_adj": 0,
@@ -597,7 +597,7 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-01 09:46:20 ET"
+      "updated_at": "2026-10-01 09:46:50 ET"
     }
   },
   "futures": {
@@ -607,24 +607,24 @@
   },
   "sector": {
     "SOXX": {
-      "price": 570.26,
-      "chg_pct": 0.28
+      "price": 568.66,
+      "chg_pct": 0.0
     },
     "SMH": {
-      "price": 610.8,
-      "chg_pct": 0.3
+      "price": 610.33,
+      "chg_pct": 0.22
     },
     "QQQ": {
-      "price": 742.02,
-      "chg_pct": 0.3
+      "price": 741.26,
+      "chg_pct": 0.2
     },
     "SPY": {
-      "price": 764.1,
-      "chg_pct": 0.19
+      "price": 763.57,
+      "chg_pct": 0.12
     },
     "VIX": {
-      "price": 16.58,
-      "chg_pct": 1.47
+      "price": 16.6,
+      "chg_pct": 1.59
     }
   },
   "macro": {
@@ -633,7 +633,7 @@
     "t10y2y_regime": "risk-on",
     "cpi_nowcast_yoy": null,
     "cpi_nowcast_mom": null,
-    "risk_on": true
+    "risk_on": false
   },
   "unusual_flow": [],
   "alerts": [],
