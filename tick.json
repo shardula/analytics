@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-10-02 09:49:12 ET",
+    "timestamp": "2026-10-02 09:49:42 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -17,12 +17,12 @@
   "symbols": {
     "AMD": {
       "price": {
-        "last": 635.21,
-        "bid": 634.61,
-        "ask": 639.38,
-        "spread": 4.77,
-        "chg_pct": -0.03,
-        "volume": 1783217,
+        "last": 634.65,
+        "bid": 628.42,
+        "ask": 636,
+        "spread": 7.58,
+        "chg_pct": -0.11,
+        "volume": 1841246,
         "session_high": 639.8,
         "session_low": 630.99,
         "session_mid": 635.39
@@ -32,7 +32,7 @@
         "upper": 639.11,
         "lower": 632.15,
         "slope": 0.0538,
-        "vs_vwap": -0.42,
+        "vs_vwap": -0.98,
         "above_vwap": false
       },
       "indicators": {
@@ -157,32 +157,32 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 60.21,
+        "max_pain_dist": 59.65,
         "max_pain_direction": "ABOVE",
-        "call_wall_dist": 4.79,
-        "put_wall_dist": 95.21,
+        "call_wall_dist": 5.35,
+        "put_wall_dist": 94.65,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.46,
-        "bias": "NEUTRAL",
+        "bias": "LONG",
         "bias_points_long": 2,
-        "bias_points_short": 2,
+        "bias_points_short": 1,
         "price_map": {
           "max_pain": 575.0,
           "call_wall": 640.0,
           "put_wall": 540.0,
           "gamma_flip": 512.5,
-          "current": 635.21,
+          "current": 634.65,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
           "$60 ABOVE max pain -> gravity DOWN toward $575.0",
-          "Within $5 of Call Wall $640.0 -> heavy resistance",
+          "Call Wall $640.0 ($5 above)",
           "Put Wall $540.0 ($95 below)",
           "Above gamma flip $512.5 -> long gamma, MM stabilizing",
           "P/C 1.46 (put heavy -> contrarian LONG lean)",
           "Call imbalance +76% -> call buying floor"
         ],
-        "summary": "$60 ABOVE max pain -> gravity DOWN toward $575.0 | Within $5 of Call Wall $640.0 -> heavy resistance | Put Wall $540.0 ($95 below) | Above gamma flip $512.5 -> long gamma, MM stabilizing | P/C 1.46 (put heavy -> contrarian LONG lean) | Call imbalance +76% -> call buying floor"
+        "summary": "$60 ABOVE max pain -> gravity DOWN toward $575.0 | Call Wall $640.0 ($5 above) | Put Wall $540.0 ($95 below) | Above gamma flip $512.5 -> long gamma, MM stabilizing | P/C 1.46 (put heavy -> contrarian LONG lean) | Call imbalance +76% -> call buying floor"
       },
       "bar_ctx": {
         "bias": "MILD_BULL",
@@ -230,7 +230,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.68,
+          "value": 0.79,
           "state": "THIN"
         },
         "levels": {
@@ -238,16 +238,16 @@
             "level": 635.0,
             "type": "CALL_WALL",
             "oi": 1429.0,
-            "dist": -0.21
+            "dist": 0.35
           },
           "next": {
             "level": 635.0,
             "type": "PUT_WALL",
             "oi": 184.0,
-            "dist": -0.21
+            "dist": 0.35
           },
           "at_wall": true,
-          "signal": "AT CALL_WALL $635.0 (-0.21)"
+          "signal": "AT CALL_WALL $635.0 (+0.35)"
         },
         "level_tests": {
           "$635": 4,
@@ -257,16 +257,16 @@
         "momentum_burst": null
       },
       "algo": {
-        "score": 3,
+        "score": 4,
         "required_score": 5,
-        "long_signals": 2,
+        "long_signals": 3,
         "short_signals": 1,
         "checks": {
           "vwap": "NEUTRAL",
           "rsi": "NEUTRAL_51",
           "macd": "NEUTRAL",
           "obv": "CONFIRMED",
-          "options": "OPT_NEUTRAL",
+          "options": "OPT_BIAS_LONG",
           "nq": "NQ_FLAT",
           "sector": "ALIGNED_BULL",
           "bb": "N/A",
@@ -276,7 +276,7 @@
         "direction": "LONG",
         "setup": null,
         "narrative": null,
-        "pattern": "LONG|NORMAL|misc",
+        "pattern": "LONG|NORMAL|options:OPT_BIAS_LONG",
         "pattern_adj": 0,
         "regime_adj": 0,
         "eod_adj": 0,
@@ -308,16 +308,16 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-02 09:49:12 ET"
+      "updated_at": "2026-10-02 09:49:42 ET"
     },
     "TSLA": {
       "price": {
-        "last": 368.7,
+        "last": 368.1,
         "bid": 365,
-        "ask": 368.8,
-        "spread": 3.8,
-        "chg_pct": 3.24,
-        "volume": 4526840,
+        "ask": 368.16,
+        "spread": 3.16,
+        "chg_pct": 3.07,
+        "volume": 4758940,
         "session_high": 371.2,
         "session_low": 357.12,
         "session_mid": 364.16
@@ -327,8 +327,8 @@
         "upper": 377.15,
         "lower": 359.65,
         "slope": 0.0935,
-        "vs_vwap": 0.3,
-        "above_vwap": true
+        "vs_vwap": -0.3,
+        "above_vwap": false
       },
       "indicators": {
         "rsi": 68.7,
@@ -452,10 +452,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 13.7,
+        "max_pain_dist": 13.1,
         "max_pain_direction": "ABOVE",
-        "call_wall_dist": 6.3,
-        "put_wall_dist": 18.7,
+        "call_wall_dist": 6.9,
+        "put_wall_dist": 18.1,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 0.92,
         "bias": "LONG",
@@ -466,16 +466,16 @@
           "call_wall": 375.0,
           "put_wall": 350.0,
           "gamma_flip": 347.5,
-          "current": 368.7,
+          "current": 368.1,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
-          "Call Wall $375.0 ($6 above)",
-          "Put Wall $350.0 ($19 below)",
+          "Call Wall $375.0 ($7 above)",
+          "Put Wall $350.0 ($18 below)",
           "Above gamma flip $347.5 -> long gamma, MM stabilizing",
           "Call imbalance +61% -> call buying floor"
         ],
-        "summary": "Call Wall $375.0 ($6 above) | Put Wall $350.0 ($19 below) | Above gamma flip $347.5 -> long gamma, MM stabilizing | Call imbalance +61% -> call buying floor"
+        "summary": "Call Wall $375.0 ($7 above) | Put Wall $350.0 ($18 below) | Above gamma flip $347.5 -> long gamma, MM stabilizing | Call imbalance +61% -> call buying floor"
       },
       "bar_ctx": {
         "bias": "MILD_BULL",
@@ -523,7 +523,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.11,
+          "value": 0.18,
           "state": "NORMAL"
         },
         "levels": {
@@ -531,13 +531,13 @@
             "level": 370.0,
             "type": "CALL_WALL",
             "oi": 3895.0,
-            "dist": 1.3
+            "dist": 1.9
           },
           "next": {
             "level": 370.0,
             "type": "PUT_WALL",
             "oi": 994.0,
-            "dist": 1.3
+            "dist": 1.9
           },
           "at_wall": false,
           "signal": null
@@ -601,7 +601,7 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-02 09:49:12 ET"
+      "updated_at": "2026-10-02 09:49:42 ET"
     }
   },
   "futures": {
@@ -611,24 +611,24 @@
   },
   "sector": {
     "SOXX": {
-      "price": 589.3,
-      "chg_pct": 2.25
+      "price": 590.08,
+      "chg_pct": 2.39
     },
     "SMH": {
-      "price": 630.26,
-      "chg_pct": 2.02
+      "price": 631.2,
+      "chg_pct": 2.17
     },
     "QQQ": {
-      "price": 749.94,
-      "chg_pct": 1.07
+      "price": 750.89,
+      "chg_pct": 1.19
     },
     "SPY": {
-      "price": 769.88,
-      "chg_pct": 0.77
+      "price": 770.4,
+      "chg_pct": 0.84
     },
     "VIX": {
-      "price": 15.69,
-      "chg_pct": -4.27
+      "price": 15.68,
+      "chg_pct": -4.33
     }
   },
   "macro": {
