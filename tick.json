@@ -1,14 +1,14 @@
 {
   "meta": {
-    "timestamp": "2026-10-07 12:10:34 ET",
+    "timestamp": "2026-10-07 12:11:02 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
       "TSLA"
     ],
     "bars_count": {
-      "AMD": 149,
-      "TSLA": 162
+      "AMD": 150,
+      "TSLA": 163
     },
     "signals_gated": true,
     "min_score_req": 5,
@@ -17,55 +17,47 @@
   "symbols": {
     "AMD": {
       "price": {
-        "last": 644.38,
-        "bid": 644.25,
-        "ask": 644.66,
-        "spread": 0.41,
-        "chg_pct": 1.16,
-        "volume": 10399072,
+        "last": 644.25,
+        "bid": 643.54,
+        "ask": 644.65,
+        "spread": 1.11,
+        "chg_pct": 1.14,
+        "volume": 10413548,
         "session_high": 648.31,
         "session_low": 633.97,
         "session_mid": 641.14
       },
       "vwap": {
-        "vwap": 641.06,
-        "upper": 646.39,
-        "lower": 635.73,
-        "slope": 0.0036,
-        "vs_vwap": 3.32,
+        "vwap": 641.07,
+        "upper": 646.4,
+        "lower": 635.74,
+        "slope": 0.0039,
+        "vs_vwap": 3.18,
         "above_vwap": true
       },
       "indicators": {
-        "rsi": 49.5,
-        "macd_hist": -0.1406,
-        "macd_sig": 0.1535,
+        "rsi": 47.5,
+        "macd_hist": -0.1296,
+        "macd_sig": 0.1211,
         "macd_dir": "BEARISH",
         "bb_upper": 646.1,
-        "bb_lower": 643.68,
-        "bb_pct_b": 0.312,
+        "bb_lower": 643.62,
+        "bb_pct_b": 0.254,
         "bb_state": "SQUEEZE",
-        "atr": 0.4721,
+        "atr": 0.4436,
         "rvol": 1.0
       },
       "obv": {
         "obv_millions": 0.015,
-        "delta_1min": 0.0,
+        "delta_1min": -0.001,
         "delta_5min": -0.001,
-        "divergence": "CONFIRMED",
-        "trend": "\u2192"
+        "divergence": "BEARISH_DIV",
+        "trend": "\u25bc"
       },
       "candles": {
-        "single": "MARUBOZU_\ud83d\udfe2",
-        "multi": "N/A",
+        "single": "MARUBOZU_\ud83d\udd34",
+        "multi": "ALTERNATING",
         "last3": [
-          {
-            "t": "12:07",
-            "color": "\ud83d\udfe2",
-            "o": 644.55,
-            "h": 644.55,
-            "l": 644.55,
-            "c": 644.55
-          },
           {
             "t": "12:08",
             "color": "\ud83d\udd34",
@@ -81,6 +73,14 @@
             "h": 644.43,
             "l": 644.16,
             "c": 644.43
+          },
+          {
+            "t": "12:10",
+            "color": "\ud83d\udd34",
+            "o": 644.35,
+            "h": 644.36,
+            "l": 644.25,
+            "c": 644.25
           }
         ]
       },
@@ -157,9 +157,9 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 36.88,
+        "max_pain_dist": 36.75,
         "max_pain_direction": "ABOVE",
-        "put_wall_dist": 44.38,
+        "put_wall_dist": 44.25,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.42,
         "bias": "LONG",
@@ -170,7 +170,7 @@
           "call_wall": 640.0,
           "put_wall": 600.0,
           "gamma_flip": 615.0,
-          "current": 644.38,
+          "current": 644.25,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
@@ -183,14 +183,14 @@
         "summary": "$37 ABOVE max pain -> gravity DOWN toward $607.5 | Put Wall $600.0 ($44 below) | Above gamma flip $615.0 -> long gamma, MM stabilizing | P/C 1.42 (put heavy -> contrarian LONG lean) | Call imbalance +59% -> call buying floor"
       },
       "bar_ctx": {
-        "bias": "MILD_BULL",
+        "bias": "MILD_BEAR",
         "streak": 1,
-        "momentum": 1,
+        "momentum": -1,
         "vol_state": "FADING",
-        "vol_ratio": 0.48,
-        "bar_score_long": 1,
-        "bar_score_short": 0,
-        "summary": "1 consecutive up bars | vol FADING (0.5x) | momentum +1/9",
+        "vol_ratio": 0.57,
+        "bar_score_long": 0,
+        "bar_score_short": 1,
+        "summary": "1 consecutive down bars | vol FADING (0.6x) | momentum -1/9",
         "bars_analyzed": 10
       },
       "news_ctx": {
@@ -236,13 +236,13 @@
             "level": 645.0,
             "type": "CALL_WALL",
             "oi": 2496.0,
-            "dist": 0.62
+            "dist": 0.75
           },
           "next": {
             "level": 640.0,
             "type": "CALL_WALL",
             "oi": 8165.0,
-            "dist": -4.38
+            "dist": -4.25
           },
           "at_wall": false,
           "signal": null
@@ -257,24 +257,24 @@
       "algo": {
         "score": 6,
         "required_score": 5,
-        "long_signals": 3,
-        "short_signals": 3,
+        "long_signals": 2,
+        "short_signals": 4,
         "checks": {
           "vwap": "BUY_BIAS",
-          "rsi": "NEUTRAL_50",
+          "rsi": "NEUTRAL_48",
           "macd": "BEARISH",
-          "obv": "CONFIRMED",
+          "obv": "BEARISH_DIV",
           "options": "OPT_BIAS_LONG",
           "nq": "NQ_FLAT",
           "sector": "ALIGNED_BEAR",
-          "bb": "BB_MID_0.31",
-          "bar_ctx": "BARS_MILD_BULL",
+          "bb": "BB_MID_0.25",
+          "bar_ctx": "BARS_MILD_BEAR",
           "sentiment": "SENTIMENT_NEUTRAL"
         },
-        "direction": "NEUTRAL",
+        "direction": "SHORT",
         "setup": null,
         "narrative": null,
-        "pattern": "NEUTRAL|NORMAL|vwap:BUY_BIAS",
+        "pattern": "SHORT|NORMAL|vwap:BUY_BIAS",
         "pattern_adj": 0,
         "regime_adj": 0,
         "eod_adj": 0,
@@ -306,59 +306,51 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-07 12:10:34 ET"
+      "updated_at": "2026-10-07 12:11:01 ET"
     },
     "TSLA": {
       "price": {
-        "last": 375.8,
-        "bid": 375.73,
-        "ask": 375.84,
-        "spread": 0.11,
-        "chg_pct": -0.49,
-        "volume": 13267446,
+        "last": 375.77,
+        "bid": 374.2,
+        "ask": 375.87,
+        "spread": 1.67,
+        "chg_pct": -0.5,
+        "volume": 13298425,
         "session_high": 382.3,
         "session_low": 374.46,
         "session_mid": 378.38
       },
       "vwap": {
         "vwap": 376.42,
-        "upper": 379.13,
-        "lower": 373.71,
-        "slope": -0.0019,
-        "vs_vwap": -0.62,
+        "upper": 379.12,
+        "lower": 373.72,
+        "slope": -0.0014,
+        "vs_vwap": -0.65,
         "above_vwap": false
       },
       "indicators": {
         "rsi": 49.5,
-        "macd_hist": -0.024,
-        "macd_sig": 0.0189,
+        "macd_hist": -0.02,
+        "macd_sig": 0.0139,
         "macd_dir": "BEARISH",
-        "bb_upper": 376.49,
-        "bb_lower": 375.32,
-        "bb_pct_b": 0.385,
+        "bb_upper": 376.42,
+        "bb_lower": 375.33,
+        "bb_pct_b": 0.404,
         "bb_state": "SQUEEZE",
-        "atr": 0.2096,
+        "atr": 0.2025,
         "rvol": 1.0
       },
       "obv": {
         "obv_millions": -0.018,
-        "delta_1min": -0.0,
-        "delta_5min": 0.0,
+        "delta_1min": 0.0,
+        "delta_5min": 0.001,
         "divergence": "CONFIRMED",
         "trend": "\u2192"
       },
       "candles": {
-        "single": "\ud83d\udd34_CANDLE",
-        "multi": "THREE_RED",
+        "single": "\ud83d\udfe2_CANDLE",
+        "multi": "N/A",
         "last3": [
-          {
-            "t": "12:07",
-            "color": "\ud83d\udd34",
-            "o": 375.97,
-            "h": 375.98,
-            "l": 375.82,
-            "c": 375.87
-          },
           {
             "t": "12:08",
             "color": "\ud83d\udd34",
@@ -373,6 +365,14 @@
             "o": 375.81,
             "h": 375.86,
             "l": 375.77,
+            "c": 375.77
+          },
+          {
+            "t": "12:10",
+            "color": "\ud83d\udfe2",
+            "o": 375.73,
+            "h": 375.81,
+            "l": 375.73,
             "c": 375.77
           }
         ]
@@ -450,10 +450,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 5.8,
+        "max_pain_dist": 5.77,
         "max_pain_direction": "ABOVE",
-        "call_wall_dist": 24.2,
-        "put_wall_dist": 55.8,
+        "call_wall_dist": 24.23,
+        "put_wall_dist": 55.77,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.09,
         "bias": "LONG",
@@ -464,7 +464,7 @@
           "call_wall": 400.0,
           "put_wall": 320.0,
           "gamma_flip": 352.5,
-          "current": 375.8,
+          "current": 375.77,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
@@ -476,14 +476,14 @@
         "summary": "Call Wall $400.0 ($24 above) | Put Wall $320.0 ($56 below) | Above gamma flip $352.5 -> long gamma, MM stabilizing | Call imbalance +43% -> call buying floor"
       },
       "bar_ctx": {
-        "bias": "MILD_BEAR",
-        "streak": 2,
-        "momentum": -1,
-        "vol_state": "STEADY",
-        "vol_ratio": 1.29,
+        "bias": "NEUTRAL",
+        "streak": 0,
+        "momentum": 0,
+        "vol_state": "FADING",
+        "vol_ratio": 0.65,
         "bar_score_long": 0,
-        "bar_score_short": 1,
-        "summary": "2 consecutive down bars | vol STEADY (1.3x) | momentum -1/9",
+        "bar_score_short": 0,
+        "summary": "0 consecutive down bars | vol FADING (0.6x) | momentum +0/9",
         "bars_analyzed": 10
       },
       "news_ctx": {
@@ -521,7 +521,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.04,
+          "value": 0.05,
           "state": "NORMAL"
         },
         "levels": {
@@ -529,13 +529,13 @@
             "level": 375.0,
             "type": "CALL_WALL",
             "oi": 8458.0,
-            "dist": -0.8
+            "dist": -0.77
           },
           "next": {
             "level": 375.0,
             "type": "PUT_WALL",
             "oi": 3197.0,
-            "dist": -0.8
+            "dist": -0.77
           },
           "at_wall": false,
           "signal": null
@@ -550,8 +550,8 @@
       "algo": {
         "score": 4,
         "required_score": 5,
-        "long_signals": 1,
-        "short_signals": 3,
+        "long_signals": 2,
+        "short_signals": 2,
         "checks": {
           "vwap": "NEUTRAL",
           "rsi": "NEUTRAL_50",
@@ -560,14 +560,14 @@
           "options": "OPT_BIAS_LONG",
           "nq": "NQ_FLAT",
           "sector": "QQQ_BEAR",
-          "bb": "BB_MID_0.39",
-          "bar_ctx": "BARS_MILD_BEAR",
+          "bb": "BB_MID_0.40",
+          "bar_ctx": "BARS_NEUTRAL",
           "sentiment": "SENTIMENT_NEUTRAL"
         },
-        "direction": "SHORT",
+        "direction": "NEUTRAL",
         "setup": null,
         "narrative": null,
-        "pattern": "SHORT|TREND_DOWN|options:OPT_BIAS_LONG",
+        "pattern": "NEUTRAL|TREND_DOWN|options:OPT_BIAS_LONG",
         "pattern_adj": 0,
         "regime_adj": 0,
         "eod_adj": 0,
@@ -599,7 +599,7 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-07 12:10:34 ET"
+      "updated_at": "2026-10-07 12:11:02 ET"
     }
   },
   "futures": {
@@ -609,24 +609,24 @@
   },
   "sector": {
     "SOXX": {
-      "price": 580.45,
-      "chg_pct": -1.53
+      "price": 580.17,
+      "chg_pct": -1.57
     },
     "SMH": {
-      "price": 623.53,
-      "chg_pct": -1.42
+      "price": 623.22,
+      "chg_pct": -1.47
     },
     "QQQ": {
-      "price": 756.7,
-      "chg_pct": -0.39
+      "price": 756.63,
+      "chg_pct": -0.4
     },
     "SPY": {
-      "price": 776.26,
-      "chg_pct": -0.36
+      "price": 776.34,
+      "chg_pct": -0.35
     },
     "VIX": {
-      "price": 15.35,
-      "chg_pct": 2.27
+      "price": 15.36,
+      "chg_pct": 2.33
     }
   },
   "macro": {
