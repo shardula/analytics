@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-10-09 14:59:44 ET",
+    "timestamp": "2026-10-09 15:00:28 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -8,21 +8,21 @@
     ],
     "bars_count": {
       "AMD": 269,
-      "TSLA": 329
+      "TSLA": 330
     },
-    "signals_gated": false,
+    "signals_gated": true,
     "min_score_req": 6,
     "version": "3.0"
   },
   "symbols": {
     "AMD": {
       "price": {
-        "last": 611.24,
+        "last": 610.8,
         "bid": 609.9,
-        "ask": 611.8,
-        "spread": 1.9,
-        "chg_pct": -3.11,
-        "volume": 10075250,
+        "ask": 611.3,
+        "spread": 1.4,
+        "chg_pct": -3.18,
+        "volume": 10081257,
         "session_high": 630.88,
         "session_low": 609.02,
         "session_mid": 619.95
@@ -32,7 +32,7 @@
         "upper": 619.41,
         "lower": 607.87,
         "slope": -0.0031,
-        "vs_vwap": -2.4,
+        "vs_vwap": -2.84,
         "above_vwap": false
       },
       "indicators": {
@@ -86,7 +86,7 @@
       },
       "options": {
         "expiry": "2026-10-16",
-        "spot": 610.85,
+        "spot": 610.8,
         "max_pain": 540.0,
         "call_wall": 490.0,
         "call_wall_oi": 8817.0,
@@ -94,7 +94,7 @@
         "put_wall_oi": 7653.0,
         "gamma_flip": 530.0,
         "pc_ratio": 1.13,
-        "atm_iv": 42.3,
+        "atm_iv": 42.4,
         "imbalance_pct": -0.9,
         "imbalance_bias": "BALANCED (-1%)",
         "top_calls": [
@@ -106,29 +106,29 @@
           {
             "strike": 630.0,
             "oi": 4068.0,
-            "vol": 1507.0
+            "vol": 1508.0
           },
           {
             "strike": 610.0,
             "oi": 3103.0,
-            "vol": 982.0
+            "vol": 1018.0
           },
           {
             "strike": 620.0,
             "oi": 2276.0,
-            "vol": 3735.0
+            "vol": 3989.0
           },
           {
             "strike": 615.0,
             "oi": 1384.0,
-            "vol": 2654.0
+            "vol": 2659.0
           }
         ],
         "top_puts": [
           {
             "strike": 600.0,
             "oi": 7653.0,
-            "vol": 2150.0
+            "vol": 2217.0
           },
           {
             "strike": 620.0,
@@ -138,7 +138,7 @@
           {
             "strike": 610.0,
             "oi": 1810.0,
-            "vol": 1408.0
+            "vol": 1425.0
           },
           {
             "strike": 595.0,
@@ -148,7 +148,7 @@
           {
             "strike": 605.0,
             "oi": 1004.0,
-            "vol": 981.0
+            "vol": 989.0
           }
         ],
         "total_call_oi": 161150.0,
@@ -157,9 +157,9 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 71.24,
+        "max_pain_dist": 70.8,
         "max_pain_direction": "ABOVE",
-        "put_wall_dist": 11.24,
+        "put_wall_dist": 10.8,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.13,
         "bias": "SHORT",
@@ -170,7 +170,7 @@
           "call_wall": 490.0,
           "put_wall": 600.0,
           "gamma_flip": 530.0,
-          "current": 611.24,
+          "current": 610.8,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
@@ -200,7 +200,7 @@
       "social_ctx": {
         "available": true,
         "bias": "NEUTRAL",
-        "summary": "Adanos Buy 54/100 | WSB 42 mentions 71% bull | Insider MSPR -91.0 (2026-09)",
+        "summary": "Adanos Buy 54/100 | WSB 41 mentions 71% bull | Insider MSPR -91.0 (2026-09)",
         "insider": {
           "mspr": -91.0,
           "change": -147261,
@@ -214,7 +214,15 @@
         "score_adj": 1
       },
       "eod": {
-        "active": false
+        "active": true,
+        "forces_count": 2,
+        "short_covering": true,
+        "options_pinning": 610.0,
+        "closing_programs": false,
+        "price_recovery": 0,
+        "score_adj": 2,
+        "is_friday_opex": true,
+        "note": "F1 short-covering: day -3.2% | F2 OPEX pinning: near $610.0 high-OI strike"
       },
       "scalp": {
         "imbalance": {
@@ -226,7 +234,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.25,
+          "value": 0.32,
           "state": "NORMAL"
         },
         "levels": {
@@ -234,13 +242,13 @@
             "level": 610.0,
             "type": "CALL_WALL",
             "oi": 3103.0,
-            "dist": -1.24
+            "dist": -0.8
           },
           "next": {
             "level": 610.0,
             "type": "PUT_WALL",
             "oi": 1810.0,
-            "dist": -1.24
+            "dist": -0.8
           },
           "at_wall": false,
           "signal": null
@@ -254,7 +262,7 @@
       },
       "algo": {
         "score": 6,
-        "required_score": 7,
+        "required_score": 9,
         "long_signals": 1,
         "short_signals": 5,
         "checks": {
@@ -275,9 +283,9 @@
         "pattern": "SHORT|TREND_DOWN|vwap:SELL_BIAS",
         "pattern_adj": 0,
         "regime_adj": 1,
-        "eod_adj": 0,
-        "signals_blocked": false,
-        "signals_blocked_reason": null
+        "eod_adj": 2,
+        "signals_blocked": true,
+        "signals_blocked_reason": "after 3PM"
       },
       "sentiment": {
         "adanos": {
@@ -288,7 +296,7 @@
         },
         "apewisdom": {
           "symbol": "AMD",
-          "mentions": 42,
+          "mentions": 41,
           "bullish_pct": 71,
           "bearish_pct": 29
         },
@@ -304,59 +312,51 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-09 14:59:44 ET"
+      "updated_at": "2026-10-09 15:00:27 ET"
     },
     "TSLA": {
       "price": {
-        "last": 384.07,
+        "last": 383.98,
         "bid": 381.01,
         "ask": 385.13,
         "spread": 4.12,
-        "chg_pct": 0.76,
-        "volume": 31821266,
+        "chg_pct": 0.73,
+        "volume": 31869453,
         "session_high": 388.53,
         "session_low": 379.74,
         "session_mid": 384.13
       },
       "vwap": {
         "vwap": 384.51,
-        "upper": 387.83,
-        "lower": 381.19,
+        "upper": 387.82,
+        "lower": 381.2,
         "slope": -0.0004,
-        "vs_vwap": -0.44,
+        "vs_vwap": -0.53,
         "above_vwap": false
       },
       "indicators": {
-        "rsi": 48.9,
-        "macd_hist": -0.063,
-        "macd_sig": 0.159,
+        "rsi": 48.3,
+        "macd_hist": -0.0662,
+        "macd_sig": 0.1425,
         "macd_dir": "BEARISH",
-        "bb_upper": 384.63,
-        "bb_lower": 383.91,
+        "bb_upper": 384.61,
+        "bb_lower": 383.89,
         "bb_pct_b": 0.257,
         "bb_state": "SQUEEZE",
-        "atr": 0.205,
+        "atr": 0.1968,
         "rvol": 1.0
       },
       "obv": {
-        "obv_millions": 0.052,
-        "delta_1min": -0.0,
+        "obv_millions": 0.051,
+        "delta_1min": -0.001,
         "delta_5min": -0.002,
         "divergence": "CONFIRMED",
-        "trend": "\u2192"
+        "trend": "\u25bc"
       },
       "candles": {
-        "single": "\ud83d\udd34_CANDLE",
+        "single": "DOJI",
         "multi": "N/A",
         "last3": [
-          {
-            "t": "14:56",
-            "color": "\ud83d\udfe2",
-            "o": 384.12,
-            "h": 384.23,
-            "l": 384.12,
-            "c": 384.15
-          },
           {
             "t": "14:57",
             "color": "\ud83d\udfe2",
@@ -372,12 +372,20 @@
             "h": 384.21,
             "l": 384.1,
             "c": 384.1
+          },
+          {
+            "t": "14:59",
+            "color": "\ud83d\udd34",
+            "o": 384.08,
+            "h": 384.21,
+            "l": 384.04,
+            "c": 384.07
           }
         ]
       },
       "options": {
         "expiry": "2026-10-16",
-        "spot": 384.13,
+        "spot": 383.98,
         "max_pain": 370.0,
         "call_wall": 400.0,
         "call_wall_oi": 31253.0,
@@ -385,46 +393,46 @@
         "put_wall_oi": 14624.0,
         "gamma_flip": 365.0,
         "pc_ratio": 0.88,
-        "atm_iv": 37.7,
+        "atm_iv": 37.3,
         "imbalance_pct": 31.5,
         "imbalance_bias": "CALL_HEAVY +31%",
         "top_calls": [
           {
             "strike": 400.0,
             "oi": 31253.0,
-            "vol": 43127.0
+            "vol": 43168.0
           },
           {
             "strike": 380.0,
             "oi": 14124.0,
-            "vol": 11746.0
+            "vol": 11797.0
           },
           {
             "strike": 390.0,
             "oi": 10316.0,
-            "vol": 10727.0
+            "vol": 10756.0
           },
           {
             "strike": 385.0,
             "oi": 10137.0,
-            "vol": 25725.0
+            "vol": 25826.0
           },
           {
             "strike": 370.0,
             "oi": 6791.0,
-            "vol": 2373.0
+            "vol": 2384.0
           }
         ],
         "top_puts": [
           {
             "strike": 380.0,
             "oi": 14624.0,
-            "vol": 9953.0
+            "vol": 9960.0
           },
           {
             "strike": 370.0,
             "oi": 8300.0,
-            "vol": 5209.0
+            "vol": 5219.0
           },
           {
             "strike": 400.0,
@@ -434,12 +442,12 @@
           {
             "strike": 390.0,
             "oi": 4908.0,
-            "vol": 4635.0
+            "vol": 4672.0
           },
           {
             "strike": 375.0,
             "oi": 4591.0,
-            "vol": 6071.0
+            "vol": 6077.0
           }
         ],
         "total_call_oi": 336353.0,
@@ -448,10 +456,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 14.07,
+        "max_pain_dist": 13.98,
         "max_pain_direction": "ABOVE",
-        "call_wall_dist": 15.93,
-        "put_wall_dist": 4.07,
+        "call_wall_dist": 16.02,
+        "put_wall_dist": 3.98,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 0.88,
         "bias": "LONG",
@@ -462,7 +470,7 @@
           "call_wall": 400.0,
           "put_wall": 380.0,
           "gamma_flip": 365.0,
-          "current": 384.07,
+          "current": 383.98,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
@@ -475,13 +483,13 @@
       },
       "bar_ctx": {
         "bias": "MILD_BEAR",
-        "streak": 2,
-        "momentum": -5,
+        "streak": 3,
+        "momentum": -7,
         "vol_state": "FADING",
-        "vol_ratio": 0.69,
+        "vol_ratio": 0.61,
         "bar_score_long": 0,
         "bar_score_short": 1,
-        "summary": "2 consecutive down bars | vol FADING (0.7x) | momentum -5/9",
+        "summary": "3 consecutive down bars | vol FADING (0.6x) | momentum -7/9",
         "bars_analyzed": 10
       },
       "news_ctx": {
@@ -493,7 +501,7 @@
       "social_ctx": {
         "available": true,
         "bias": "BULLISH",
-        "summary": "Adanos Buy 93/100 | WSB 53 mentions 78% bull | Insider MSPR -16.6 (2026-09)",
+        "summary": "Adanos Buy 93/100 | WSB 51 mentions 77% bull | Insider MSPR -16.6 (2026-09)",
         "insider": {
           "mspr": -16.6,
           "change": -2606,
@@ -507,7 +515,15 @@
         "score_adj": 1
       },
       "eod": {
-        "active": false
+        "active": true,
+        "forces_count": 1,
+        "short_covering": false,
+        "options_pinning": 385.0,
+        "closing_programs": false,
+        "price_recovery": 0,
+        "score_adj": 1,
+        "is_friday_opex": true,
+        "note": "F2 OPEX pinning: near $385.0 high-OI strike"
       },
       "scalp": {
         "imbalance": {
@@ -519,7 +535,7 @@
           "signal": null
         },
         "spread": {
-          "value": 0.06,
+          "value": 0.04,
           "state": "NORMAL"
         },
         "levels": {
@@ -527,13 +543,13 @@
             "level": 385.0,
             "type": "CALL_WALL",
             "oi": 10137.0,
-            "dist": 0.93
+            "dist": 1.02
           },
           "next": {
             "level": 380.0,
             "type": "CALL_WALL",
             "oi": 14124.0,
-            "dist": -4.07
+            "dist": -3.98
           },
           "at_wall": false,
           "signal": null
@@ -547,12 +563,12 @@
       },
       "algo": {
         "score": 6,
-        "required_score": 7,
+        "required_score": 8,
         "long_signals": 3,
         "short_signals": 3,
         "checks": {
           "vwap": "NEUTRAL",
-          "rsi": "NEUTRAL_49",
+          "rsi": "NEUTRAL_48",
           "macd": "BEARISH",
           "obv": "CONFIRMED",
           "options": "OPT_BIAS_LONG",
@@ -568,9 +584,9 @@
         "pattern": "NEUTRAL|COMPRESSION|options:OPT_BIAS_LONG",
         "pattern_adj": 0,
         "regime_adj": 1,
-        "eod_adj": 0,
-        "signals_blocked": false,
-        "signals_blocked_reason": null
+        "eod_adj": 1,
+        "signals_blocked": true,
+        "signals_blocked_reason": "after 3PM"
       },
       "sentiment": {
         "adanos": {
@@ -582,9 +598,9 @@
         },
         "apewisdom": {
           "symbol": "TSLA",
-          "mentions": 53,
-          "bullish_pct": 78,
-          "bearish_pct": 22
+          "mentions": 51,
+          "bullish_pct": 77,
+          "bearish_pct": 23
         },
         "short_interest": {
           "squeeze_risk": "LOW"
@@ -598,7 +614,7 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-09 14:59:44 ET"
+      "updated_at": "2026-10-09 15:00:28 ET"
     }
   },
   "futures": {
@@ -608,24 +624,24 @@
   },
   "sector": {
     "SOXX": {
-      "price": 559.44,
-      "chg_pct": -0.68
+      "price": 559.67,
+      "chg_pct": -0.64
     },
     "SMH": {
-      "price": 603.11,
-      "chg_pct": -0.69
+      "price": 603.35,
+      "chg_pct": -0.65
     },
     "QQQ": {
-      "price": 751.01,
-      "chg_pct": 0.46
+      "price": 751.1,
+      "chg_pct": 0.47
     },
     "SPY": {
-      "price": 778.46,
+      "price": 778.48,
       "chg_pct": 0.59
     },
     "VIX": {
-      "price": 14.87,
-      "chg_pct": -3.5
+      "price": 14.86,
+      "chg_pct": -3.57
     }
   },
   "macro": {
