@@ -105,6 +105,16 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 .btn-save{background:var(--blue);color:#000;font-weight:bold}
 .btn-cancel{background:var(--border);color:var(--text)}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:199}
+.card.watch-near{border-color:var(--yellow);box-shadow:0 0 0 1px rgba(210,153,34,.35)}
+.watch-box{margin-top:8px;padding:8px;border-radius:6px;font-size:12px;border:1px solid var(--border);background:rgba(139,148,158,.06)}
+.watch-box.near{border-color:var(--yellow);background:rgba(210,153,34,.10)}
+.watch-box.watch{border:1px dashed var(--yellow)}
+.w-title{font-size:13px;font-weight:bold;margin-bottom:4px;color:var(--muted)}
+.watch-box.near .w-title,.watch-box.watch .w-title{color:var(--yellow)}
+.w-need{color:var(--yellow);padding:1px 0}
+.w-met{color:var(--text);padding:1px 0}.w-met b{color:var(--green)}
+.w-against{color:var(--muted);padding:1px 0}.w-against b{color:var(--red)}
+.news-new{color:#000;background:var(--yellow);border-radius:3px;padding:0 4px;font-weight:bold;margin-right:4px}
 </style>
 </head>
 <body>
@@ -346,6 +356,41 @@ function scalpPanel(sym, info) {
   return el('div', 'scalp', el('div', 'scalp-title', '⚡ Scalp Panel') + html);
 }
 
+// ─── Setup watch + news helpers (v3.1.2) ─────────────────────────────────────
+var SYM_NAMES = {AMD: ['AMD', 'Advanced Micro'], TSLA: ['TSLA', 'Tesla']};
+function namesSym(sym, title) {
+  var names = SYM_NAMES[sym] || [sym];
+  for (var i = 0; i < names.length; i++) {
+    if (new RegExp('\\b' + names[i] + '\\b', 'i').test(title || '')) return true;
+  }
+  return false;
+}
+function etNowMins() {
+  try {
+    var h = 0, m = 0;
+    new Intl.DateTimeFormat('en-US', {timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'})
+      .formatToParts(new Date()).forEach(function(p) {
+        if (p.type === 'hour') h = +p.value;
+        if (p.type === 'minute') m = +p.value;
+      });
+    return h * 60 + m;
+  } catch (e) { var d = new Date(); return d.getHours() * 60 + d.getMinutes(); }
+}
+function watchBox(algo, score, reqScore) {
+  var w = algo.watch;
+  if (!w || (w.dir !== 'LONG' && w.dir !== 'SHORT')) {
+    return el('div', 'setup-box setup-none-box', 'Score ' + score + '/' + reqScore + ' — No setup');
+  }
+  var cls = w.state === 'NEAR' ? ' near' : w.state === 'WATCH' ? ' watch' : '';
+  var tag = w.state === 'NEAR' ? '👀 NEAR — ' : w.state === 'WATCH' ? '👀 WATCH — ' : '';
+  var title = tag + w.dir + ' ' + w.score + '/' + w.required +
+    (w.missing ? ' · ' + w.missing + ' to go' : '');
+  var rows = (w.need || []).map(function(r) { return el('div', 'w-need', '○ ' + r); }).join('') +
+    (w['for'] || []).map(function(r) { return el('div', 'w-met', '<b>✓</b> ' + r); }).join('') +
+    (w.against || []).map(function(r) { return el('div', 'w-against', '<b>✗</b> ' + r); }).join('');
+  return el('div', 'watch-box' + cls, el('div', 'w-title', title) + rows);
+}
+
 // ─── Symbol card ─────────────────────────────────────────────────────────────
 function symbolCard(sym, info) {
   var pr = info.price || {};
@@ -369,7 +414,8 @@ function symbolCard(sym, info) {
   var rvol = ind.rvol;
   var atr = ind.atr;
   var diverg = obv.divergence || '--';
-  var cardCls = 'card' + (setup && setup.direction === 'LONG' ? ' setup-long' : setup && setup.direction === 'SHORT' ? ' setup-short' : '');
+  var cardCls = 'card' + (setup && setup.direction === 'LONG' ? ' setup-long' : setup && setup.direction === 'SHORT' ? ' setup-short' : '') +
+    (!setup && algo.watch && algo.watch.state === 'NEAR' ? ' watch-near' : '');
 
   // Setup box
   var setupHTML;
@@ -389,7 +435,7 @@ function symbolCard(sym, info) {
       '<button class="copy-btn" onclick="copyCmd(\'' + sym + '\')">📋 &quot;' + sym + ' check&quot; → Claude</button>'
     );
   } else {
-    setupHTML = el('div', 'setup-box setup-none-box', 'Score ' + score + '/' + reqScore + ' — No setup');
+    setupHTML = watchBox(algo, score, reqScore);
   }
 
   // Sentiment
@@ -408,8 +454,7 @@ function symbolCard(sym, info) {
   }
   if (ape.bullish_pct != null) {
     sentHTML += el('div', null, el('small', null,
-      'WSB: ' + (ape.mentions || 0) + ' mentions · ' + ape.bullish_pct + '% bullish' +
-      (ins.mspr != null ? ' · Insider MSPR ' + fmt(ins.mspr, 0) : '')
+      'WSB: ' + (ape.mentions || 0) + ' mentions · ' + ape.bullish_pct + '% bullish'
     ));
   }
 
@@ -427,9 +472,15 @@ function symbolCard(sym, info) {
 
   // News
   var newsHTML = '';
-  if (news.length) {
-    newsHTML = news.slice(0, 2).map(function(n) {
-      return el('div', null, el('small', null, (n.time || '') + ' ' + (n.headline || '')));
+  var relNews = news.filter(function(n) { return namesSym(sym, n.headline); });
+  if (relNews.length) {
+    var nowM = etNowMins();
+    newsHTML = relNews.slice(0, 2).map(function(n) {
+      var t = /^(\d{1,2}):(\d{2})$/.exec(n.time || '');
+      var age = t ? nowM - (+t[1] * 60 + +t[2]) : 999;
+      var isNew = age >= 0 && age <= 15;
+      return el('div', null, el('small', null,
+        (isNew ? el('span', 'news-new', 'NEW') : '') + (n.time || '') + ' ' + (n.headline || '')));
     }).join('');
   }
 
