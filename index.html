@@ -115,6 +115,9 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 .w-met{color:var(--text);padding:1px 0}.w-met b{color:var(--green)}
 .w-against{color:var(--muted);padding:1px 0}.w-against b{color:var(--red)}
 .news-new{color:#000;background:var(--yellow);border-radius:3px;padding:0 4px;font-weight:bold;margin-right:4px}
+.tip{cursor:help;text-decoration:underline dotted;text-decoration-color:var(--muted);text-underline-offset:3px;outline:none}
+#tipbox{display:none;position:fixed;z-index:500;max-width:300px;background:#1f2630;color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:12px;line-height:1.45;font-weight:normal;letter-spacing:0;text-transform:none;white-space:normal;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.55)}
+@media (hover:none){.tip{cursor:pointer}}
 </style>
 </head>
 <body>
@@ -281,9 +284,59 @@ function timeAgo(s) {
 function el(tag, cls, html, attrs) {
   return '<' + tag + (cls ? ' class="' + cls + '"' : '') + (attrs ? ' ' + attrs : '') + '>' + (html || '') + '</' + tag + '>';
 }
+// ─── Tooltips (v3.1.3) ────────────────────────────────────────────────────────
+var TIPS = {"VWAP": "Volume-Weighted Average Price: today's average price weighted by volume -- the line big funds benchmark against. ▲ = price above it. Votes LONG when price is 0.2%+ above, SHORT when 0.2%+ below. A pullback to VWAP that holds (long) or fails (short) is a preferred entry.","RSI(14)": "Relative Strength Index over the last 14 one-minute bars (0-100). Above 70 = overbought, votes SHORT. Below 30 = oversold, votes LONG. In between = no vote.","MACD": "Moving Average Convergence Divergence: short-term momentum (12- vs 26-bar averages) against its 9-bar signal line. BULLISH = momentum turning up (votes LONG), BEARISH = turning down (votes SHORT), CROSS = it just flipped.","OBV": "On-Balance Volume: running total of volume on up bars minus down bars. CONFIRMED = volume agrees with the price trend (votes the way OBV moved over 5 min). BULLISH/BEARISH DIV = volume disagrees with price -- a possible reversal.","BB": "Bollinger Bands: 20-bar average ± 2 standard deviations. UPPER_TOUCH = stretched up (votes SHORT), LOWER_TOUCH = stretched down (votes LONG), SQUEEZE = bands unusually tight, a bigger move often follows.","RVOL": "Relative Volume: today's volume so far vs the average of the last 10 sessions at the same time of day. 1.00x = normal. Alerts need 0.70x or more.","ATR": "Average True Range: the typical size of one 1-minute bar -- how much the stock is moving right now. Alerts need $0.50+; stops and targets are sized from it.","Score": "Votes pointing the same way / votes required, then the direction. Required = 4, +1 after 1 PM, +1 when trading against the day's trend, plus event-day, late-day and journal adjustments. An alert also needs every item in the checklist below to pass.","NQ Futures": "Nasdaq-100 futures (front month). Your IBKR futures feed is 10 minutes delayed, so NQ is shown for context only and doesn't vote.","T10Y2Y": "10-year minus 2-year Treasury yield (FRED, daily). Positive = normal yield curve, negative = inverted (a recession warning). Background only.","Risk": "ON when both SOXX and QQQ are up on the day, otherwise OFF. Background only.","VIX": "CBOE Volatility Index: the market's expected S&P 500 volatility over the next 30 days. Higher = more fear and bigger intraday swings.","SOXX": "iShares Semiconductor ETF (chip stocks). AMD's sector vote needs SOXX and QQQ together: both above +0.3% / +0.2% votes LONG, both below -0.3% / -0.2% votes SHORT.","SMH": "VanEck Semiconductor ETF -- a second chip-sector gauge. Display only.","QQQ": "Invesco QQQ -- the Nasdaq-100 (big tech). TSLA's sector vote: above +0.3% votes LONG, below -0.3% votes SHORT. Also half of AMD's sector vote.","SPY": "SPDR S&P 500 ETF -- the broad market. Display only.","BID/ASK IMBALANCE": "Shares waiting on the best bid (buyers) vs the best ask (sellers). BID_HEAVY / ASK_HEAVY only shows when the tilt lasts several samples (xN).","B/A": "B = shares on the best bid (buyers), A = shares on the best ask (sellers), live from IBKR. The green/red bar shows the split.","SPREAD": "Ask minus bid -- your cost to get in and out. NORMAL = tight; WIDE = thin liquidity.","CW": "Call wall: a nearby strike with heavy call open interest -- tends to act as resistance or a magnet. The +/- number is its distance from price.","PW": "Put wall: a nearby strike with heavy put open interest -- tends to act as support or a magnet. The +/- number is its distance from price.","OI": "Open interest: option contracts still open at that strike. More OI = a stronger level.","tested": "How many times price has touched this level today. Several tests = the level matters (and can eventually break).","EOD": "Late-day forces (3:00-4:05 PM) that trap shorts: down-day short covering, Friday option pinning, closing buy programs, a bounce off the recent low. Each active force adds +1 to the score a SHORT needs; longs are unaffected.","MaxPain": "Max pain: the strike where option buyers lose the most at this week's expiry. Price often drifts toward it into Friday.","GF": "Gamma flip: above it, market-maker hedging tends to calm moves; below it, hedging tends to amplify them.","CW_DAY": "Call wall for this expiry: the strike above price with the most call open interest. Often far away -- the scalp panel above shows the nearest levels.","PW_DAY": "Put wall for this expiry: the strike below price with the most put open interest. Often far away -- the scalp panel above shows the nearest levels.","BIAS": "Puts vs calls in open interest: negative % = more puts, positive = more calls, BALANCED = no strong tilt. Background only.","Adanos": "Adanos AI sentiment across Reddit, X and news: Buy / Hold / Sell, with buzz (how much it's being talked about) out of 100. Display only -- it doesn't vote.","Reddit": "Share of bullish vs bearish Reddit mentions (Adanos). Above 50% = more bullish. Display only.","X": "Share of bullish vs bearish posts on X / Twitter (Adanos). Above 50% = more bullish. Display only.","News": "Share of bullish vs bearish news coverage (Adanos). Above 50% = more bullish. Display only.","WSB": "Mentions on Reddit stock forums (r/wallstreetbets and others) in the last 24 hours, and % bullish (ApeWisdom). A sudden spike = retail crowding and bigger ranges. Display only.","WATCH": "Checklist for the current direction. ○ = still missing (with the price levels that would fix it), ✓ = votes for, ✗ = votes against. NEAR = one thing missing (yellow border) -- start watching. WATCH = two missing.","ALERT": "E = entry, S = stop, T1 = first target (1.5× the risk), R:R = reward-to-risk at T1."};
+function escAttr(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function tipEl(tag, cls, html, key) {
+  var t = TIPS[key];
+  if (!t) return el(tag, cls, html);
+  return el(tag, (cls ? cls + ' ' : '') + 'tip', html, 'tabindex="0" data-tip="' + escAttr(t) + '"');
+}
+var tipBox = null, tipPt = null, tipTouchAt = 0;
+function tipShow(a) {
+  if (!tipBox) { tipBox = document.createElement('div'); tipBox.id = 'tipbox'; document.body.appendChild(tipBox); }
+  tipBox.textContent = a.getAttribute('data-tip');
+  tipBox.style.display = 'block';
+  var r = a.getBoundingClientRect(), w = tipBox.offsetWidth, h = tipBox.offsetHeight;
+  var x = Math.min(Math.max(8, r.left), window.innerWidth - w - 8);
+  var y = r.bottom + 6;
+  if (y + h > window.innerHeight - 8) y = Math.max(8, r.top - h - 6);
+  tipBox.style.left = Math.max(8, x) + 'px';
+  tipBox.style.top = y + 'px';
+}
+function tipHide() { if (tipBox) tipBox.style.display = 'none'; }
+function tipAt(e) { return e.target && e.target.closest ? e.target.closest('[data-tip]') : null; }
+document.addEventListener('mouseover', function(e) {
+  if (Date.now() - tipTouchAt < 1500) return;   // phones fire fake mouse events after a tap -- ignore them
+  var a = tipAt(e); if (a) tipShow(a); else tipHide();
+});
+document.addEventListener('mousemove', function(e) { tipPt = [e.clientX, e.clientY]; });
+document.addEventListener('click', function(e) {
+  var a = tipAt(e);
+  if (e.clientX || e.clientY) tipPt = [e.clientX, e.clientY];
+  if (a) tipShow(a); else tipHide();
+});
+document.addEventListener('touchend', function(e) {   // phones: tap a term to show, tap elsewhere to hide
+  tipTouchAt = Date.now();
+  var a = tipAt(e), t = e.changedTouches && e.changedTouches[0];
+  if (t) tipPt = [t.clientX, t.clientY];
+  if (a) tipShow(a); else tipHide();
+}, {passive: true});
+document.addEventListener('focusin', function(e) { var a = tipAt(e); if (a) tipShow(a); });
+window.addEventListener('scroll', tipHide, true);
+function tipRefresh() {
+  // the grid is rebuilt every few seconds -- keep the tip on the term under the pointer/finger
+  if (!tipBox || tipBox.style.display !== 'block' || !tipPt) return;
+  var u = document.elementFromPoint(tipPt[0], tipPt[1]);
+  var a = u && u.closest ? u.closest('[data-tip]') : null;
+  if (a) tipShow(a); else tipHide();
+}
+
 function metric(label, val, cls) {
   return el('div', 'm',
-    el('span', 'ml', label) +
+    tipEl('span', 'ml', label, label) +
     el('span', 'mv' + (cls ? ' ' + cls : ''), val)
   );
 }
@@ -314,7 +367,7 @@ function scalpPanel(sym, info) {
     html += el('div', 'sig-strip sig-eod', '🎯 ' + lv.signal);
   }
   if (eod.active && eod.forces_count > 0) {
-    html += el('div', 'sig-strip sig-eod', '⏰ EOD: ' + eod.forces_count + '/4 forces — SHORT req +' + (eod.score_adj || 0));
+    html += tipEl('div', 'sig-strip sig-eod', '⏰ EOD: ' + eod.forces_count + '/4 forces — SHORT req +' + (eod.score_adj || 0), 'EOD');
   }
 
   // L1 imbalance bar
@@ -322,16 +375,16 @@ function scalpPanel(sym, info) {
   var total = bsz + asz;
   var bidPct = total ? Math.max(8, Math.round(bsz / total * 100)) : 50;
   var imbCls = imb.state === 'BID_HEAVY' ? 'g' : imb.state === 'ASK_HEAVY' ? 'r' : '';
-  html += el('div', 'imb-bar',
+  html += tipEl('div', 'imb-bar',
     el('div', 'imb-bid', 'B ' + bsz, 'style="width:' + bidPct + '%"') +
-    el('div', 'imb-ask', asz + ' A', 'style="width:' + (100 - bidPct) + '%"')
-  );
+    el('div', 'imb-ask', asz + ' A', 'style="width:' + (100 - bidPct) + '%"'),
+  'B/A');
   html += el('div', 'sc-row',
-    el('span', 'sc-l', 'BID/ASK IMBALANCE') +
+    tipEl('span', 'sc-l', 'BID/ASK IMBALANCE', 'BID/ASK IMBALANCE') +
     el('span', 'sc-v ' + imbCls, (imb.state || '--') + (imb.persist_samples > 1 ? ' x' + imb.persist_samples : ''))
   );
   html += el('div', 'sc-row',
-    el('span', 'sc-l', 'SPREAD') +
+    tipEl('span', 'sc-l', 'SPREAD', 'SPREAD') +
     el('span', 'sc-v ' + (spr.state === 'THIN' ? 'y' : ''), '$' + fmt(spr.value) + ' ' + (spr.state || ''))
   );
 
@@ -341,10 +394,10 @@ function scalpPanel(sym, info) {
     var tCls = w.type === 'CALL_WALL' ? 'wall-type-c' : 'wall-type-p';
     var dCls = w.dist > 0 ? 'wall-dist-up' : 'wall-dist-dn';
     var testKey = '$' + Number(w.level);
-    var testCnt = tests[testKey] ? el('span', 'tests', ' · tested ' + tests[testKey] + 'x') : '';
+    var testCnt = tests[testKey] ? tipEl('span', 'tests', ' · tested ' + tests[testKey] + 'x', 'tested') : '';
     return el('div', 'wall-row' + (atWall ? ' at-wall' : ''),
-      el('span', null, el('span', tCls, w.type === 'CALL_WALL' ? 'CW' : 'PW') + ' $' + w.level +
-        el('span', 'tests', ' (' + (w.oi/1000).toFixed(1) + 'k OI)') + testCnt) +
+      el('span', null, tipEl('span', tCls, w.type === 'CALL_WALL' ? 'CW' : 'PW', w.type === 'CALL_WALL' ? 'CW' : 'PW') + ' $' + w.level +
+        tipEl('span', 'tests', ' (' + (w.oi/1000).toFixed(1) + 'k OI)', 'OI') + testCnt) +
       el('span', dCls, (w.dist > 0 ? '+' : '') + fmt(w.dist))
     );
   }
@@ -388,7 +441,7 @@ function watchBox(algo, score, reqScore) {
   var rows = (w.need || []).map(function(r) { return el('div', 'w-need', '○ ' + r); }).join('') +
     (w['for'] || []).map(function(r) { return el('div', 'w-met', '<b>✓</b> ' + r); }).join('') +
     (w.against || []).map(function(r) { return el('div', 'w-against', '<b>✗</b> ' + r); }).join('');
-  return el('div', 'watch-box' + cls, el('div', 'w-title', title) + rows);
+  return el('div', 'watch-box' + cls, tipEl('div', 'w-title', title, 'WATCH') + rows);
 }
 
 // ─── Symbol card ─────────────────────────────────────────────────────────────
@@ -446,15 +499,15 @@ function symbolCard(sym, info) {
   if (adanos.signal) {
     var sigCls = adanos.signal === 'Buy' ? 'pill pill-bull' : adanos.signal === 'Sell' ? 'pill pill-bear' : 'pill pill-neut';
     sentHTML += el('div', null,
-      el('span', sigCls, adanos.signal + (adanos.conviction ? ' ' + adanos.conviction + '/100' : '')) +
-      (adanos.reddit != null ? el('span', 'pill ' + (adanos.reddit > 50 ? 'pill-bull' : 'pill-bear'), 'Reddit ' + adanos.reddit + '%') : '') +
-      (adanos.x != null ? el('span', 'pill ' + (adanos.x > 50 ? 'pill-bull' : 'pill-bear'), 'X ' + adanos.x + '%') : '') +
-      (adanos.news != null ? el('span', 'pill ' + (adanos.news > 50 ? 'pill-bull' : 'pill-bear'), 'News ' + adanos.news + '%') : '')
+      tipEl('span', sigCls, adanos.signal + (adanos.conviction ? ' ' + adanos.conviction + '/100' : ''), 'Adanos') +
+      (adanos.reddit != null ? tipEl('span', 'pill ' + (adanos.reddit > 50 ? 'pill-bull' : 'pill-bear'), 'Reddit ' + adanos.reddit + '%', 'Reddit') : '') +
+      (adanos.x != null ? tipEl('span', 'pill ' + (adanos.x > 50 ? 'pill-bull' : 'pill-bear'), 'X ' + adanos.x + '%', 'X') : '') +
+      (adanos.news != null ? tipEl('span', 'pill ' + (adanos.news > 50 ? 'pill-bull' : 'pill-bear'), 'News ' + adanos.news + '%', 'News') : '')
     );
   }
   if (ape.bullish_pct != null) {
     sentHTML += el('div', null, el('small', null,
-      'WSB: ' + (ape.mentions || 0) + ' mentions · ' + ape.bullish_pct + '% bullish'
+      tipEl('span', null, 'WSB', 'WSB') + ': ' + (ape.mentions || 0) + ' mentions · ' + ape.bullish_pct + '% bullish'
     ));
   }
 
@@ -462,11 +515,11 @@ function symbolCard(sym, info) {
   var optsHTML = '';
   if (opts.max_pain) {
     optsHTML = el('div', null, el('small', null,
-      'MaxPain: $' + opts.max_pain +
-      ' · GF: $' + (opts.gamma_flip || '--') +
-      ' · CW: $' + (opts.call_wall || '--') +
-      ' · PW: $' + (opts.put_wall || '--') +
-      ' · ' + (opts.imbalance_bias || '')
+      tipEl('span', null, 'MaxPain', 'MaxPain') + ': $' + opts.max_pain +
+      ' · ' + tipEl('span', null, 'GF', 'GF') + ': $' + (opts.gamma_flip || '--') +
+      ' · ' + tipEl('span', null, 'CW', 'CW_DAY') + ': $' + (opts.call_wall || '--') +
+      ' · ' + tipEl('span', null, 'PW', 'PW_DAY') + ': $' + (opts.put_wall || '--') +
+      ' · ' + tipEl('span', null, opts.imbalance_bias || '', 'BIAS')
     ));
   }
 
@@ -536,7 +589,7 @@ function sectorCard() {
     var d = sec[sym];
     var chg = d.chg_pct || 0;
     return el('div', 'sec-item',
-      el('div', 'sec-sym', sym) +
+      tipEl('div', 'sec-sym', sym, sym) +
       el('div', 'sec-chg ' + chgClass(chg), arrow(chg) + fmt(Math.abs(chg), 1) + '%') +
       el('div', null, el('small', null, '$' + fmt(d.price, 0)))
     );
@@ -570,8 +623,8 @@ function alertsCard() {
         el('b', null, a.symbol || '') + ' ' +
         (a.price ? '$' + fmt(a.price) + ' ' : '') +
         (a.entry_quality ? el('span', 'tests', a.entry_quality) : '') +
-        (a.entry ? el('div', null, el('small', null,
-          'E $' + fmt(a.entry) + ' · S $' + fmt(a.stop) + ' · T1 $' + fmt(a.t1) + ' · R:R ' + fmt(a.rr,1))) : '')
+        (a.entry ? el('div', null, tipEl('small', null,
+          'E $' + fmt(a.entry) + ' · S $' + fmt(a.stop) + ' · T1 $' + fmt(a.t1) + ' · R:R ' + fmt(a.rr,1), 'ALERT')) : '')
       )
     );
   }).join('');
@@ -633,6 +686,7 @@ function render() {
 
   document.getElementById('grid').innerHTML = html ||
     el('div', 'card span-full', el('div', 'empty', 'No data — scanner not running'));
+  tipRefresh();
 }
 
 function copyCmd(sym) {
