@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-10-15 16:00:34 ET",
+    "timestamp": "2026-10-15 16:01:05 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -8,7 +8,7 @@
     ],
     "bars_count": {
       "AMD": 310,
-      "TSLA": 318
+      "TSLA": 319
     },
     "signals_gated": true,
     "min_score_req": 5,
@@ -26,7 +26,7 @@
         "src": "Alpaca",
         "data_ts": 1792094407.5,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.6,
+        "bar_age_min": 2.1,
         "volume": 0,
         "session_high": 568.52,
         "session_low": 530.29,
@@ -348,7 +348,7 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-15 16:00:34 ET"
+      "updated_at": "2026-10-15 16:01:04 ET"
     },
     "TSLA": {
       "price": {
@@ -361,7 +361,7 @@
         "src": "Alpaca",
         "data_ts": 1792094429.1,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.6,
+        "bar_age_min": 1.1,
         "volume": 0,
         "session_high": 363.67,
         "session_low": 355.27,
@@ -371,41 +371,33 @@
         "vwap": 359.86,
         "upper": 363.94,
         "lower": 355.78,
-        "slope": 0.0386,
+        "slope": 0.0336,
         "vs_vwap": 2.96,
         "above_vwap": true
       },
       "indicators": {
-        "rsi": 40.1,
-        "macd_hist": -0.0869,
-        "macd_sig": 0.0573,
+        "rsi": 47.3,
+        "macd_hist": -0.0773,
+        "macd_sig": 0.038,
         "macd_dir": "BEARISH",
-        "bb_upper": 363.91,
-        "bb_lower": 362.44,
-        "bb_pct_b": -0.007,
-        "bb_state": "LOWER_TOUCH",
-        "atr": 0.3746,
+        "bb_upper": 363.9,
+        "bb_lower": 362.4,
+        "bb_pct_b": 0.28,
+        "bb_state": "SQUEEZE",
+        "atr": 0.3854,
         "rvol": 1.16
       },
       "obv": {
         "obv_millions": 0.03,
-        "delta_1min": -0.021,
-        "delta_5min": -0.037,
+        "delta_1min": 0.0,
+        "delta_5min": -0.033,
         "divergence": "CONFIRMED",
-        "trend": "\u25bc"
+        "trend": "\u2192"
       },
       "candles": {
-        "single": "MARUBOZU_\ud83d\udd34",
+        "single": "DOJI",
         "multi": "THREE_RED",
         "last3": [
-          {
-            "t": "15:57",
-            "color": "\ud83d\udd34",
-            "o": 363.06,
-            "h": 363.13,
-            "l": 362.89,
-            "c": 363.01
-          },
           {
             "t": "15:58",
             "color": "\ud83d\udd34",
@@ -421,6 +413,14 @@
             "h": 362.86,
             "l": 362.37,
             "c": 362.43
+          },
+          {
+            "t": "16:00",
+            "color": "\ud83d\udfe2",
+            "o": 362.82,
+            "h": 362.82,
+            "l": 362.82,
+            "c": 362.82
           }
         ]
       },
@@ -523,13 +523,13 @@
       },
       "bar_ctx": {
         "bias": "NEUTRAL",
-        "streak": 3,
+        "streak": 1,
         "momentum": 0,
         "vol_state": "EXPANDING",
-        "vol_ratio": 3.15,
+        "vol_ratio": 1.92,
         "bar_score_long": 0,
         "bar_score_short": 0,
-        "summary": "3 consecutive down bars | vol EXPANDING (3.1x) | momentum +0/9",
+        "summary": "1 consecutive up bars | vol EXPANDING (1.9x) | momentum +0/9",
         "bars_analyzed": 10
       },
       "news_ctx": {
@@ -551,7 +551,7 @@
       },
       "regime": {
         "name": "TREND_UP",
-        "note": "ATR compressed to 0.10% on a 2.3% range day",
+        "note": "ATR compressed to 0.11% on a 2.3% range day",
         "score_adj": 1
       },
       "eod": {
@@ -597,46 +597,55 @@
         "level_tests": {
           "$360": 11
         },
-        "climax": null,
-        "momentum_burst": {
-          "dir": "DOWN",
-          "move": -0.63,
-          "note": "3-bar down burst -0.63 w/ rising vol"
-        }
+        "climax": {
+          "type": "SELL_CLIMAX",
+          "note": "SELL_CLIMAX: 20992 vol spike then dry-up -> reversal watch"
+        },
+        "momentum_burst": null
       },
       "algo": {
         "score": 2,
         "required_score": 6,
-        "long_signals": 2,
+        "long_signals": 1,
         "short_signals": 2,
         "checks": {
           "vwap": "BUY_BIAS",
-          "rsi": "NEUTRAL_40",
+          "rsi": "NEUTRAL_47",
           "macd": "BEARISH",
           "obv": "CONFIRMED",
           "options": "OPT_NEUTRAL",
           "nq": "NQ_UNAVAILABLE",
           "sector": "QQQ_FLAT",
-          "bb": "BB_LOWER_TOUCH",
+          "bb": "BB_MID_0.28",
           "bar_ctx": "BARS_NEUTRAL",
           "sentiment": "SENTIMENT_INFO(news +0, MILD_BULL)"
         },
-        "direction": "NEUTRAL",
+        "direction": "SHORT",
         "setup": null,
         "narrative": null,
-        "pattern": "NEUTRAL|TREND_UP|vwap:BUY_BIAS",
+        "pattern": "SHORT|TREND_UP|vwap:BUY_BIAS",
         "pattern_adj": 0,
         "regime_adj": 1,
         "eod_adj": 0,
         "watch": {
-          "dir": "NEUTRAL",
-          "state": "NONE",
+          "dir": "SHORT",
+          "state": "FAR",
           "score": 2,
           "required": 6,
-          "missing": null,
-          "for": [],
-          "against": [],
-          "need": []
+          "missing": 7,
+          "for": [
+            "MACD BEARISH (hist -0.0773)",
+            "OBV confirmed bearish trend"
+          ],
+          "against": [
+            "price $362.82 above VWAP $359.86"
+          ],
+          "need": [
+            "4 more short votes (2/6) -- e.g. upper band $363.82+, bars turning bearish, price below VWAP $359.14",
+            "time window: after 15:30",
+            "1-min ATR $0.39 (needs $0.50)",
+            "entry: price below $361.57 first (no shorts in the top 25% of a 2.3% range day; now at 90%); then short at 30-bar high $363.48-$363.67 / upper band $363.67+ / VWAP retest $359.28-$359.86 (now $362.82)"
+          ]
         },
         "signals_blocked": true,
         "signals_blocked_reason": "after 15:30"
@@ -675,7 +684,7 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-15 16:00:34 ET"
+      "updated_at": "2026-10-15 16:01:05 ET"
     }
   },
   "futures": {
