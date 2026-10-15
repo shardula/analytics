@@ -342,6 +342,7 @@ TIPS.ALERT = "E = entry, S = stop, \u00bd = sell half here (+0.5R) and move the 
 TIPS.SIZE = "Shares for your Risk per trade $ (Config): risk \u00f7 R, rounded down (R = entry-to-stop distance per share), so a stop-out costs about that amount whatever the stop width. Sell the half shown at \u00bd OFF and move the stop on the rest to entry. 1-year replay, \u00bd plan, $278 a trade (the average 100-share risk) vs 100 shares: $12.3k vs $10.5k, worst trade -$278 vs -$663, worst day -$723 vs -$1,049.";
 TIPS.FEEDTIME = "Time (ET) of the last price the scanner got and how old it is now -- red after 2 minutes. 'IBKR' in front: Alpaca's live feed is quiet, so the price is the IBKR gateway's last trade.";
 TIPS.FEED = "IBKR BARS: Alpaca's 1-minute bars stopped, so the scanner is using the IBKR gateway's IEX bars (same exchange) until Alpaca is back. BARS ...m OLD: neither feed has new bars -- indicators are frozen and alerts are held.";
+TIPS.FEEDTIME = "Time (ET) of the last price the scanner got and how old it is now -- red after 2 minutes. 'IBKR' in front: Alpaca's live feed is quiet, so the price is the IBKR gateway's last trade. IBKR DELAYED / FROZEN: the gateway on the laptop isn't getting live prices (usually another IBKR login -- TWS, mobile, browser -- has your live data); the price shown is old and alerts are held.";   // v3.1.10
 function escAttr(s) {
   return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
@@ -695,6 +696,8 @@ function sectorCard() {
 function riskUsd() { var v = +getCfg().risk_usd; return v > 0 ? v : 0; }
 // v3.1.9: the feed's own time on each card (the scanner can push fresh ticks with frozen data)
 function feedTime(pr, info) {
+  if (String(pr.src || '').indexOf('IBKR-') === 0)        // v3.1.10: gateway not live
+    return tipEl('span', 'feed-time old', 'IBKR ' + pr.src.slice(5).toUpperCase() + ' · not live', 'FEEDTIME');
   var ts = +pr.data_ts;
   if (!(ts > 0)) return el('span', null, timeAgo(info.updated_at));
   var age = Math.max(0, Math.round(Date.now() / 1000 - ts)), hms;
