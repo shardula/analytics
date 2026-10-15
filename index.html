@@ -76,6 +76,8 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 .lvls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-top:5px;text-align:center}
 .lvl-label{font-size:10px;color:var(--muted)}.lvl-val{font-weight:bold;font-size:13px}
 .lvl-val.g{color:var(--green)}.lvl-val.r{color:var(--red)}.lvl-val.b{color:var(--blue)}
+.al-size{font-size:11px;color:var(--blue);font-weight:bold;margin-top:2px}
+.sym-row{flex-wrap:wrap;column-gap:10px}.chg-usd{white-space:nowrap}
 .sym-col{display:flex;flex-direction:column;gap:14px;min-width:0}
 .al-card{padding:12px 14px}.al-card .alerts-list{max-height:none;overflow:visible}
 .al-none{color:var(--muted);font-size:12px}.al-old{opacity:.55}
@@ -185,6 +187,9 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
   <label class="cfg-chk"><input type="checkbox" id="cfg-n-visible"> Also while I'm on this page</label>
   <div class="cfg-row"><button class="btn-cancel" onclick="testNotify()">Test</button></div>
   <p class="cfg-note" id="cfg-n-state"></p>
+  <p class="cfg-h">💵 Risk per trade $</p>
+  <input type="number" id="cfg-risk" min="0" step="10" inputmode="decimal" placeholder="blank = off   (e.g. 278)">
+  <p class="cfg-note">Each alert then shows the shares for that risk (risk ÷ R, rounded down) and how many to sell at ½. Saved in this browser.</p>
   <p style="color:var(--muted);font-size:11px;margin-top:8px">Password: change it on the HA machine with <code>python3 secure_dashboard.py --new-password</code></p>
   <div class="cfg-row">
     <button class="btn-save" onclick="saveCfg()">Save</button>
@@ -260,6 +265,7 @@ function openCfg() {
   document.getElementById('cfg-syms').value = (cfg.symbols || []).join('\n');
   var nc = notifyCfg();
   NOTIFY_KEYS.forEach(function(k) { document.getElementById('cfg-n-' + k).checked = nc[k]; });
+  document.getElementById('cfg-risk').value = riskUsd() || '';
   notifyState();
   document.getElementById('cfg-panel').style.display = 'block';
   document.getElementById('overlay').style.display = 'block';
@@ -275,6 +281,8 @@ function saveCfg() {
   cfg.symbols = syms;
   cfg.notify = {};
   NOTIFY_KEYS.forEach(function(k) { cfg.notify[k] = document.getElementById('cfg-n-' + k).checked; });
+  var rk = parseFloat(document.getElementById('cfg-risk').value);
+  cfg.risk_usd = rk > 0 ? Math.round(rk * 100) / 100 : null;     // v3.1.8
   unlockAudio();
   if ((cfg.notify.alerts || cfg.notify.half) && permState() === 'default')
     Notification.requestPermission().then(bellLabel, bellLabel);
@@ -328,6 +336,7 @@ TIPS.DAY = "Today's high (H) and low (L) from the scanner's 1-minute bars -- can
 TIPS.HALF = "R = the distance from entry to the stop -- your risk per share. \u00bd OFF = entry + half of R in your favour (+0.5R). When price gets there, sell half and move the stop on the rest to your entry price: from then on the trade can't lose. The rest goes to T1 (1.25R) or closes at entry. 1-year replay: 75% of alerts profitable vs 61% taking everything off at T1, but about a third less profit (+0.20R vs +0.28R a trade).";
 TIPS.EXITS = "Every finished alert in the scanner's journal, scored two ways. \u00bd plan: half off at +0.5R, stop moved to entry, rest at T1. All out: everything at T1 or the stop. Both close at market after 40 minutes. Uses the scanner's 1-minute IEX bars.";
 TIPS.ALERT = "E = entry, S = stop, \u00bd = sell half here (+0.5R) and move the stop to your entry, T1 = target for the rest (1.25\u00d7 the risk), R:R = reward-to-risk at T1. The line below follows the alert live: when +0.5R prints it says so; when the alert finishes it shows the result both ways.";
+TIPS.SIZE = "Shares for your Risk per trade $ (Config): risk \u00f7 R, rounded down (R = entry-to-stop distance per share), so a stop-out costs about that amount whatever the stop width. Sell the half shown at \u00bd OFF and move the stop on the rest to entry. 1-year replay, \u00bd plan, $278 a trade (the average 100-share risk) vs 100 shares: $12.3k vs $10.5k, worst trade -$278 vs -$663, worst day -$723 vs -$1,049.";
 function escAttr(s) {
   return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
@@ -548,6 +557,7 @@ function symbolCard(sym, info) {
         el('div', null, el('div', 'lvl-label', 'T2') + el('div', 'lvl-val g', '$' + fmt(setup.t2)))
       ) +
       el('div', null, tipEl('small', null, 'R $' + fmt(setup.stop_dist) + ' · R:R ' + fmt(setup.rr, 2) + ':1 · at ½ OFF sell half, stop → $' + fmt(setup.entry), 'HALF')) +
+      sizeLine(setup.entry, setup.stop) +
       '<button class="copy-btn" onclick="copyCmd(\'' + sym + '\')">📋 &quot;' + sym + ' check&quot; → Claude</button>'
     );
   } else {
@@ -624,7 +634,7 @@ function symbolCard(sym, info) {
     ) +
     el('div', 'sym-row',
       el('span', 'price-big', '$' + fmt(price)) +
-      el('span', chgClass(chgPct), arrow(chgPct) + ' ' + fmt(Math.abs(chgPct), 2) + '%')
+      el('span', chgClass(chgPct), dayChgTxt(pr, price, chgPct))
     ) +
     dayRange(pr, price) +
     scalpPanel(sym, info) +
@@ -676,6 +686,31 @@ function sectorCard() {
 }
 
 // ─── Alerts card ─────────────────────────────────────────────────────────────
+// v3.1.8: shares for a fixed $ risk per trade (Config -> Risk per trade $) + the day's change in $
+function riskUsd() { var v = +getCfg().risk_usd; return v > 0 ? v : 0; }
+function sizeFor(entry, stop) {
+  var risk = riskUsd(), R = Math.abs(entry - stop);
+  if (!risk || !(R > 0)) return null;
+  var sh = Math.floor(risk / R + 1e-9);
+  return sh >= 1 ? {sh: sh, usd: sh * R, half: Math.ceil(sh / 2)} : null;
+}
+function sizeLine(entry, stop) {
+  var z = sizeFor(entry, stop);
+  return z ? tipEl('div', 'al-size', z.sh + ' sh = $' + fmt(z.usd, 0) + ' risk · sell ' + z.half + ' at ½', 'SIZE') : '';
+}
+function usdOf(a, r) {
+  var z = sizeFor(a.entry, a.stop);
+  if (!z || r === undefined || r === null) return '';
+  var v = Math.round(r * z.usd);
+  return ' = ' + (v < 0 ? '-' : '+') + '$' + Math.abs(v);
+}
+function dayChgTxt(pr, price, pct) {
+  var pc = +pr.prior_close, usd = null;
+  if (pc > 0 && price > 0) usd = price - pc;
+  else if (price > 0 && pct) usd = price - price / (1 + pct / 100);
+  return arrow(pct) + ' ' + (usd !== null ? el('span', 'chg-usd', '$' + fmt(Math.abs(usd), 2)) + ' · ' : '') +
+         fmt(Math.abs(pct), 2) + '%';
+}
 // v3.1.6: live status of the half-off plan on each alert
 function alertStatus(a) {
   if (!a || !a.entry) return '';
@@ -685,9 +720,9 @@ function alertStatus(a) {
   var res = a.outcome === 'WIN' ? 'T1 hit' : a.outcome === 'LOSS' ? 'stopped' :
             a.outcome === 'EXPIRED' ? '40-min exit' : '';
   if (a.outcome && a.r_half !== undefined && a.r_half !== null)
-    return el('div', 'al-status done', res + ' · all-out ' + R(a.r) + ' · ½ plan ' + R(a.r_half));
+    return el('div', 'al-status done', res + ' · all-out ' + R(a.r) + ' · ½ plan ' + R(a.r_half) + usdOf(a, a.r_half));
   if (a.be_t)
-    return el('div', 'al-status done', '½ sold ' + a.half_t + ' · rest out at entry ' + a.be_t + ' (≈ +0.25R)');
+    return el('div', 'al-status done', '½ sold ' + a.half_t + ' · rest out at entry ' + a.be_t + ' (≈ +0.25R' + usdOf(a, 0.25) + ')');
   if (a.half_t)
     return el('div', 'al-status go', '½ hit ' + a.half_t + ' → sell half, move stop to $' + fmt(a.entry));
   if (a.outcome) return el('div', 'al-status done', res + (a.r !== undefined ? ' · ' + R(a.r) : ''));
@@ -725,6 +760,7 @@ function alertsCard(sym) {
         (a.entry ? el('div', null, tipEl('small', null,
           'E $' + fmt(a.entry) + ' · S $' + fmt(a.stop) + (a.half ? ' · ½ $' + fmt(a.half) : '') +
           ' · T1 $' + fmt(a.t1) + ' · R:R ' + fmt(a.rr,2), 'ALERT')) : '') +
+        (old || a.outcome || a.be_t ? '' : sizeLine(a.entry, a.stop)) +
         alertStatus(a)
       )
     );
@@ -866,11 +902,14 @@ window.addEventListener('focus', stopFlash);
 document.addEventListener('visibilitychange', function() { if (watching()) stopFlash(); });
 function alertKey(a) { return [a.date || '', a.time, a.symbol, a.type].join('|'); }
 function notifyText(kind, a) {
+  var z = sizeFor(a.entry, a.stop);                 // v3.1.8: shares at your Risk per trade $
   if (kind === 'half')
     return [a.symbol + ' ' + a.type + ': ½ hit ' + (a.half_t || ''),
-            'Sell half at $' + fmt(a.half) + ', move the stop on the rest to entry $' + fmt(a.entry) + ' · T1 $' + fmt(a.t1)];
-  return [a.symbol + ' ' + a.type + ' alert @ $' + fmt(a.entry),
+            'Sell ' + (z ? z.half + ' sh' : 'half') + ' at $' + fmt(a.half) + ', move the stop on the rest to entry $' +
+            fmt(a.entry) + ' · T1 $' + fmt(a.t1)];
+  return [a.symbol + ' ' + a.type + ' alert @ $' + fmt(a.entry) + (z ? ' · ' + z.sh + ' sh' : ''),
           'Stop $' + fmt(a.stop) + (a.half ? ' · ½ $' + fmt(a.half) : '') + ' · T1 $' + fmt(a.t1) +
+          (z ? ' · risk $' + fmt(z.usd, 0) : '') +
           (a.score ? ' · score ' + a.score + '/' + (a.required_score || '?') : '')];
 }
 function fireNotify(kind, a, force) {
