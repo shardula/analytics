@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-10-15 10:38:07 ET",
+    "timestamp": "2026-10-15 10:38:36 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -17,12 +17,12 @@
   "symbols": {
     "AMD": {
       "price": {
-        "last": 537.39,
-        "bid": 537.09,
+        "last": 538.08,
+        "bid": 537.47,
         "ask": 548.88,
-        "spread": 11.79,
-        "chg_pct": -5.86,
-        "volume": 9574692,
+        "spread": 11.41,
+        "chg_pct": -5.74,
+        "volume": 9658221,
         "session_high": 550.54,
         "session_low": 530.29,
         "session_mid": 540.42
@@ -32,8 +32,8 @@
         "upper": 545.0,
         "lower": 531.1,
         "slope": 0.003,
-        "vs_vwap": -0.66,
-        "above_vwap": false
+        "vs_vwap": 0.03,
+        "above_vwap": true
       },
       "indicators": {
         "rsi": 46.9,
@@ -157,10 +157,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -12.61,
+        "max_pain_dist": -11.92,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 62.61,
-        "put_wall_dist": 37.39,
+        "call_wall_dist": 61.92,
+        "put_wall_dist": 38.08,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.07,
         "bias": "SHORT",
@@ -171,16 +171,16 @@
           "call_wall": 600.0,
           "put_wall": 500.0,
           "gamma_flip": 450.0,
-          "current": 537.39,
+          "current": 538.08,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
-          "Call Wall $600.0 ($63 above)",
-          "Put Wall $500.0 ($37 below)",
+          "Call Wall $600.0 ($62 above)",
+          "Put Wall $500.0 ($38 below)",
           "Above gamma flip $450.0 -> long gamma, MM stabilizing",
           "Put imbalance -33% -> put pressure ceiling"
         ],
-        "summary": "Call Wall $600.0 ($63 above) | Put Wall $500.0 ($37 below) | Above gamma flip $450.0 -> long gamma, MM stabilizing | Put imbalance -33% -> put pressure ceiling"
+        "summary": "Call Wall $600.0 ($62 above) | Put Wall $500.0 ($38 below) | Above gamma flip $450.0 -> long gamma, MM stabilizing | Put imbalance -33% -> put pressure ceiling"
       },
       "bar_ctx": {
         "bias": "BEARISH",
@@ -216,7 +216,7 @@
       },
       "regime": {
         "name": "POST_SELLOFF_CHOP",
-        "note": "Day -5.9%, price 36% off low -- mean-reverting chop; counter-trend entries need a level",
+        "note": "Day -5.7%, price 36% off low -- mean-reverting chop; counter-trend entries need a level",
         "score_adj": 1
       },
       "eod": {
@@ -224,35 +224,36 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 200.0,
+          "bid_size": 400.0,
           "ask_size": 100.0,
-          "ratio": 2.0,
-          "state": "BALANCED",
-          "persist_samples": 0,
+          "ratio": 4.0,
+          "state": "BID_HEAVY",
+          "persist_samples": 1,
           "signal": null
         },
         "spread": {
-          "value": 0.23,
-          "state": "NORMAL"
+          "value": 0.69,
+          "state": "THIN"
         },
         "levels": {
           "nearest": {
             "level": 540.0,
             "type": "CALL_WALL",
             "oi": 3418.0,
-            "dist": 2.61
+            "dist": 1.92
           },
           "next": {
             "level": 540.0,
             "type": "PUT_WALL",
             "oi": 3811.0,
-            "dist": 2.61
+            "dist": 1.92
           },
           "at_wall": false,
           "signal": null
         },
         "level_tests": {
           "$540": 11,
+          "$545": 2,
           "$530": 1
         },
         "climax": null,
@@ -261,10 +262,10 @@
       "algo": {
         "score": 5,
         "required_score": 5,
-        "long_signals": 0,
+        "long_signals": 1,
         "short_signals": 5,
         "checks": {
-          "vwap": "NEUTRAL",
+          "vwap": "BUY_BIAS_RETEST",
           "rsi": "NEUTRAL_47",
           "macd": "BEARISH_CROSS",
           "obv": "BEARISH_DIV",
@@ -276,57 +277,32 @@
           "sentiment": "SENTIMENT_INFO(news +0, NEUTRAL)"
         },
         "direction": "SHORT",
-        "setup": {
-          "direction": "SHORT",
-          "entry": 537.39,
-          "stop": 541.85,
-          "t1": 531.82,
-          "t2": 524.02,
-          "rr": 1.25,
-          "half": 535.16,
-          "stop_dist": 4.46,
-          "atr": 1.2879
-        },
-        "narrative": {
-          "recommendation": "SHORT (MEDIUM CONFIDENCE)",
-          "confidence": "MEDIUM",
-          "score": "5/10",
-          "regime": "POST_SELLOFF_CHOP",
-          "explanation": "SHORT -- 5 aligned factors. Entry $537.39, stop $541.85, T1 $531.82, T2 $524.02 (R/R 1.25). Half off at $535.16 (+0.5R), then stop to entry.",
-          "key_factors": [
-            "MACD BEARISH_CROSS (hist -0.0300)",
-            "OBV bearish divergence",
-            "Call Wall $600.0 ($63 above) | Put Wall $500.0 ($37 below) | Above gamma flip $450.0 -> long gamma, MM stabilizing | Put imbalance -33% -> put pressure ceiling",
-            "SOXX -3.4% QQQ -1.2% falling",
-            "Entry quality: VWAP reject",
-            "Options: Call Wall $600.0 ($63 above)",
-            "Bars: 4 consecutive down bars | vol EXPANDING (1.4x) | momentum -3/9",
-            "News (5): NEUTRAL",
-            "Sentiment: Adanos Hold 71/100 | WSB 70 mentions 63% bull | Insider MSPR -91.0 (20"
-          ],
-          "warnings": [
-            "Regime POST_SELLOFF_CHOP: Day -5.9%, price 36% off low -- mean-reverting chop; counter-trend entries need a level"
-          ]
-        },
-        "pattern": "SHORT|POST_SELLOFF_CHOP|macd:BEARISH_CROSS",
+        "setup": null,
+        "narrative": null,
+        "pattern": "SHORT|POST_SELLOFF_CHOP|vwap:BUY_BIAS_RETEST",
         "pattern_adj": 0,
         "regime_adj": 1,
         "eod_adj": 0,
         "watch": {
           "dir": "SHORT",
-          "state": "SETUP",
+          "state": "WATCH",
           "score": 5,
           "required": 5,
-          "missing": 0,
+          "missing": 2,
           "for": [
             "MACD BEARISH_CROSS (hist -0.0300)",
             "OBV bearish divergence",
-            "Call Wall $600.0 ($63 above) | Put Wall $500.0 ($37 below) | Above gamma flip $450.0 -> lo",
-            "SOXX -3.4% QQQ -1.2% falling",
+            "Call Wall $600.0 ($62 above) | Put Wall $500.0 ($38 below) | Above gamma flip $450.0 -> lo",
+            "SOXX -3.2% QQQ -1.1% falling",
             "Bars: 4 consecutive down bars | vol EXPANDING (1.4x) | momentum -3/9"
           ],
-          "against": [],
-          "need": []
+          "against": [
+            "price $538.08 holding rising VWAP $538.05"
+          ],
+          "need": [
+            "cooldown after a recent alert",
+            "entry: short at 30-bar high $541.81-$542.45 / upper band $539.49+ / VWAP retest $536.12-$538.05 (now $538.08)"
+          ]
         },
         "signals_blocked": false,
         "signals_blocked_reason": null
@@ -391,16 +367,16 @@
           "time": "08:47"
         }
       ],
-      "updated_at": "2026-10-15 10:38:06 ET"
+      "updated_at": "2026-10-15 10:38:36 ET"
     },
     "TSLA": {
       "price": {
-        "last": 358.54,
-        "bid": 356.58,
-        "ask": 363.96,
-        "spread": 7.38,
-        "chg_pct": -2.35,
-        "volume": 7803010,
+        "last": 359.18,
+        "bid": 357.84,
+        "ask": 359.29,
+        "spread": 1.45,
+        "chg_pct": -2.17,
+        "volume": 7827285,
         "session_high": 360.49,
         "session_low": 355.27,
         "session_mid": 357.88
@@ -410,7 +386,7 @@
         "upper": 359.88,
         "lower": 354.88,
         "slope": 0.0038,
-        "vs_vwap": 1.16,
+        "vs_vwap": 1.8,
         "above_vwap": true
       },
       "indicators": {
@@ -535,10 +511,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -11.46,
+        "max_pain_dist": -10.82,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 41.46,
-        "put_wall_dist": 18.54,
+        "call_wall_dist": 40.82,
+        "put_wall_dist": 19.18,
         "gamma_regime": "SHORT_GAMMA",
         "pc_ratio": 0.95,
         "bias": "SHORT",
@@ -549,7 +525,7 @@
           "call_wall": 400.0,
           "put_wall": 340.0,
           "gamma_flip": 372.5,
-          "current": 358.54,
+          "current": 359.18,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
@@ -602,15 +578,15 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 80.0,
-          "ask_size": 240.0,
-          "ratio": 0.33,
+          "bid_size": 40.0,
+          "ask_size": 40.0,
+          "ratio": 1.0,
           "state": "BALANCED",
           "persist_samples": 0,
           "signal": null
         },
         "spread": {
-          "value": 0.07,
+          "value": 0.09,
           "state": "NORMAL"
         },
         "levels": {
@@ -618,13 +594,13 @@
             "level": 360.0,
             "type": "CALL_WALL",
             "oi": 7211.0,
-            "dist": 1.46
+            "dist": 0.82
           },
           "next": {
             "level": 360.0,
             "type": "PUT_WALL",
             "oi": 12965.0,
-            "dist": 1.46
+            "dist": 0.82
           },
           "at_wall": false,
           "signal": null
@@ -666,20 +642,20 @@
           "required": 4,
           "missing": 3,
           "for": [
-            "price $358.54 above VWAP $357.38",
+            "price $359.18 above VWAP $357.38",
             "MACD BULLISH (hist +0.1387)",
             "OBV confirmed bullish trend",
             "Bars: 1 consecutive up bars | vol FADING (0.6x) | momentum +2/9"
           ],
           "against": [
             "Call Wall $400.0 ($41 above) | Put Wall $340.0 ($19 below) | Below gamma flip $372.5 -> sh",
-            "QQQ -1.2% falling",
+            "QQQ -1.1% falling",
             "BB upper touch (0.98)"
           ],
           "need": [
             "3 votes against (max 2)",
             "cooldown after a recent alert",
-            "entry: long at 30-bar low $355.61-$355.89 / lower band $356.57 or below / VWAP hold $357.38-$357.94 (now $358.54)"
+            "entry: long at 30-bar low $355.61-$355.89 / lower band $356.57 or below / VWAP hold $357.38-$357.94 (now $359.18)"
           ]
         },
         "signals_blocked": false,
@@ -735,7 +711,7 @@
           "time": "08:45"
         }
       ],
-      "updated_at": "2026-10-15 10:38:07 ET"
+      "updated_at": "2026-10-15 10:38:36 ET"
     }
   },
   "futures": {
@@ -745,24 +721,24 @@
   },
   "sector": {
     "SOXX": {
-      "price": 501.61,
-      "chg_pct": -3.43
+      "price": 502.78,
+      "chg_pct": -3.2
     },
     "SMH": {
-      "price": 547.33,
-      "chg_pct": -3.08
+      "price": 548.28,
+      "chg_pct": -2.91
     },
     "QQQ": {
-      "price": 720.13,
-      "chg_pct": -1.21
+      "price": 720.83,
+      "chg_pct": -1.11
     },
     "SPY": {
-      "price": 767.25,
-      "chg_pct": -0.31
+      "price": 767.61,
+      "chg_pct": -0.26
     },
     "VIX": {
-      "price": 17.43,
-      "chg_pct": 3.32
+      "price": 17.44,
+      "chg_pct": 3.38
     }
   },
   "macro": {
