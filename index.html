@@ -77,6 +77,9 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 .lvl-label{font-size:10px;color:var(--muted)}.lvl-val{font-weight:bold;font-size:13px}
 .lvl-val.g{color:var(--green)}.lvl-val.r{color:var(--red)}.lvl-val.b{color:var(--blue)}
 .al-size{font-size:11px;color:var(--blue);font-weight:bold;margin-top:2px}
+.feed-tag{font-size:10px;font-weight:bold;padding:1px 6px;border-radius:4px;margin-left:8px;letter-spacing:.5px}
+.feed-tag.ib,.feed-time.ib{color:var(--yellow)}.feed-tag.ib{background:rgba(210,153,34,.15)}
+.feed-tag.old{color:var(--red);background:rgba(248,81,73,.15)}.feed-time.old{color:var(--red);font-weight:bold}
 .sym-row{flex-wrap:wrap;column-gap:10px}.chg-usd{white-space:nowrap}
 .sym-col{display:flex;flex-direction:column;gap:14px;min-width:0}
 .al-card{padding:12px 14px}.al-card .alerts-list{max-height:none;overflow:visible}
@@ -337,6 +340,8 @@ TIPS.HALF = "R = the distance from entry to the stop -- your risk per share. \u0
 TIPS.EXITS = "Every finished alert in the scanner's journal, scored two ways. \u00bd plan: half off at +0.5R, stop moved to entry, rest at T1. All out: everything at T1 or the stop. Both close at market after 40 minutes. Uses the scanner's 1-minute IEX bars.";
 TIPS.ALERT = "E = entry, S = stop, \u00bd = sell half here (+0.5R) and move the stop to your entry, T1 = target for the rest (1.25\u00d7 the risk), R:R = reward-to-risk at T1. The line below follows the alert live: when +0.5R prints it says so; when the alert finishes it shows the result both ways.";
 TIPS.SIZE = "Shares for your Risk per trade $ (Config): risk \u00f7 R, rounded down (R = entry-to-stop distance per share), so a stop-out costs about that amount whatever the stop width. Sell the half shown at \u00bd OFF and move the stop on the rest to entry. 1-year replay, \u00bd plan, $278 a trade (the average 100-share risk) vs 100 shares: $12.3k vs $10.5k, worst trade -$278 vs -$663, worst day -$723 vs -$1,049.";
+TIPS.FEEDTIME = "Time (ET) of the last price the scanner got and how old it is now -- red after 2 minutes. 'IBKR' in front: Alpaca's live feed is quiet, so the price is the IBKR gateway's last trade.";
+TIPS.FEED = "IBKR BARS: Alpaca's 1-minute bars stopped, so the scanner is using the IBKR gateway's IEX bars (same exchange) until Alpaca is back. BARS ...m OLD: neither feed has new bars -- indicators are frozen and alerts are held.";
 function escAttr(s) {
   return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
@@ -623,14 +628,14 @@ function symbolCard(sym, info) {
 
   return el('div', cardCls,
     el('div', 'card-hdr',
-      el('span', null, sym) +
+      el('span', null, sym + feedTag(pr)) +
       (function(){
         var sess = info.session || (data.meta && data.meta.session) || '';
         var tag = sess === 'AH'  ? el('span','sess-tag sess-ah','AH CLOSE') :
                   sess === 'PRE' ? el('span','sess-tag sess-pre','PRE') : '';
         return tag;
       })() +
-      el('span', null, timeAgo(info.updated_at))
+      feedTime(pr, info)
     ) +
     el('div', 'sym-row',
       el('span', 'price-big', '$' + fmt(price)) +
@@ -688,6 +693,25 @@ function sectorCard() {
 // ─── Alerts card ─────────────────────────────────────────────────────────────
 // v3.1.8: shares for a fixed $ risk per trade (Config -> Risk per trade $) + the day's change in $
 function riskUsd() { var v = +getCfg().risk_usd; return v > 0 ? v : 0; }
+// v3.1.9: the feed's own time on each card (the scanner can push fresh ticks with frozen data)
+function feedTime(pr, info) {
+  var ts = +pr.data_ts;
+  if (!(ts > 0)) return el('span', null, timeAgo(info.updated_at));
+  var age = Math.max(0, Math.round(Date.now() / 1000 - ts)), hms;
+  try {
+    hms = new Date(ts * 1000).toLocaleTimeString('en-US', {timeZone: 'America/New_York', hourCycle: 'h23',
+                                                         hour: '2-digit', minute: '2-digit', second: '2-digit'});
+  } catch (e) { hms = new Date(ts * 1000).toTimeString().slice(0, 8); }
+  var ago = age < 60 ? age + 's' : age < 3600 ? Math.round(age / 60) + 'm' : Math.round(age / 3600) + 'h';
+  var cls = 'feed-time' + (age > 120 ? ' old' : pr.src === 'IBKR' ? ' ib' : '');
+  return tipEl('span', cls, (pr.src === 'IBKR' ? 'IBKR ' : '') + hms + ' · ' + ago + (age > 120 ? ' old' : ''), 'FEEDTIME');
+}
+function feedTag(pr) {
+  var age = +pr.bar_age_min;
+  if (age > 4) return tipEl('span', 'feed-tag old', 'BARS ' + Math.round(age) + 'm OLD', 'FEED');
+  if (pr.bars_src === 'IBKR') return tipEl('span', 'feed-tag ib', 'IBKR BARS', 'FEED');
+  return '';
+}
 function sizeFor(entry, stop) {
   var risk = riskUsd(), R = Math.abs(entry - stop);
   if (!risk || !(R > 0)) return null;
