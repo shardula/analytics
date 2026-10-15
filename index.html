@@ -76,6 +76,20 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 .lvls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-top:5px;text-align:center}
 .lvl-label{font-size:10px;color:var(--muted)}.lvl-val{font-weight:bold;font-size:13px}
 .lvl-val.g{color:var(--green)}.lvl-val.r{color:var(--red)}.lvl-val.b{color:var(--blue)}
+.sym-col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.al-card{padding:12px 14px}.al-card .alerts-list{max-height:none;overflow:visible}
+.al-none{color:var(--muted);font-size:12px}.al-old{opacity:.55}
+.card.al-live-long{border-color:var(--green);box-shadow:0 0 0 1px var(--green)}
+.card.al-live-short{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
+.card.al-new{animation:alnew 1.2s ease-in-out infinite}
+@keyframes alnew{0%,100%{box-shadow:0 0 0 1px var(--yellow)}50%{box-shadow:0 0 0 5px rgba(210,153,34,.55)}}
+.journal-card{padding:10px 14px}
+.cfg-panel{max-height:90vh;overflow-y:auto;max-width:calc(100vw - 24px)}
+.cfg-h{color:var(--blue);font-size:12px;margin:14px 0 4px}
+.cfg-chk{display:flex;align-items:center;gap:6px;font-size:12px;margin:5px 0;cursor:pointer}
+.cfg-panel .cfg-chk input{width:auto;margin:0}
+.cfg-note{color:var(--muted);font-size:11px;margin-top:6px}
+.bell-btn.need{border-color:var(--yellow);color:var(--yellow)}
 .lvls.lvls5{grid-template-columns:repeat(5,1fr)}.lvls5 .lvl-val{font-size:12px}.lvl-val.y{color:var(--yellow)}
 .al-status{font-size:11px;color:var(--muted);margin-top:2px}.al-status.go{color:var(--yellow);font-weight:bold}.al-status.done{color:var(--text)}
 .ec-line{padding:4px 0 2px;color:var(--muted)}
@@ -150,6 +164,7 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
     <span id="mkt-status"><span class="dot off"></span>LOADING</span>
     <span id="last-upd" style="color:var(--muted)">--</span>
     <span style="color:var(--muted)">↻<span id="cd">60</span>s</span>
+    <button class="cfg-btn bell-btn" id="bell-btn" onclick="bellClick()">🔔</button>
     <button class="cfg-btn" onclick="openCfg()">⚙ Config</button>
   </div>
 </header>
@@ -163,6 +178,13 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
   <h3>⚙ Config</h3>
   <p style="color:var(--muted);font-size:11px;margin-bottom:6px">Filter symbols (one per line). Must exist in WATCHLIST in my_analytics.py. Leave blank to show all.</p>
   <textarea id="cfg-syms"></textarea>
+  <p class="cfg-h">🔔 When an alert comes in and you're not on this page</p>
+  <label class="cfg-chk"><input type="checkbox" id="cfg-n-alerts"> New alert: pop-up</label>
+  <label class="cfg-chk"><input type="checkbox" id="cfg-n-half"> ½ hit (sell half, stop to entry): pop-up</label>
+  <label class="cfg-chk"><input type="checkbox" id="cfg-n-sound"> Sound</label>
+  <label class="cfg-chk"><input type="checkbox" id="cfg-n-visible"> Also while I'm on this page</label>
+  <div class="cfg-row"><button class="btn-cancel" onclick="testNotify()">Test</button></div>
+  <p class="cfg-note" id="cfg-n-state"></p>
   <p style="color:var(--muted);font-size:11px;margin-top:8px">Password: change it on the HA machine with <code>python3 secure_dashboard.py --new-password</code></p>
   <div class="cfg-row">
     <button class="btn-save" onclick="saveCfg()">Save</button>
@@ -236,6 +258,9 @@ function getCfg() {
 function openCfg() {
   var cfg = getCfg();
   document.getElementById('cfg-syms').value = (cfg.symbols || []).join('\n');
+  var nc = notifyCfg();
+  NOTIFY_KEYS.forEach(function(k) { document.getElementById('cfg-n-' + k).checked = nc[k]; });
+  notifyState();
   document.getElementById('cfg-panel').style.display = 'block';
   document.getElementById('overlay').style.display = 'block';
 }
@@ -248,6 +273,11 @@ function saveCfg() {
     .split('\n').map(function(s) { return s.trim().toUpperCase(); }).filter(Boolean);
   var cfg = getCfg();
   cfg.symbols = syms;
+  cfg.notify = {};
+  NOTIFY_KEYS.forEach(function(k) { cfg.notify[k] = document.getElementById('cfg-n-' + k).checked; });
+  unlockAudio();
+  if ((cfg.notify.alerts || cfg.notify.half) && permState() === 'default')
+    Notification.requestPermission().then(bellLabel, bellLabel);
   localStorage.setItem('_tdcfg', JSON.stringify(cfg));
   closeCfg();
   loadData();
@@ -672,15 +702,24 @@ function exitCompareLine() {
   return el('div', 'ec-line', tipEl('small', null, txt, 'EXITS'));
 }
 
-function alertsCard() {
-  var alerts = data.alerts || [];
-  var items = alerts.slice(0, 20).map(function(a) {
+// v3.1.7: one alerts card per symbol, on top of that symbol's column
+function alertAgeMin(a) {
+  var ts = data.meta && data.meta.timestamp ? String(data.meta.timestamp) : '';
+  if (!a.time || ts.length < 16 || (a.date && a.date !== ts.slice(0, 10))) return null;
+  var p = a.time.split(':'), q = ts.slice(11, 16).split(':');
+  return (+q[0] * 60 + +q[1]) - (+p[0] * 60 + +p[1]);
+}
+function alertsCard(sym) {
+  var today = data.meta && data.meta.timestamp ? String(data.meta.timestamp).slice(0, 10) : '';
+  var mine = (data.alerts || []).filter(function(a) { return a.symbol === sym; });
+  var nToday = mine.filter(function(a) { return !a.date || !today || a.date === today; }).length;
+  var items = mine.slice(0, 5).map(function(a) {
+    var old = !!(a.date && today && a.date !== today);
     var badgeCls = a.type === 'LONG' ? 'badge-long' : 'badge-short';
-    return el('div', 'al',
-      el('span', 'al-time', a.time || '--') +
+    return el('div', 'al' + (old ? ' al-old' : ''),
+      el('span', 'al-time', (old ? a.date.slice(5) + ' ' : '') + (a.time || '--')) +
       el('div', null,
         el('span', badgeCls, a.type) + ' ' +
-        el('b', null, a.symbol || '') + ' ' +
         (a.price ? '$' + fmt(a.price) + ' ' : '') +
         (a.entry_quality ? el('span', 'tests', a.entry_quality) : '') +
         (a.entry ? el('div', null, tipEl('small', null,
@@ -690,13 +729,18 @@ function alertsCard() {
       )
     );
   }).join('');
-  return el('div', 'card',
-    el('div', 'card-hdr',
-      el('span', null, 'ALERTS') + el('span', null, String(alerts.length))
-    ) +
-    exitCompareLine() +
-    el('div', 'alerts-list', items || el('div', 'empty', 'No alerts yet'))
+  var top = mine[0], age = top ? alertAgeMin(top) : null;
+  var live = !!(top && age !== null && age >= 0 && !top.outcome && !top.be_t);
+  var cls = 'card al-card' + (live ? (top.type === 'LONG' ? ' al-live-long' : ' al-live-short') : '') +
+            (live && age <= 5 ? ' al-new' : '');
+  return el('div', cls,
+    el('div', 'card-hdr', el('span', null, sym + ' ALERTS') + el('span', null, nToday + ' today')) +
+    (items ? el('div', 'alerts-list', items) : el('div', 'al-none', 'No ' + sym + ' alerts yet today'))
   );
+}
+function journalCard() {
+  var line = exitCompareLine();
+  return line ? el('div', 'card span-full journal-card', el('div', 'card-hdr', 'ALERT JOURNAL') + line) : '';
 }
 
 // ─── Render ──────────────────────────────────────────────────────────────────
@@ -713,10 +757,10 @@ function render() {
   var html = '';
   Object.keys(symbols).forEach(function(sym) {
     if (filter.length && filter.indexOf(sym) === -1) return;
-    html += symbolCard(sym, symbols[sym]);
+    html += el('div', 'sym-col', alertsCard(sym) + symbolCard(sym, symbols[sym]));   // v3.1.7
   });
-  html += sectorCard();
-  html += alertsCard();
+  html += el('div', 'span-full', sectorCard());
+  html += journalCard();
 
   // Health check — stale detection with session awareness
   var banner = document.getElementById('stale-banner');
@@ -750,6 +794,8 @@ function render() {
   document.getElementById('grid').innerHTML = html ||
     el('div', 'card span-full', el('div', 'empty', 'No data — scanner not running'));
   tipRefresh();
+  checkNotify();     // v3.1.7
+  bellLabel();
 }
 
 function copyCmd(sym) {
@@ -761,6 +807,133 @@ function copyCmd(sym) {
   } else {
     prompt('Copy this:', text);
   }
+}
+
+// ─── v3.1.7: alert notifications (pop-up / sound / tab title) when you're not looking ───
+var NOTIFY_KEYS = ['alerts', 'half', 'sound', 'visible'];
+var NOTIFY_DEFAULT = {alerts: true, half: true, sound: true, visible: false};
+function notifyCfg() {
+  var n = getCfg().notify || {}, out = {};
+  NOTIFY_KEYS.forEach(function(k) { out[k] = n[k] === undefined ? NOTIFY_DEFAULT[k] : !!n[k]; });
+  return out;
+}
+var notifySeen = null, audioCtx = null, baseTitle = document.title, flashTimer = null;
+function unlockAudio() {
+  try {
+    if (!audioCtx) { var AC = window.AudioContext || window.webkitAudioContext; if (AC) audioCtx = new AC(); }
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  } catch (e) {}
+}
+['click', 'keydown', 'touchstart'].forEach(function(ev) { document.addEventListener(ev, unlockAudio, true); });
+function beep(kind) {
+  if (!audioCtx) return;
+  try {
+    var t0 = audioCtx.currentTime + 0.02, notes = kind === 'half' ? [660, 990] : [880, 660, 880];
+    notes.forEach(function(f, i) {
+      var o = audioCtx.createOscillator(), g = audioCtx.createGain(), t = t0 + i * 0.2;
+      o.type = 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.35, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+      o.connect(g); g.connect(audioCtx.destination); o.start(t); o.stop(t + 0.2);
+    });
+  } catch (e) {}
+}
+function watching() { return !document.hidden && document.hasFocus(); }
+function stopFlash() {
+  if (flashTimer) { clearInterval(flashTimer); flashTimer = null; }
+  document.title = baseTitle;
+}
+function flashTitle(msg) {
+  stopFlash();
+  var on = true;
+  document.title = '🔔 ' + msg;
+  flashTimer = setInterval(function() { on = !on; document.title = on ? '🔔 ' + msg : baseTitle; }, 1000);
+}
+window.addEventListener('focus', stopFlash);
+document.addEventListener('visibilitychange', function() { if (watching()) stopFlash(); });
+function alertKey(a) { return [a.date || '', a.time, a.symbol, a.type].join('|'); }
+function notifyText(kind, a) {
+  if (kind === 'half')
+    return [a.symbol + ' ' + a.type + ': ½ hit ' + (a.half_t || ''),
+            'Sell half at $' + fmt(a.half) + ', move the stop on the rest to entry $' + fmt(a.entry) + ' · T1 $' + fmt(a.t1)];
+  return [a.symbol + ' ' + a.type + ' alert @ $' + fmt(a.entry),
+          'Stop $' + fmt(a.stop) + (a.half ? ' · ½ $' + fmt(a.half) : '') + ' · T1 $' + fmt(a.t1) +
+          (a.score ? ' · score ' + a.score + '/' + (a.required_score || '?') : '')];
+}
+function fireNotify(kind, a, force) {
+  var n = notifyCfg();
+  if (!force && (!n[kind === 'half' ? 'half' : 'alerts'] || (watching() && !n.visible))) return false;
+  var t = notifyText(kind, a);
+  if (n.sound || force) beep(kind);
+  if (!watching()) flashTitle(t[0]);
+  if (window.Notification && Notification.permission === 'granted') {
+    try {
+      var x = new Notification(t[0], {body: t[1], tag: alertKey(a) + '|' + kind, requireInteraction: kind === 'alert'});
+      x.onclick = function() { window.focus(); x.close(); };
+    } catch (e) {}       // phones need an installed app for pop-ups -- sound + tab title still work
+  }
+  return true;
+}
+function checkNotify() {
+  var filter = getCfg().symbols || [];
+  var today = data.meta && data.meta.timestamp ? String(data.meta.timestamp).slice(0, 10) : '';
+  var keys = {}, fresh = [];
+  (data.alerts || []).forEach(function(a) {
+    if (filter.length && filter.indexOf(a.symbol) === -1) return;
+    var k = alertKey(a), todays = !a.date || !today || a.date === today;
+    keys[k] = 1;
+    if (a.half_t) keys[k + '|half'] = 1;
+    if (notifySeen && todays) {
+      if (!notifySeen[k]) fresh.push(['alert', a]);
+      if (a.half_t && !notifySeen[k + '|half']) fresh.push(['half', a]);
+    }
+  });
+  if (notifySeen) Object.keys(notifySeen).forEach(function(k) { keys[k] = 1; });
+  notifySeen = keys;                        // first load: remember what's there, no pop-ups
+  fresh.reverse().forEach(function(f) { fireNotify(f[0], f[1]); });
+}
+function permState() {
+  if (!window.Notification) return 'unsupported';
+  if (window.isSecureContext === false) return 'insecure';
+  return Notification.permission;          // default / granted / denied
+}
+function bellLabel() {
+  var b = document.getElementById('bell-btn');
+  if (!b) return;
+  var n = notifyCfg(), p = permState(), on = n.alerts || n.half;
+  b.textContent = !on ? '🔕' : p === 'default' ? '🔔 Enable pop-ups' : p === 'granted' ? '🔔' : '🔔 sound only';
+  b.className = 'cfg-btn bell-btn' + (on && p === 'default' ? ' need' : '');
+  b.title = !on ? 'Alert notifications are off (Config)' :
+    p === 'granted' ? 'Pop-ups' + (n.sound ? ' + sound' : '') + ' when you are not on this page (Config to change)' :
+    p === 'default' ? 'Click to let this page show pop-up notifications' :
+    'Pop-ups unavailable here -- sound and the flashing tab title still work (Config)';
+}
+function bellClick() {
+  unlockAudio();
+  if (permState() === 'default') Notification.requestPermission().then(bellLabel, bellLabel);
+  else openCfg();
+}
+function notifyState() {
+  var s = document.getElementById('cfg-n-state');
+  if (s) {
+    var p = permState();
+    s.textContent = p === 'granted' ? 'Pop-ups are allowed in this browser.' :
+      p === 'denied' ? 'Pop-ups are blocked for this site: allow notifications in the browser\'s site settings (the icon left of the address). Sound and the flashing tab title still work.' :
+      p === 'default' ? 'Click Test (or Save) to allow pop-ups.' :
+      p === 'insecure' ? 'Pop-ups need the https page. Sound and the flashing tab title still work.' :
+      'This browser can\'t show pop-ups from a web page (phones need an installed app). Sound and the flashing tab title still work.';
+  }
+  bellLabel();
+}
+function testNotify() {
+  unlockAudio();
+  var go = function() {
+    fireNotify('alert', {symbol: 'TEST', type: 'SHORT', entry: 486.30, stop: 489.02, half: 484.94, t1: 482.90,
+                         time: '00:00', date: 'test'}, true);
+    notifyState();
+  };
+  if (permState() === 'default') Notification.requestPermission().then(go, go); else go();
 }
 
 // ─── Data fetch ──────────────────────────────────────────────────────────────
@@ -783,13 +956,20 @@ function loadData() {
     : 'GitHub copy · GitHub caches tick.json up to 5 min, so this view can lag · use the live HA link for real-time · Open Claude → "[SYMBOL] check" when setup detected';
 })();
 
-// ─── Countdown ───────────────────────────────────────────────────────────────
-var cd = POLL;
-setInterval(function() {
-  cd--;
-  document.getElementById('cd').textContent = cd;
-  if (cd <= 0) { cd = POLL; loadData(); }
-}, 1000);
+// ─── Countdown (v3.1.7: clock-based, ticked by a worker so a hidden tab keeps checking every POLL s) ───
+var nextLoad = Date.now() + POLL * 1000, tickWorker = null;
+function tick() {
+  var c = document.getElementById('cd');
+  if (c) c.textContent = Math.max(0, Math.ceil((nextLoad - Date.now()) / 1000));
+  if (Date.now() >= nextLoad) { nextLoad = Date.now() + POLL * 1000; loadData(); }
+}
+try {
+  tickWorker = new Worker(URL.createObjectURL(new Blob(['setInterval(function(){postMessage(1)},1000);'],
+                                                     {type: 'text/javascript'})));
+  tickWorker.onmessage = tick;
+  tickWorker.onerror = function() { tickWorker = null; setInterval(tick, 1000); };
+} catch (e) { tickWorker = null; }
+if (!tickWorker) setInterval(tick, 1000);
 loadData();
 </script>
 </div>
