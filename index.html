@@ -76,6 +76,9 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 .lvls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-top:5px;text-align:center}
 .lvl-label{font-size:10px;color:var(--muted)}.lvl-val{font-weight:bold;font-size:13px}
 .lvl-val.g{color:var(--green)}.lvl-val.r{color:var(--red)}.lvl-val.b{color:var(--blue)}
+.lvls.lvls5{grid-template-columns:repeat(5,1fr)}.lvls5 .lvl-val{font-size:12px}.lvl-val.y{color:var(--yellow)}
+.al-status{font-size:11px;color:var(--muted);margin-top:2px}.al-status.go{color:var(--yellow);font-weight:bold}.al-status.done{color:var(--text)}
+.ec-line{padding:4px 0 2px;color:var(--muted)}
 .copy-btn{display:block;width:100%;margin-top:7px;padding:6px;background:var(--blue);color:#000;border:none;border-radius:4px;cursor:pointer;font-size:11px;font-weight:bold;font-family:inherit}
 .copy-btn:hover{opacity:.85}
 .pill{display:inline-block;padding:3px 8px;border-radius:8px;font-size:11px;background:var(--border);margin:2px}
@@ -292,6 +295,9 @@ function el(tag, cls, html, attrs) {
 // ─── Tooltips (v3.1.3) ────────────────────────────────────────────────────────
 var TIPS = {"VWAP": "Volume-Weighted Average Price: today's average price weighted by volume -- the line big funds benchmark against. ▲ = price above it. Votes LONG when price is 0.2%+ above, SHORT when 0.2%+ below. A pullback to VWAP that holds (long) or fails (short) is a preferred entry. Right at VWAP it votes with VWAP's own direction: falling VWAP = SHORT, rising = LONG.","RSI(14)": "Relative Strength Index over the last 14 one-minute bars (0-100). Above 70 = overbought, votes SHORT. Below 30 = oversold, votes LONG. In between = no vote.","MACD": "Moving Average Convergence Divergence: short-term momentum (12- vs 26-bar averages) against its 9-bar signal line. BULLISH = momentum turning up (votes LONG), BEARISH = turning down (votes SHORT), CROSS = it just flipped.","OBV": "On-Balance Volume: running total of volume on up bars minus down bars. CONFIRMED = volume agrees with the price trend (votes the way OBV moved over 5 min). BULLISH/BEARISH DIV = volume disagrees with price -- a possible reversal.","BB": "Bollinger Bands: 20-bar average ± 2 standard deviations. UPPER_TOUCH = stretched up (votes SHORT), LOWER_TOUCH = stretched down (votes LONG), SQUEEZE = bands unusually tight, a bigger move often follows.","RVOL": "Relative Volume: today's volume so far vs the average of the last 10 sessions at the same time of day. 1.00x = normal. Alerts need 0.70x or more; 10:45-1 PM they need 1.1x+ (quiet middays chop), and before 10:15 a reading of 1.0x+ holds alerts back (news-driven opens whipsaw).","ATR": "Average True Range: the typical size of one 1-minute bar -- how much the stock is moving right now. Alerts need $0.50+; stops and targets are sized from it.","Score": "Votes pointing the same way / votes required, then the direction. Required = 4, +1 after 1 PM, +1 when trading against the day's trend, plus event-day, late-day and journal adjustments. An alert also needs every item in the checklist below to pass.","NQ Futures": "Nasdaq-100 futures (front month). Your IBKR futures feed is 10 minutes delayed, so NQ is shown for context only and doesn't vote.","T10Y2Y": "10-year minus 2-year Treasury yield (FRED, daily). Positive = normal yield curve, negative = inverted (a recession warning). Background only.","Risk": "ON when both SOXX and QQQ are up on the day, otherwise OFF. Background only.","VIX": "CBOE Volatility Index: the market's expected S&P 500 volatility over the next 30 days. Higher = more fear and bigger intraday swings.","SOXX": "iShares Semiconductor ETF (chip stocks). AMD's sector vote needs SOXX and QQQ together: both above +0.3% / +0.2% votes LONG, both below -0.3% / -0.2% votes SHORT.","SMH": "VanEck Semiconductor ETF -- a second chip-sector gauge. Display only.","QQQ": "Invesco QQQ -- the Nasdaq-100 (big tech). TSLA's sector vote: above +0.3% votes LONG, below -0.3% votes SHORT. Also half of AMD's sector vote.","SPY": "SPDR S&P 500 ETF -- the broad market. Display only.","BID/ASK IMBALANCE": "Shares waiting on the best bid (buyers) vs the best ask (sellers). BID_HEAVY / ASK_HEAVY only shows when the tilt lasts several samples (xN).","B/A": "B = shares on the best bid (buyers), A = shares on the best ask (sellers), live from IBKR. The green/red bar shows the split.","SPREAD": "Ask minus bid -- your cost to get in and out. NORMAL = tight; WIDE = thin liquidity.","CW": "Call wall: a nearby strike with heavy call open interest -- tends to act as resistance or a magnet. The +/- number is its distance from price.","PW": "Put wall: a nearby strike with heavy put open interest -- tends to act as support or a magnet. The +/- number is its distance from price.","OI": "Open interest: option contracts still open at that strike. More OI = a stronger level.","tested": "How many times price has touched this level today. Several tests = the level matters (and can eventually break).","EOD": "Late-day forces (3:00-4:05 PM) that trap shorts: down-day short covering, Friday option pinning, closing buy programs, a bounce off the recent low. Each active force adds +1 to the score a SHORT needs; longs are unaffected.","MaxPain": "Max pain: the strike where option buyers lose the most at this week's expiry. Price often drifts toward it into Friday.","GF": "Gamma flip: above it, market-maker hedging tends to calm moves; below it, hedging tends to amplify them.","CW_DAY": "Call wall for this expiry: the strike above price with the most call open interest. Often far away -- the scalp panel above shows the nearest levels.","PW_DAY": "Put wall for this expiry: the strike below price with the most put open interest. Often far away -- the scalp panel above shows the nearest levels.","BIAS": "Puts vs calls in open interest: negative % = more puts, positive = more calls, BALANCED = no strong tilt. Background only.","Adanos": "Adanos AI sentiment across Reddit, X and news: Buy / Hold / Sell, with buzz (how much it's being talked about) out of 100. Display only -- it doesn't vote.","Reddit": "Share of bullish vs bearish Reddit mentions (Adanos). Above 50% = more bullish. Display only.","X": "Share of bullish vs bearish posts on X / Twitter (Adanos). Above 50% = more bullish. Display only.","News": "Share of bullish vs bearish news coverage (Adanos). Above 50% = more bullish. Display only.","WSB": "Mentions on Reddit stock forums (r/wallstreetbets and others) in the last 24 hours, and % bullish (ApeWisdom). A sudden spike = retail crowding and bigger ranges. Display only.","WATCH": "Checklist for the current direction. ○ = still missing (with the price levels that would fix it), ✓ = votes for, ✗ = votes against. NEAR = one thing missing (yellow border) -- start watching. WATCH = two missing.","ALERT": "E = entry, S = stop, T1 = first target (1.25× the risk), R:R = reward-to-risk at T1."};
 TIPS.DAY = "Today's high (H) and low (L) from the scanner's 1-minute bars -- can differ by a few cents from your broker's. The bar shows where price sits in today's range: 0% = at the low, 100% = at the high. On days with a range over about 1.5%, the scanner won't short in the top 25% or buy in the bottom 25% (the shaded ends) -- that's the counter-trend part of 'entry location'. The day's high and low also tend to act as resistance and support.";
+TIPS.HALF = "R = the distance from entry to the stop -- your risk per share. \u00bd OFF = entry + half of R in your favour (+0.5R). When price gets there, sell half and move the stop on the rest to your entry price: from then on the trade can't lose. The rest goes to T1 (1.25R) or closes at entry. 1-year replay: 75% of alerts profitable vs 61% taking everything off at T1, but about a third less profit (+0.20R vs +0.28R a trade).";
+TIPS.EXITS = "Every finished alert in the scanner's journal, scored two ways. \u00bd plan: half off at +0.5R, stop moved to entry, rest at T1. All out: everything at T1 or the stop. Both close at market after 40 minutes. Uses the scanner's 1-minute IEX bars.";
+TIPS.ALERT = "E = entry, S = stop, \u00bd = sell half here (+0.5R) and move the stop to your entry, T1 = target for the rest (1.25\u00d7 the risk), R:R = reward-to-risk at T1. The line below follows the alert live: when +0.5R prints it says so; when the alert finishes it shows the result both ways.";
 function escAttr(s) {
   return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
@@ -504,12 +510,14 @@ function symbolCard(sym, info) {
     setupHTML = el('div', boxCls,
       el('div', dirCls, emoji + ' ' + setup.direction + ' SETUP') +
       el('div', null, el('small', null, setup.reason || '')) +
-      el('div', 'lvls',
+      el('div', 'lvls lvls5',
         el('div', null, el('div', 'lvl-label', 'ENTRY') + el('div', 'lvl-val b', '$' + fmt(setup.entry))) +
         el('div', null, el('div', 'lvl-label', 'STOP') + el('div', 'lvl-val r', '$' + fmt(setup.stop))) +
-        el('div', null, el('div', 'lvl-label', 'TGT') + el('div', 'lvl-val g', '$' + fmt(setup.target)))
+        el('div', null, el('div', 'lvl-label', '½ OFF') + el('div', 'lvl-val y', '$' + fmt(setup.half))) +
+        el('div', null, el('div', 'lvl-label', 'T1') + el('div', 'lvl-val g', '$' + fmt(setup.t1 !== undefined ? setup.t1 : setup.target))) +
+        el('div', null, el('div', 'lvl-label', 'T2') + el('div', 'lvl-val g', '$' + fmt(setup.t2)))
       ) +
-      el('div', null, el('small', null, 'R:R ' + fmt(setup.rr, 2) + ':1')) +
+      el('div', null, tipEl('small', null, 'R $' + fmt(setup.stop_dist) + ' · R:R ' + fmt(setup.rr, 2) + ':1 · at ½ OFF sell half, stop → $' + fmt(setup.entry), 'HALF')) +
       '<button class="copy-btn" onclick="copyCmd(\'' + sym + '\')">📋 &quot;' + sym + ' check&quot; → Claude</button>'
     );
   } else {
@@ -638,6 +646,32 @@ function sectorCard() {
 }
 
 // ─── Alerts card ─────────────────────────────────────────────────────────────
+// v3.1.6: live status of the half-off plan on each alert
+function alertStatus(a) {
+  if (!a || !a.entry) return '';
+  var today = data.meta && data.meta.timestamp ? String(data.meta.timestamp).slice(0, 10) : '';
+  if (a.date && today && a.date !== today) return '';
+  var R = function(v) { return (v > 0 ? '+' : '') + fmt(v, 2) + 'R'; };
+  var res = a.outcome === 'WIN' ? 'T1 hit' : a.outcome === 'LOSS' ? 'stopped' :
+            a.outcome === 'EXPIRED' ? '40-min exit' : '';
+  if (a.outcome && a.r_half !== undefined && a.r_half !== null)
+    return el('div', 'al-status done', res + ' · all-out ' + R(a.r) + ' · ½ plan ' + R(a.r_half));
+  if (a.be_t)
+    return el('div', 'al-status done', '½ sold ' + a.half_t + ' · rest out at entry ' + a.be_t + ' (≈ +0.25R)');
+  if (a.half_t)
+    return el('div', 'al-status go', '½ hit ' + a.half_t + ' → sell half, move stop to $' + fmt(a.entry));
+  if (a.outcome) return el('div', 'al-status done', res + (a.r !== undefined ? ' · ' + R(a.r) : ''));
+  return a.half ? el('div', 'al-status', 'open · ½ off at $' + fmt(a.half) + ', then stop → $' + fmt(a.entry)) : '';
+}
+function exitCompareLine() {
+  var ec = (data.learning || {}).exit_compare;
+  if (!ec || !ec.n || !ec.half || !ec.all_out) return '';
+  var txt = 'Journal, ' + ec.n + ' alerts: ½ plan ' + ec.half.profitable_pct + '% profitable, ' +
+            fmt(ec.half.avg_r, 2) + 'R avg · all out at T1 ' + ec.all_out.profitable_pct + '%, ' +
+            fmt(ec.all_out.avg_r, 2) + 'R';
+  return el('div', 'ec-line', tipEl('small', null, txt, 'EXITS'));
+}
+
 function alertsCard() {
   var alerts = data.alerts || [];
   var items = alerts.slice(0, 20).map(function(a) {
@@ -650,7 +684,9 @@ function alertsCard() {
         (a.price ? '$' + fmt(a.price) + ' ' : '') +
         (a.entry_quality ? el('span', 'tests', a.entry_quality) : '') +
         (a.entry ? el('div', null, tipEl('small', null,
-          'E $' + fmt(a.entry) + ' · S $' + fmt(a.stop) + ' · T1 $' + fmt(a.t1) + ' · R:R ' + fmt(a.rr,2), 'ALERT')) : '')
+          'E $' + fmt(a.entry) + ' · S $' + fmt(a.stop) + (a.half ? ' · ½ $' + fmt(a.half) : '') +
+          ' · T1 $' + fmt(a.t1) + ' · R:R ' + fmt(a.rr,2), 'ALERT')) : '') +
+        alertStatus(a)
       )
     );
   }).join('');
@@ -658,6 +694,7 @@ function alertsCard() {
     el('div', 'card-hdr',
       el('span', null, 'ALERTS') + el('span', null, String(alerts.length))
     ) +
+    exitCompareLine() +
     el('div', 'alerts-list', items || el('div', 'empty', 'No alerts yet'))
   );
 }
