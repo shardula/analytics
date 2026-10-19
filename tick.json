@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-10-19 12:02:23 ET",
+    "timestamp": "2026-10-19 12:02:55 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -17,17 +17,17 @@
   "symbols": {
     "AMD": {
       "price": {
-        "last": 548.95,
-        "bid": 548.72,
+        "last": 548.67,
+        "bid": 537.5,
         "ask": 580.53,
-        "spread": 31.81,
-        "chg_pct": 3.82,
+        "spread": 43.03,
+        "chg_pct": 3.77,
         "prior_close": 528.75,
         "src": "Alpaca",
-        "data_ts": 1792425732.1,
+        "data_ts": 1792425765.6,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.4,
-        "volume": 10148521,
+        "bar_age_min": 1.9,
+        "volume": 10154299,
         "session_high": 554.27,
         "session_low": 539.77,
         "session_mid": 547.02
@@ -37,8 +37,8 @@
         "upper": 555.32,
         "lower": 542.56,
         "slope": 0.0016,
-        "vs_vwap": 0.01,
-        "above_vwap": true
+        "vs_vwap": -0.27,
+        "above_vwap": false
       },
       "indicators": {
         "rsi": 28.0,
@@ -162,10 +162,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -1.05,
+        "max_pain_dist": -1.33,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 71.05,
-        "put_wall_dist": 48.95,
+        "call_wall_dist": 71.33,
+        "put_wall_dist": 48.67,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.02,
         "bias": "LONG",
@@ -176,7 +176,7 @@
           "call_wall": 620.0,
           "put_wall": 500.0,
           "gamma_flip": 520.0,
-          "current": 548.95,
+          "current": 548.67,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
@@ -202,10 +202,8 @@
       "news_ctx": {
         "score": 0,
         "label": "NEUTRAL",
-        "count": 1,
-        "headlines": [
-          "Intel leads chip stocks higher as investors jump back into AI trade"
-        ]
+        "count": 0,
+        "headlines": []
       },
       "social_ctx": {
         "available": true,
@@ -229,28 +227,28 @@
       "scalp": {
         "imbalance": {
           "bid_size": 200.0,
-          "ask_size": 200.0,
-          "ratio": 1.0,
+          "ask_size": 500.0,
+          "ratio": 0.4,
           "state": "BALANCED",
           "persist_samples": 0,
           "signal": null
         },
         "spread": {
-          "value": 0.41,
-          "state": "THIN"
+          "value": 0.28,
+          "state": "NORMAL"
         },
         "levels": {
           "nearest": {
             "level": 550.0,
             "type": "CALL_WALL",
             "oi": 2760.0,
-            "dist": 1.05
+            "dist": 1.33
           },
           "next": {
             "level": 550.0,
             "type": "PUT_WALL",
             "oi": 2094.0,
-            "dist": 1.05
+            "dist": 1.33
           },
           "at_wall": false,
           "signal": null
@@ -264,12 +262,12 @@
         "momentum_burst": null
       },
       "algo": {
-        "score": 5,
+        "score": 4,
         "required_score": 5,
-        "long_signals": 5,
+        "long_signals": 4,
         "short_signals": 3,
         "checks": {
-          "vwap": "BUY_BIAS_RETEST",
+          "vwap": "NEUTRAL",
           "rsi": "OVERSOLD_28",
           "macd": "BEARISH",
           "obv": "CONFIRMED",
@@ -283,18 +281,17 @@
         "direction": "LONG",
         "setup": null,
         "narrative": null,
-        "pattern": "LONG|POST_RALLY_CHOP|vwap:BUY_BIAS_RETEST",
+        "pattern": "LONG|POST_RALLY_CHOP|rsi:OVERSOLD_28",
         "pattern_adj": 0,
         "regime_adj": 1,
         "eod_adj": 0,
         "watch": {
           "dir": "LONG",
           "state": "NEAR",
-          "score": 5,
+          "score": 4,
           "required": 5,
           "missing": 1,
           "for": [
-            "price $548.95 holding rising VWAP $548.94",
             "RSI oversold at 28",
             "Near max pain $550.0 (within $5) -> pinning likely | Call Wall $620.0 ($71 above) | Put Wa",
             "SOXX +3.8% QQQ +2.0% rising",
@@ -306,6 +303,7 @@
             "Bars: 5 consecutive down bars | vol STEADY (1.3x) | momentum -5/9"
           ],
           "need": [
+            "1 more long vote (4/5) -- e.g. OBV 5-min turning up, MACD turning bullish, bars turning bullish",
             "3 votes against (max 2)"
           ]
         },
@@ -345,28 +343,22 @@
         },
         "congress": null
       },
-      "news": [
-        {
-          "headline": "Intel leads chip stocks higher as investors jump back into AI trade",
-          "source": "Yahoo",
-          "time": "09:57"
-        }
-      ],
-      "updated_at": "2026-10-19 12:02:22 ET"
+      "news": [],
+      "updated_at": "2026-10-19 12:02:54 ET"
     },
     "TSLA": {
       "price": {
-        "last": 367.94,
-        "bid": 367.85,
-        "ask": 368,
-        "spread": 0.15,
-        "chg_pct": 3.73,
+        "last": 367.79,
+        "bid": 367.78,
+        "ask": 368.83,
+        "spread": 1.05,
+        "chg_pct": 3.68,
         "prior_close": 354.72,
         "src": "Alpaca",
-        "data_ts": 1792425742.9,
+        "data_ts": 1792425774.6,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.4,
-        "volume": 18740669,
+        "bar_age_min": 1.9,
+        "volume": 18765219,
         "session_high": 368.69,
         "session_low": 354.76,
         "session_mid": 361.73
@@ -376,7 +368,7 @@
         "upper": 369.64,
         "lower": 357.04,
         "slope": 0.0119,
-        "vs_vwap": 4.6,
+        "vs_vwap": 4.45,
         "above_vwap": true
       },
       "indicators": {
@@ -430,7 +422,7 @@
       },
       "options": {
         "expiry": "2026-10-23",
-        "spot": 368.29,
+        "spot": 367.79,
         "max_pain": 365.0,
         "call_wall": 400.0,
         "call_wall_oi": 10628.0,
@@ -438,61 +430,61 @@
         "put_wall_oi": 4375.0,
         "gamma_flip": 297.5,
         "pc_ratio": 0.9,
-        "atm_iv": 76.9,
+        "atm_iv": 77.3,
         "imbalance_pct": 38.3,
         "imbalance_bias": "CALL_HEAVY +38%",
         "top_calls": [
           {
             "strike": 385.0,
             "oi": 10443.0,
-            "vol": 3167.0
+            "vol": 3219.0
           },
           {
             "strike": 380.0,
             "oi": 9758.0,
-            "vol": 4342.0
+            "vol": 4350.0
           },
           {
             "strike": 370.0,
             "oi": 8267.0,
-            "vol": 7041.0
+            "vol": 7073.0
           },
           {
             "strike": 365.0,
             "oi": 5820.0,
-            "vol": 5836.0
+            "vol": 5868.0
           },
           {
             "strike": 375.0,
             "oi": 4836.0,
-            "vol": 3113.0
+            "vol": 3170.0
           }
         ],
         "top_puts": [
           {
             "strike": 350.0,
             "oi": 4087.0,
-            "vol": 4008.0
+            "vol": 4019.0
           },
           {
             "strike": 360.0,
             "oi": 3538.0,
-            "vol": 4345.0
+            "vol": 4369.0
           },
           {
             "strike": 370.0,
             "oi": 2781.0,
-            "vol": 6945.0
+            "vol": 7007.0
           },
           {
             "strike": 375.0,
             "oi": 2773.0,
-            "vol": 1436.0
+            "vol": 1486.0
           },
           {
             "strike": 365.0,
             "oi": 2567.0,
-            "vol": 2749.0
+            "vol": 2790.0
           }
         ],
         "total_call_oi": 163636.0,
@@ -501,10 +493,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 2.94,
+        "max_pain_dist": 2.79,
         "max_pain_direction": "ABOVE",
-        "call_wall_dist": 32.06,
-        "put_wall_dist": 67.94,
+        "call_wall_dist": 32.21,
+        "put_wall_dist": 67.79,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 0.9,
         "bias": "LONG",
@@ -515,7 +507,7 @@
           "call_wall": 400.0,
           "put_wall": 300.0,
           "gamma_flip": 297.5,
-          "current": 367.94,
+          "current": 367.79,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
@@ -565,15 +557,15 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 240.0,
-          "ask_size": 120.0,
-          "ratio": 2.0,
+          "bid_size": 480.0,
+          "ask_size": 1200.0,
+          "ratio": 0.4,
           "state": "BALANCED",
           "persist_samples": 0,
           "signal": null
         },
         "spread": {
-          "value": 0.06,
+          "value": 0.08,
           "state": "NORMAL"
         },
         "levels": {
@@ -581,13 +573,13 @@
             "level": 370.0,
             "type": "CALL_WALL",
             "oi": 8267.0,
-            "dist": 2.06
+            "dist": 2.21
           },
           "next": {
             "level": 370.0,
             "type": "PUT_WALL",
             "oi": 2781.0,
-            "dist": 2.06
+            "dist": 2.21
           },
           "at_wall": false,
           "signal": null
@@ -629,7 +621,7 @@
           "required": 4,
           "missing": 2,
           "for": [
-            "price $367.94 above VWAP $363.34",
+            "price $367.79 above VWAP $363.34",
             "Near max pain $365.0 (within $5) -> pinning likely | Call Wall $400.0 ($32 above) | Put Wa",
             "QQQ +2.0% rising",
             "Bars: 3 consecutive down bars | vol EXPANDING (1.4x) | momentum +1/9"
@@ -640,7 +632,7 @@
           ],
           "need": [
             "1-min ATR $0.33 (needs $0.50)",
-            "entry: long at 30-bar low $367.34-$367.50 / lower band $367.86 or below / VWAP hold $363.34-$363.83 (now $367.94)"
+            "entry: long at 30-bar low $367.34-$367.50 / lower band $367.86 or below / VWAP hold $363.34-$363.83 (now $367.79)"
           ]
         },
         "signals_blocked": false,
@@ -680,7 +672,7 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-19 12:02:23 ET"
+      "updated_at": "2026-10-19 12:02:55 ET"
     }
   },
   "futures": {
@@ -690,20 +682,20 @@
   },
   "sector": {
     "SOXX": {
-      "price": 512.08,
-      "chg_pct": 3.79
+      "price": 512.2,
+      "chg_pct": 3.81
     },
     "SMH": {
-      "price": 557.34,
-      "chg_pct": 3.25
+      "price": 557.46,
+      "chg_pct": 3.27
     },
     "QQQ": {
-      "price": 723.98,
-      "chg_pct": 2.0
+      "price": 723.92,
+      "chg_pct": 1.99
     },
     "SPY": {
-      "price": 769.98,
-      "chg_pct": 0.88
+      "price": 769.87,
+      "chg_pct": 0.87
     },
     "VIX": {
       "price": 17.54,
