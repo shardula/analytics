@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-10-19 09:41:18 ET",
+    "timestamp": "2026-10-19 09:41:48 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -17,17 +17,17 @@
   "symbols": {
     "AMD": {
       "price": {
-        "last": 547.36,
-        "bid": 547.04,
-        "ask": 580.39,
-        "spread": 33.35,
-        "chg_pct": 3.52,
+        "last": 549.18,
+        "bid": 547.84,
+        "ask": 549.51,
+        "spread": 1.67,
+        "chg_pct": 3.86,
         "prior_close": 528.75,
         "src": "Alpaca",
-        "data_ts": 1792417278.7,
+        "data_ts": 1792417307.3,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.3,
-        "volume": 1155711,
+        "bar_age_min": 1.8,
+        "volume": 1157189,
         "session_high": 550.4,
         "session_low": 545.7,
         "session_mid": 548.05
@@ -37,8 +37,8 @@
         "upper": 549.68,
         "lower": 546.06,
         "slope": -0.0097,
-        "vs_vwap": -0.51,
-        "above_vwap": false
+        "vs_vwap": 1.31,
+        "above_vwap": true
       },
       "indicators": {
         "rsi": null,
@@ -162,10 +162,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -2.64,
+        "max_pain_dist": -0.82,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 72.64,
-        "put_wall_dist": 47.36,
+        "call_wall_dist": 70.82,
+        "put_wall_dist": 49.18,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.02,
         "bias": "LONG",
@@ -176,17 +176,17 @@
           "call_wall": 620.0,
           "put_wall": 500.0,
           "gamma_flip": 520.0,
-          "current": 547.36,
+          "current": 549.18,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
           "Near max pain $550.0 (within $5) -> pinning likely",
-          "Call Wall $620.0 ($73 above)",
-          "Put Wall $500.0 ($47 below)",
+          "Call Wall $620.0 ($71 above)",
+          "Put Wall $500.0 ($49 below)",
           "Above gamma flip $520.0 -> long gamma, MM stabilizing",
           "Call imbalance +21% -> call buying floor"
         ],
-        "summary": "Near max pain $550.0 (within $5) -> pinning likely | Call Wall $620.0 ($73 above) | Put Wall $500.0 ($47 below) | Above gamma flip $520.0 -> long gamma, MM stabilizing | Call imbalance +21% -> call buying floor"
+        "summary": "Near max pain $550.0 (within $5) -> pinning likely | Call Wall $620.0 ($71 above) | Put Wall $500.0 ($49 below) | Above gamma flip $520.0 -> long gamma, MM stabilizing | Call imbalance +21% -> call buying floor"
       },
       "bar_ctx": {
         "bias": "MILD_BULL",
@@ -226,47 +226,47 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 200.0,
-          "ask_size": 500.0,
-          "ratio": 0.4,
+          "bid_size": 100.0,
+          "ask_size": 200.0,
+          "ratio": 0.5,
           "state": "BALANCED",
           "persist_samples": 0,
           "signal": null
         },
         "spread": {
-          "value": 0.3,
+          "value": 0.09,
           "state": "NORMAL"
         },
         "levels": {
           "nearest": {
-            "level": 547.5,
+            "level": 550.0,
             "type": "CALL_WALL",
-            "oi": 2147.0,
-            "dist": 0.14
+            "oi": 2760.0,
+            "dist": 0.82
           },
           "next": {
-            "level": 545.0,
+            "level": 550.0,
             "type": "PUT_WALL",
-            "oi": 1355.0,
-            "dist": -2.36
+            "oi": 2094.0,
+            "dist": 0.82
           },
           "at_wall": false,
           "signal": null
         },
         "level_tests": {
-          "$547.5": 1,
-          "$550": 2
+          "$550": 2,
+          "$547.5": 1
         },
         "climax": null,
         "momentum_burst": null
       },
       "algo": {
-        "score": 4,
+        "score": 5,
         "required_score": 4,
-        "long_signals": 4,
-        "short_signals": 1,
+        "long_signals": 5,
+        "short_signals": 0,
         "checks": {
-          "vwap": "SELL_BIAS_RETEST",
+          "vwap": "BUY_BIAS",
           "rsi": "N/A",
           "macd": "NEUTRAL",
           "obv": "CONFIRMED",
@@ -280,25 +280,24 @@
         "direction": "LONG",
         "setup": null,
         "narrative": null,
-        "pattern": "LONG|NORMAL|vwap:SELL_BIAS_RETEST",
+        "pattern": "LONG|NORMAL|vwap:BUY_BIAS",
         "pattern_adj": 0,
         "regime_adj": 0,
         "eod_adj": 0,
         "watch": {
           "dir": "LONG",
           "state": "WATCH",
-          "score": 4,
+          "score": 5,
           "required": 4,
           "missing": 2,
           "for": [
+            "price $549.18 above VWAP $547.87",
             "OBV confirmed bullish trend",
-            "Near max pain $550.0 (within $5) -> pinning likely | Call Wall $620.0 ($73 above) | Put Wa",
-            "SOXX +3.8% QQQ +1.4% rising",
+            "Near max pain $550.0 (within $5) -> pinning likely | Call Wall $620.0 ($71 above) | Put Wa",
+            "SOXX +3.7% QQQ +1.3% rising",
             "Bars: 1 consecutive down bars | vol FADING (0.5x) | momentum +1/9"
           ],
-          "against": [
-            "price $547.36 retesting falling VWAP $547.87"
-          ],
+          "against": [],
           "need": [
             "indicators warming up (11 bars)",
             "1-min ATR $0.00 (needs $0.50)"
@@ -341,21 +340,21 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-19 09:41:18 ET"
+      "updated_at": "2026-10-19 09:41:48 ET"
     },
     "TSLA": {
       "price": {
-        "last": 358.94,
+        "last": 359.63,
         "bid": 355,
-        "ask": 362.49,
-        "spread": 7.49,
-        "chg_pct": 1.19,
+        "ask": 369.68,
+        "spread": 14.68,
+        "chg_pct": 1.38,
         "prior_close": 354.72,
         "src": "Alpaca",
-        "data_ts": 1792417278.3,
+        "data_ts": 1792417307.2,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.3,
-        "volume": 999362,
+        "bar_age_min": 1.8,
+        "volume": 1005952,
         "session_high": 362.13,
         "session_low": 354.76,
         "session_mid": 358.44
@@ -365,7 +364,7 @@
         "upper": 361.29,
         "lower": 356.09,
         "slope": -0.0375,
-        "vs_vwap": 0.25,
+        "vs_vwap": 0.94,
         "above_vwap": true
       },
       "indicators": {
@@ -490,10 +489,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -6.06,
+        "max_pain_dist": -5.37,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 41.06,
-        "put_wall_dist": 58.94,
+        "call_wall_dist": 40.37,
+        "put_wall_dist": 59.63,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 0.9,
         "bias": "NEUTRAL",
@@ -504,15 +503,15 @@
           "call_wall": 400.0,
           "put_wall": 300.0,
           "gamma_flip": 292.5,
-          "current": 358.94,
+          "current": 359.63,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
-          "Call Wall $400.0 ($41 above)",
-          "Put Wall $300.0 ($59 below)",
+          "Call Wall $400.0 ($40 above)",
+          "Put Wall $300.0 ($60 below)",
           "Above gamma flip $292.5 -> long gamma, MM stabilizing"
         ],
-        "summary": "Call Wall $400.0 ($41 above) | Put Wall $300.0 ($59 below) | Above gamma flip $292.5 -> long gamma, MM stabilizing"
+        "summary": "Call Wall $400.0 ($40 above) | Put Wall $300.0 ($60 below) | Above gamma flip $292.5 -> long gamma, MM stabilizing"
       },
       "bar_ctx": {
         "bias": "MILD_BULL",
@@ -552,15 +551,15 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 40.0,
-          "ask_size": 120.0,
-          "ratio": 0.33,
-          "state": "BALANCED",
-          "persist_samples": 0,
+          "bid_size": 320.0,
+          "ask_size": 40.0,
+          "ratio": 8.0,
+          "state": "BID_HEAVY",
+          "persist_samples": 1,
           "signal": null
         },
         "spread": {
-          "value": 0.09,
+          "value": 0.19,
           "state": "NORMAL"
         },
         "levels": {
@@ -568,13 +567,13 @@
             "level": 360.0,
             "type": "PUT_WALL",
             "oi": 3538.0,
-            "dist": 1.06
+            "dist": 0.37
           },
           "next": {
             "level": 362.5,
             "type": "CALL_WALL",
             "oi": 3833.0,
-            "dist": 3.56
+            "dist": 2.87
           },
           "at_wall": false,
           "signal": null
@@ -587,12 +586,12 @@
         "momentum_burst": null
       },
       "algo": {
-        "score": 3,
+        "score": 4,
         "required_score": 4,
-        "long_signals": 3,
+        "long_signals": 4,
         "short_signals": 0,
         "checks": {
-          "vwap": "NEUTRAL",
+          "vwap": "BUY_BIAS",
           "rsi": "N/A",
           "macd": "NEUTRAL",
           "obv": "CONFIRMED",
@@ -606,24 +605,24 @@
         "direction": "LONG",
         "setup": null,
         "narrative": null,
-        "pattern": "LONG|NORMAL|misc",
+        "pattern": "LONG|NORMAL|vwap:BUY_BIAS",
         "pattern_adj": 0,
         "regime_adj": 0,
         "eod_adj": 0,
         "watch": {
           "dir": "LONG",
           "state": "FAR",
-          "score": 3,
+          "score": 4,
           "required": 4,
-          "missing": 4,
+          "missing": 3,
           "for": [
+            "price $359.63 above VWAP $358.69",
             "OBV confirmed bullish trend",
-            "QQQ +1.4% rising",
+            "QQQ +1.3% rising",
             "Bars: 2 consecutive up bars | vol STEADY (0.7x) | momentum +1/9"
           ],
           "against": [],
           "need": [
-            "1 more long vote (3/4) -- e.g. MACD turning bullish, price above VWAP $359.41",
             "time window: news-driven open: RVOL 1.25 >= 1.0 before 10:15",
             "indicators warming up (11 bars)",
             "1-min ATR $0.00 (needs $0.50)"
@@ -666,7 +665,7 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-19 09:41:18 ET"
+      "updated_at": "2026-10-19 09:41:48 ET"
     }
   },
   "futures": {
@@ -676,20 +675,20 @@
   },
   "sector": {
     "SOXX": {
-      "price": 512.2,
-      "chg_pct": 3.81
+      "price": 511.8,
+      "chg_pct": 3.73
     },
     "SMH": {
       "price": 557.68,
       "chg_pct": 3.31
     },
     "QQQ": {
-      "price": 719.49,
-      "chg_pct": 1.37
+      "price": 719.19,
+      "chg_pct": 1.32
     },
     "SPY": {
-      "price": 767.17,
-      "chg_pct": 0.51
+      "price": 767.1,
+      "chg_pct": 0.5
     },
     "VIX": {
       "price": 18.38,
