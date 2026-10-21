@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-10-21 10:24:25 ET",
+    "timestamp": "2026-10-21 10:24:55 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -17,17 +17,17 @@
   "symbols": {
     "AMD": {
       "price": {
-        "last": 544.31,
-        "bid": 543.41,
+        "last": 544.6,
+        "bid": 544.25,
         "ask": 550,
-        "spread": 6.59,
-        "chg_pct": 1.79,
+        "spread": 5.75,
+        "chg_pct": 1.84,
         "prior_close": 534.74,
         "src": "Alpaca",
-        "data_ts": 1792592661.8,
+        "data_ts": 1792592694.9,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.4,
-        "volume": 4262010,
+        "bar_age_min": 1.9,
+        "volume": 4280102,
         "session_high": 554.03,
         "session_low": 537.36,
         "session_mid": 545.69
@@ -37,8 +37,8 @@
         "upper": 551.46,
         "lower": 537.66,
         "slope": -0.0095,
-        "vs_vwap": -0.25,
-        "above_vwap": false
+        "vs_vwap": 0.04,
+        "above_vwap": true
       },
       "indicators": {
         "rsi": 55.7,
@@ -162,10 +162,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -3.19,
+        "max_pain_dist": -2.9,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 55.69,
-        "put_wall_dist": 44.31,
+        "call_wall_dist": 55.4,
+        "put_wall_dist": 44.6,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 0.92,
         "bias": "LONG",
@@ -176,17 +176,17 @@
           "call_wall": 600.0,
           "put_wall": 500.0,
           "gamma_flip": 520.0,
-          "current": 544.31,
+          "current": 544.6,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
           "Near max pain $547.5 (within $5) -> pinning likely",
-          "Call Wall $600.0 ($56 above)",
-          "Put Wall $500.0 ($44 below)",
+          "Call Wall $600.0 ($55 above)",
+          "Put Wall $500.0 ($45 below)",
           "Above gamma flip $520.0 -> long gamma, MM stabilizing",
           "Call imbalance +22% -> call buying floor"
         ],
-        "summary": "Near max pain $547.5 (within $5) -> pinning likely | Call Wall $600.0 ($56 above) | Put Wall $500.0 ($44 below) | Above gamma flip $520.0 -> long gamma, MM stabilizing | Call imbalance +22% -> call buying floor"
+        "summary": "Near max pain $547.5 (within $5) -> pinning likely | Call Wall $600.0 ($55 above) | Put Wall $500.0 ($45 below) | Above gamma flip $520.0 -> long gamma, MM stabilizing | Call imbalance +22% -> call buying floor"
       },
       "bar_ctx": {
         "bias": "BULLISH",
@@ -230,29 +230,29 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 700.0,
-          "ask_size": 200.0,
-          "ratio": 3.5,
-          "state": "BID_HEAVY",
-          "persist_samples": 1,
+          "bid_size": 300.0,
+          "ask_size": 100.0,
+          "ratio": 3.0,
+          "state": "BALANCED",
+          "persist_samples": 0,
           "signal": null
         },
         "spread": {
-          "value": 0.48,
-          "state": "THIN"
+          "value": 0.26,
+          "state": "NORMAL"
         },
         "levels": {
           "nearest": {
             "level": 545.0,
             "type": "PUT_WALL",
             "oi": 1455.0,
-            "dist": 0.69
+            "dist": 0.4
           },
           "next": {
             "level": 547.5,
             "type": "CALL_WALL",
             "oi": 2360.0,
-            "dist": 3.19
+            "dist": 2.9
           },
           "at_wall": false,
           "signal": null
@@ -270,9 +270,9 @@
         "score": 5,
         "required_score": 4,
         "long_signals": 5,
-        "short_signals": 2,
+        "short_signals": 1,
         "checks": {
-          "vwap": "SELL_BIAS_RETEST",
+          "vwap": "NEUTRAL",
           "rsi": "NEUTRAL_56",
           "macd": "BULLISH",
           "obv": "CONFIRMED",
@@ -284,32 +284,57 @@
           "sentiment": "SENTIMENT_INFO(news +1, NEUTRAL)"
         },
         "direction": "LONG",
-        "setup": null,
-        "narrative": null,
-        "pattern": "LONG|NORMAL|vwap:SELL_BIAS_RETEST",
+        "setup": {
+          "direction": "LONG",
+          "entry": 544.6,
+          "stop": 540.93,
+          "t1": 549.18,
+          "t2": 555.6,
+          "rr": 1.25,
+          "half": 546.43,
+          "stop_dist": 3.67,
+          "atr": 1.0736
+        },
+        "narrative": {
+          "recommendation": "LONG (MEDIUM CONFIDENCE)",
+          "confidence": "MEDIUM",
+          "score": "5/10",
+          "regime": "NORMAL",
+          "explanation": "LONG -- 5 aligned factors. Entry $544.6, stop $540.93, T1 $549.18, T2 $555.6 (R/R 1.25). Half off at $546.43 (+0.5R), then stop to entry.",
+          "key_factors": [
+            "MACD BULLISH (hist +0.2909)",
+            "OBV confirmed bullish trend",
+            "Near max pain $547.5 (within $5) -> pinning likely | Call Wall $600.0 ($55 above) | Put Wall $500.0 ($45 below) | Above gamma flip $520.0 -> long gamma, MM stabilizing | Call imbalance +22% -> call buying floor",
+            "SOXX +1.1% QQQ +0.5% rising",
+            "Entry quality: VWAP hold",
+            "Options: Near max pain $547.5 (within $5) -> pinning likely",
+            "Bars: 2 consecutive up bars | vol EXPANDING (2.3x) | momentum +3/9",
+            "News (3): MILD_BULL",
+            "Sentiment: Adanos Hold 70/100 | WSB 17 mentions 80% bull | Insider MSPR -91.0 (20"
+          ],
+          "warnings": []
+        },
+        "pattern": "LONG|NORMAL|bb:BB_UPPER_TOUCH",
         "pattern_adj": 0,
         "regime_adj": 0,
         "eod_adj": 0,
         "watch": {
           "dir": "LONG",
-          "state": "NEAR",
+          "state": "SETUP",
           "score": 5,
           "required": 4,
-          "missing": 1,
+          "missing": 0,
           "for": [
             "MACD BULLISH (hist +0.2909)",
             "OBV confirmed bullish trend",
-            "Near max pain $547.5 (within $5) -> pinning likely | Call Wall $600.0 ($56 above) | Put Wa",
-            "SOXX +1.0% QQQ +0.5% rising",
+            "Near max pain $547.5 (within $5) -> pinning likely | Call Wall $600.0 ($55 above) | Put Wa",
+            "SOXX +1.1% QQQ +0.5% rising",
             "Bars: 2 consecutive up bars | vol EXPANDING (2.3x) | momentum +3/9"
           ],
           "against": [
-            "price $544.31 retesting falling VWAP $544.56",
             "BB upper touch (0.98)"
           ],
-          "need": [
-            "entry: long at 30-bar low $537.36-$537.90 / lower band $541.36 or below / VWAP hold $544.56-$546.17 (now $544.31)"
-          ]
+          "need": []
         },
         "signals_blocked": false,
         "signals_blocked_reason": null
@@ -364,21 +389,21 @@
           "time": "08:24"
         }
       ],
-      "updated_at": "2026-10-21 10:24:25 ET"
+      "updated_at": "2026-10-21 10:24:55 ET"
     },
     "TSLA": {
       "price": {
-        "last": 385.71,
-        "bid": 385.7,
+        "last": 385.52,
+        "bid": 385.45,
         "ask": 386,
-        "spread": 0.3,
-        "chg_pct": 3.21,
+        "spread": 0.55,
+        "chg_pct": 3.16,
         "prior_close": 373.71,
         "src": "Alpaca",
-        "data_ts": 1792592665.5,
+        "data_ts": 1792592694.7,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.4,
-        "volume": 13225423,
+        "bar_age_min": 1.9,
+        "volume": 13287322,
         "session_high": 388.82,
         "session_low": 380.58,
         "session_mid": 384.7
@@ -388,7 +413,7 @@
         "upper": 388.92,
         "lower": 381.56,
         "slope": 0.0008,
-        "vs_vwap": 0.47,
+        "vs_vwap": 0.28,
         "above_vwap": true
       },
       "indicators": {
@@ -513,10 +538,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 20.71,
+        "max_pain_dist": 20.52,
         "max_pain_direction": "ABOVE",
-        "call_wall_dist": 14.29,
-        "put_wall_dist": 35.71,
+        "call_wall_dist": 14.48,
+        "put_wall_dist": 35.52,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 0.95,
         "bias": "NEUTRAL",
@@ -527,7 +552,7 @@
           "call_wall": 400.0,
           "put_wall": 350.0,
           "gamma_flip": 362.5,
-          "current": 385.71,
+          "current": 385.52,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
@@ -577,15 +602,15 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 160.0,
-          "ask_size": 80.0,
+          "bid_size": 240.0,
+          "ask_size": 120.0,
           "ratio": 2.0,
           "state": "BALANCED",
           "persist_samples": 0,
           "signal": null
         },
         "spread": {
-          "value": 0.14,
+          "value": 0.19,
           "state": "NORMAL"
         },
         "levels": {
@@ -593,13 +618,13 @@
             "level": 385.0,
             "type": "CALL_WALL",
             "oi": 13326.0,
-            "dist": -0.71
+            "dist": -0.52
           },
           "next": {
             "level": 380.0,
             "type": "CALL_WALL",
             "oi": 11520.0,
-            "dist": -5.71
+            "dist": -5.52
           },
           "at_wall": false,
           "signal": null
@@ -641,7 +666,7 @@
           "required": 5,
           "missing": 2,
           "for": [
-            "price $385.71 holding rising VWAP $385.24",
+            "price $385.52 holding rising VWAP $385.24",
             "QQQ +0.5% rising",
             "Bars: 1 consecutive up bars | vol STEADY (0.7x) | momentum +1/9"
           ],
@@ -689,7 +714,7 @@
         "congress": null
       },
       "news": [],
-      "updated_at": "2026-10-21 10:24:25 ET"
+      "updated_at": "2026-10-21 10:24:55 ET"
     }
   },
   "futures": {
@@ -699,24 +724,24 @@
   },
   "sector": {
     "SOXX": {
-      "price": 505.08,
-      "chg_pct": 1.01
+      "price": 505.71,
+      "chg_pct": 1.14
     },
     "SMH": {
-      "price": 551.52,
-      "chg_pct": 0.94
+      "price": 552.12,
+      "chg_pct": 1.05
     },
     "QQQ": {
-      "price": 721.05,
-      "chg_pct": 0.48
+      "price": 721.49,
+      "chg_pct": 0.54
     },
     "SPY": {
-      "price": 768.87,
-      "chg_pct": -0.02
+      "price": 768.98,
+      "chg_pct": -0.01
     },
     "VIX": {
-      "price": 17.34,
-      "chg_pct": 0.17
+      "price": 17.33,
+      "chg_pct": 0.12
     }
   },
   "macro": {
@@ -729,9 +754,31 @@
     "events_today": []
   },
   "unusual_flow": [],
-  "alerts": [],
+  "alerts": [
+    {
+      "date": "2026-10-21",
+      "time": "10:24",
+      "symbol": "AMD",
+      "type": "LONG",
+      "direction": "LONG",
+      "price": 544.6,
+      "score": 5,
+      "required_score": 4,
+      "regime": "NORMAL",
+      "entry": 544.6,
+      "stop": 540.93,
+      "t1": 549.18,
+      "t2": 555.6,
+      "rr": 1.25,
+      "half": 546.43,
+      "bar_t": 1792592580000,
+      "confidence": "MEDIUM",
+      "entry_quality": "VWAP hold",
+      "reason": "MACD BULLISH (hist +0.2909) | OBV confirmed bullish trend | Near max pain $547.5 (within $5) -> pinning likely | Call Wall $600.0 ($55 above) | Put Wall $500.0 ($45 below) | Above gamma flip $520.0 -> long gamma, MM stabilizing | Call imbalance +22% -> call buying floor"
+    }
+  ],
   "learning": {
-    "journal_records": 8,
+    "journal_records": 9,
     "exit_compare": {
       "n": 7,
       "all_out": {
