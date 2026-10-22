@@ -145,6 +145,10 @@ h1{font-size:16px;color:var(--blue);letter-spacing:1px}
 .tip{cursor:help;text-decoration:underline dotted;text-decoration-color:var(--muted);text-underline-offset:3px;outline:none}
 #tipbox{display:none;position:fixed;z-index:500;max-width:300px;background:#1f2630;color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:12px;line-height:1.45;font-weight:normal;letter-spacing:0;text-transform:none;white-space:normal;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.55)}
 @media (hover:none){.tip{cursor:pointer}}
+/* v3.1.11: watch-only symbols */
+.wo-tag{font-size:10px;font-weight:bold;padding:1px 6px;border-radius:4px;margin-left:8px;letter-spacing:.5px;color:var(--muted);border:1px solid var(--border)}
+.card.wo-card{border-style:dashed}
+.wo-box{background:rgba(139,148,158,.06);border:1px dashed var(--border);color:var(--muted);font-size:12px}
 </style>
 </head>
 <body>
@@ -343,6 +347,7 @@ TIPS.SIZE = "Shares for your Risk per trade $ (Config): risk \u00f7 R, rounded d
 TIPS.FEEDTIME = "Time (ET) of the last price the scanner got and how old it is now -- red after 2 minutes. 'IBKR' in front: Alpaca's live feed is quiet, so the price is the IBKR gateway's last trade.";
 TIPS.FEED = "IBKR BARS: Alpaca's 1-minute bars stopped, so the scanner is using the IBKR gateway's IEX bars (same exchange) until Alpaca is back. BARS ...m OLD: neither feed has new bars -- indicators are frozen and alerts are held.";
 TIPS.FEEDTIME = "Time (ET) of the last price the scanner got and how old it is now -- red after 2 minutes. 'IBKR' in front: Alpaca's live feed is quiet, so the price is the IBKR gateway's last trade. IBKR DELAYED / FROZEN: the gateway on the laptop isn't getting live prices (usually another IBKR login -- TWS, mobile, browser -- has your live data); the price shown is old and alerts are held.";   // v3.1.10
+TIPS.WATCHONLY = "Watch only: price, levels, indicators, options and news for context. The scanner never alerts on this symbol -- its rules were tuned and replay-tested on AMD and TSLA only. The Score line is just the vote count, not a setup. Hide the card: ⚙ Config, symbol filter (one per line, e.g. AMD and TSLA).";   // v3.1.11
 function escAttr(s) {
   return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
@@ -468,6 +473,9 @@ function scalpPanel(sym, info) {
 
 // ─── Setup watch + news helpers (v3.1.2) ─────────────────────────────────────
 var SYM_NAMES = {AMD: ['AMD', 'Advanced Micro'], TSLA: ['TSLA', 'Tesla']};
+SYM_NAMES.AVGO = SYM_NAMES.AVGO || ['AVGO', 'Broadcom'];   // v3.1.11
+SYM_NAMES.CBRS = SYM_NAMES.CBRS || ['CBRS', 'Cerebras'];
+SYM_NAMES.RGTI = SYM_NAMES.RGTI || ['RGTI', 'Rigetti'];
 function namesSym(sym, title) {
   var names = SYM_NAMES[sym] || [sym];
   for (var i = 0; i < names.length; i++) {
@@ -521,6 +529,12 @@ function dayRange(pr, price) {
   );
 }
 
+// v3.1.11: watch-only symbols -- cards for context, the scanner never alerts on them
+function isWatchOnly(sym) {
+  var s = (data.symbols || {})[sym];
+  if (s && s.watch_only !== undefined) return !!s.watch_only;
+  return ((data.meta && data.meta.watch_only) || []).indexOf(sym) > -1;
+}
 function symbolCard(sym, info) {
   var pr = info.price || {};
   var vw = info.vwap || {};
@@ -545,10 +559,12 @@ function symbolCard(sym, info) {
   var diverg = obv.divergence || '--';
   var cardCls = 'card' + (setup && setup.direction === 'LONG' ? ' setup-long' : setup && setup.direction === 'SHORT' ? ' setup-short' : '') +
     (!setup && algo.watch && algo.watch.state === 'NEAR' ? ' watch-near' : '');
+  var wo = isWatchOnly(sym);                           // v3.1.11: watch-only symbol
+  if (wo) cardCls = 'card wo-card';
 
   // Setup box
   var setupHTML;
-  if (setup) {
+  if (setup && !wo) {
     var boxCls = setup.direction === 'LONG' ? 'setup-box setup-long-box' : 'setup-box setup-short-box';
     var dirCls = setup.direction === 'LONG' ? 'setup-dir-long' : 'setup-dir-short';
     var emoji = setup.direction === 'LONG' ? '📈' : '📉';
@@ -566,6 +582,8 @@ function symbolCard(sym, info) {
       sizeLine(setup.entry, setup.stop) +
       '<button class="copy-btn" onclick="copyCmd(\'' + sym + '\')">📋 &quot;' + sym + ' check&quot; → Claude</button>'
     );
+  } else if (wo) {
+    setupHTML = tipEl('div', 'setup-box wo-box', '👁 Watch only · no alerts on ' + sym, 'WATCHONLY');
   } else {
     setupHTML = watchBox(algo, score, reqScore);
   }
@@ -629,7 +647,7 @@ function symbolCard(sym, info) {
 
   return el('div', cardCls,
     el('div', 'card-hdr',
-      el('span', null, sym + feedTag(pr)) +
+      el('span', null, sym + (wo ? tipEl('span', 'wo-tag', 'WATCH ONLY', 'WATCHONLY') : '') + feedTag(pr)) +
       (function(){
         var sess = info.session || (data.meta && data.meta.session) || '';
         var tag = sess === 'AH'  ? el('span','sess-tag sess-ah','AH CLOSE') :
@@ -832,7 +850,8 @@ function render() {
   ((data.meta && data.meta.watchlist) || []).forEach(function(s) { if (syms.indexOf(s) === -1) syms.push(s); });
   syms.forEach(function(sym) {
     if (filter.length && filter.indexOf(sym) === -1) return;
-    html += el('div', 'sym-col', alertsCard(sym) + (symbols[sym] ? symbolCard(sym, symbols[sym]) : warmupCard(sym)));
+    html += el('div', 'sym-col', (isWatchOnly(sym) ? '' : alertsCard(sym)) +   // v3.1.11
+      (symbols[sym] ? symbolCard(sym, symbols[sym]) : warmupCard(sym)));
   });
   html += el('div', 'span-full', sectorCard());
   html += journalCard();
