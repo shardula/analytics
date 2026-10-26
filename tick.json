@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-10-26 13:48:12 ET",
+    "timestamp": "2026-10-26 13:48:45 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -28,17 +28,17 @@
   "symbols": {
     "AMD": {
       "price": {
-        "last": 529.92,
-        "bid": 515,
-        "ask": 530.22,
-        "spread": 15.22,
-        "chg_pct": 2.54,
+        "last": 530.22,
+        "bid": 529.87,
+        "ask": 549.94,
+        "spread": 20.07,
+        "chg_pct": 2.6,
         "prior_close": 516.79,
         "src": "Alpaca",
-        "data_ts": 1793036889.0,
+        "data_ts": 1793036920.6,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.2,
-        "volume": 9342379,
+        "bar_age_min": 1.7,
+        "volume": 9354406,
         "session_high": 533.32,
         "session_low": 514.33,
         "session_mid": 523.83
@@ -48,7 +48,7 @@
         "upper": 536.47,
         "lower": 516.31,
         "slope": 0.0109,
-        "vs_vwap": 3.53,
+        "vs_vwap": 3.83,
         "above_vwap": true
       },
       "indicators": {
@@ -173,10 +173,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -5.08,
+        "max_pain_dist": -4.78,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 90.08,
-        "put_wall_dist": 79.92,
+        "call_wall_dist": 89.78,
+        "put_wall_dist": 80.22,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.06,
         "bias": "LONG",
@@ -187,16 +187,17 @@
           "call_wall": 620.0,
           "put_wall": 450.0,
           "gamma_flip": 517.5,
-          "current": 529.92,
+          "current": 530.22,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
+          "Near max pain $535.0 (within $5) -> pinning likely",
           "Call Wall $620.0 ($90 above)",
           "Put Wall $450.0 ($80 below)",
           "Above gamma flip $517.5 -> long gamma, MM stabilizing",
           "Call imbalance +38% -> call buying floor"
         ],
-        "summary": "Call Wall $620.0 ($90 above) | Put Wall $450.0 ($80 below) | Above gamma flip $517.5 -> long gamma, MM stabilizing | Call imbalance +38% -> call buying floor"
+        "summary": "Near max pain $535.0 (within $5) -> pinning likely | Call Wall $620.0 ($90 above) | Put Wall $450.0 ($80 below) | Above gamma flip $517.5 -> long gamma, MM stabilizing | Call imbalance +38% -> call buying floor"
       },
       "bar_ctx": {
         "bias": "MILD_BULL",
@@ -212,10 +213,8 @@
       "news_ctx": {
         "score": 0,
         "label": "NEUTRAL",
-        "count": 1,
-        "headlines": [
-          "Meta Seeks About $95 Billion for AI Buildout as Nvidia, AMD and Broadcom Conside"
-        ]
+        "count": 0,
+        "headlines": []
       },
       "social_ctx": {
         "available": true,
@@ -238,38 +237,37 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 100.0,
+          "bid_size": 1000.0,
           "ask_size": 100.0,
-          "ratio": 1.0,
-          "state": "BALANCED",
-          "persist_samples": 0,
+          "ratio": 10.0,
+          "state": "BID_HEAVY",
+          "persist_samples": 1,
           "signal": null
         },
         "spread": {
-          "value": 0.46,
-          "state": "THIN"
+          "value": 0.31,
+          "state": "NORMAL"
         },
         "levels": {
           "nearest": {
             "level": 530.0,
             "type": "PUT_WALL",
             "oi": 1224.0,
-            "dist": 0.08
+            "dist": -0.22
           },
           "next": {
             "level": 527.5,
             "type": "CALL_WALL",
             "oi": 4436.0,
-            "dist": -2.42
+            "dist": -2.72
           },
-          "at_wall": true,
-          "signal": "AT PUT_WALL $530.0 (+0.08)"
+          "at_wall": false,
+          "signal": null
         },
         "level_tests": {
           "$530": 14,
           "$527.5": 3,
-          "$525": 5,
-          "$520": 4
+          "$525": 5
         },
         "climax": null,
         "momentum_burst": null
@@ -305,8 +303,8 @@
           "required": 6,
           "missing": 2,
           "for": [
-            "price $529.92 above VWAP $526.39",
-            "Call Wall $620.0 ($90 above) | Put Wall $450.0 ($80 below) | Above gamma flip $517.5 -> lo",
+            "price $530.22 above VWAP $526.39",
+            "Near max pain $535.0 (within $5) -> pinning likely | Call Wall $620.0 ($90 above) | Put Wa",
             "SOXX +3.6% QQQ +1.3% rising",
             "BB lower touch (-0.08)",
             "Bars: 1 consecutive down bars | vol FADING (0.2x) | momentum +1/9"
@@ -355,29 +353,23 @@
         },
         "congress": null
       },
-      "news": [
-        {
-          "headline": "Meta Seeks About $95 Billion for AI Buildout as Nvidia, AMD and Broadcom Consider Investing in Their Own Customer",
-          "source": "Yahoo",
-          "time": "11:41"
-        }
-      ],
+      "news": [],
       "watch_only": false,
-      "updated_at": "2026-10-26 13:48:11 ET"
+      "updated_at": "2026-10-26 13:48:43 ET"
     },
     "TSLA": {
       "price": {
-        "last": 395.39,
-        "bid": 395.21,
+        "last": 395.35,
+        "bid": 395.48,
         "ask": 397.6,
-        "spread": 2.39,
-        "chg_pct": 6.22,
+        "spread": 2.12,
+        "chg_pct": 6.21,
         "prior_close": 372.22,
         "src": "Alpaca",
-        "data_ts": 1793036889.7,
+        "data_ts": 1793036911.4,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.2,
-        "volume": 35824224,
+        "bar_age_min": 1.7,
+        "volume": 35882726,
         "session_high": 397.25,
         "session_low": 383.88,
         "session_mid": 390.56
@@ -387,7 +379,7 @@
         "upper": 396.72,
         "lower": 390.4,
         "slope": 0.0026,
-        "vs_vwap": 1.83,
+        "vs_vwap": 1.79,
         "above_vwap": true
       },
       "indicators": {
@@ -441,7 +433,7 @@
       },
       "options": {
         "expiry": "2026-10-30",
-        "spot": 395.45,
+        "spot": 395.35,
         "max_pain": 372.5,
         "call_wall": 400.0,
         "call_wall_oi": 13126.0,
@@ -449,61 +441,61 @@
         "put_wall_oi": 5213.0,
         "gamma_flip": 372.5,
         "pc_ratio": 1.12,
-        "atm_iv": 44.1,
+        "atm_iv": 44.3,
         "imbalance_pct": 74.1,
         "imbalance_bias": "CALL_HEAVY +74%",
         "top_calls": [
           {
             "strike": 400.0,
             "oi": 13126.0,
-            "vol": 27444.0
+            "vol": 27527.0
           },
           {
             "strike": 395.0,
             "oi": 9573.0,
-            "vol": 8462.0
+            "vol": 8468.0
           },
           {
             "strike": 390.0,
             "oi": 7199.0,
-            "vol": 11156.0
+            "vol": 11163.0
           },
           {
             "strike": 380.0,
             "oi": 7077.0,
-            "vol": 3808.0
+            "vol": 3809.0
           },
           {
             "strike": 385.0,
             "oi": 6075.0,
-            "vol": 4377.0
+            "vol": 4413.0
           }
         ],
         "top_puts": [
           {
             "strike": 380.0,
             "oi": 3274.0,
-            "vol": 12475.0
+            "vol": 12493.0
           },
           {
             "strike": 385.0,
             "oi": 2196.0,
-            "vol": 5592.0
+            "vol": 5633.0
           },
           {
             "strike": 400.0,
             "oi": 1546.0,
-            "vol": 3950.0
+            "vol": 3968.0
           },
           {
             "strike": 390.0,
             "oi": 1169.0,
-            "vol": 8995.0
+            "vol": 9038.0
           },
           {
             "strike": 377.5,
             "oi": 733.0,
-            "vol": 1312.0
+            "vol": 1314.0
           }
         ],
         "total_call_oi": 144507.0,
@@ -512,10 +504,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": 22.89,
+        "max_pain_dist": 22.85,
         "max_pain_direction": "ABOVE",
-        "call_wall_dist": 4.61,
-        "put_wall_dist": 55.39,
+        "call_wall_dist": 4.65,
+        "put_wall_dist": 55.35,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 1.12,
         "bias": "SHORT",
@@ -526,7 +518,7 @@
           "call_wall": 400.0,
           "put_wall": 340.0,
           "gamma_flip": 372.5,
-          "current": 395.39,
+          "current": 395.35,
           "position": "ABOVE_MAX_PAIN"
         },
         "notes": [
@@ -550,12 +542,10 @@
         "bars_analyzed": 10
       },
       "news_ctx": {
-        "score": 2,
-        "label": "BULLISH",
-        "count": 1,
-        "headlines": [
-          "I Wouldn't Buy Tesla Stock Betting on a SpaceX Deal. Here's Why."
-        ]
+        "score": 0,
+        "label": "NEUTRAL",
+        "count": 0,
+        "headlines": []
       },
       "social_ctx": {
         "available": true,
@@ -578,15 +568,15 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 80.0,
-          "ask_size": 80.0,
-          "ratio": 1.0,
-          "state": "BALANCED",
-          "persist_samples": 0,
+          "bid_size": 40.0,
+          "ask_size": 200.0,
+          "ratio": 0.2,
+          "state": "ASK_HEAVY",
+          "persist_samples": 1,
           "signal": null
         },
         "spread": {
-          "value": 0.05,
+          "value": 0.08,
           "state": "NORMAL"
         },
         "levels": {
@@ -594,13 +584,13 @@
             "level": 395.0,
             "type": "CALL_WALL",
             "oi": 9573.0,
-            "dist": -0.39
+            "dist": -0.35
           },
           "next": {
             "level": 400.0,
             "type": "CALL_WALL",
             "oi": 13126.0,
-            "dist": 4.61
+            "dist": 4.65
           },
           "at_wall": false,
           "signal": null
@@ -627,7 +617,7 @@
           "sector": "QQQ_BULL",
           "bb": "BB_MID_0.61",
           "bar_ctx": "BARS_MILD_BULL",
-          "sentiment": "SENTIMENT_INFO(news +2, MILD_BULL)"
+          "sentiment": "SENTIMENT_INFO(news +0, MILD_BULL)"
         },
         "direction": "LONG",
         "setup": null,
@@ -643,7 +633,7 @@
           "required": 6,
           "missing": 3,
           "for": [
-            "price $395.39 above VWAP $393.56",
+            "price $395.35 above VWAP $393.56",
             "MACD BULLISH (hist +0.0586)",
             "OBV confirmed bullish trend",
             "QQQ +1.3% rising",
@@ -655,7 +645,7 @@
           "need": [
             "1 more long vote (5/6) -- e.g. lower band $394.72 or below, RSI below 30 (now 48)",
             "1-min ATR $0.26 (needs $0.50)",
-            "entry: long at 30-bar low $394.59-$394.72 / lower band $394.81 or below / VWAP hold $393.56-$393.96 (now $395.39)"
+            "entry: long at 30-bar low $394.59-$394.72 / lower band $394.81 or below / VWAP hold $393.56-$393.96 (now $395.35)"
           ]
         },
         "signals_blocked": false,
@@ -694,29 +684,23 @@
         },
         "congress": null
       },
-      "news": [
-        {
-          "headline": "I Wouldn't Buy Tesla Stock Betting on a SpaceX Deal. Here's Why.",
-          "source": "Yahoo",
-          "time": "11:43"
-        }
-      ],
+      "news": [],
       "watch_only": false,
-      "updated_at": "2026-10-26 13:48:11 ET"
+      "updated_at": "2026-10-26 13:48:44 ET"
     },
     "AVGO": {
       "price": {
-        "last": 330.15,
-        "bid": 324.57,
-        "ask": 330.43,
-        "spread": 5.86,
-        "chg_pct": 2.63,
+        "last": 330.25,
+        "bid": 324.45,
+        "ask": 330.53,
+        "spread": 6.08,
+        "chg_pct": 2.66,
         "prior_close": 321.68,
         "src": "Alpaca",
-        "data_ts": 1793036873.3,
+        "data_ts": 1793036912.3,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.2,
-        "volume": 8796739,
+        "bar_age_min": 1.7,
+        "volume": 8807879,
         "session_high": 332.09,
         "session_low": 323.44,
         "session_mid": 327.77
@@ -726,7 +710,7 @@
         "upper": 332.68,
         "lower": 323.92,
         "slope": 0.0028,
-        "vs_vwap": 1.85,
+        "vs_vwap": 1.95,
         "above_vwap": true
       },
       "indicators": {
@@ -851,10 +835,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -9.85,
+        "max_pain_dist": -9.75,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 19.85,
-        "put_wall_dist": 10.15,
+        "call_wall_dist": 19.75,
+        "put_wall_dist": 10.25,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 0.66,
         "bias": "SHORT",
@@ -865,7 +849,7 @@
           "call_wall": 350.0,
           "put_wall": 320.0,
           "gamma_flip": 327.5,
-          "current": 330.15,
+          "current": 330.25,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
@@ -890,10 +874,8 @@
       "news_ctx": {
         "score": 0,
         "label": "NEUTRAL",
-        "count": 1,
-        "headlines": [
-          "Meta Seeks About $95 Billion for AI Buildout as Nvidia, AMD and Broadcom Conside"
-        ]
+        "count": 0,
+        "headlines": []
       },
       "social_ctx": {
         "available": true,
@@ -916,11 +898,11 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 40.0,
-          "ask_size": 160.0,
-          "ratio": 0.25,
-          "state": "ASK_HEAVY",
-          "persist_samples": 1,
+          "bid_size": 120.0,
+          "ask_size": 240.0,
+          "ratio": 0.5,
+          "state": "BALANCED",
+          "persist_samples": 0,
           "signal": null
         },
         "spread": {
@@ -932,13 +914,13 @@
             "level": 330.0,
             "type": "CALL_WALL",
             "oi": 3327.0,
-            "dist": -0.15
+            "dist": -0.25
           },
           "next": {
             "level": 335.0,
             "type": "PUT_WALL",
             "oi": 3659.0,
-            "dist": 4.85
+            "dist": 4.75
           },
           "at_wall": false,
           "signal": null
@@ -1015,29 +997,23 @@
         },
         "congress": null
       },
-      "news": [
-        {
-          "headline": "Meta Seeks About $95 Billion for AI Buildout as Nvidia, AMD and Broadcom Consider Investing in Their Own Customer",
-          "source": "Yahoo",
-          "time": "11:41"
-        }
-      ],
+      "news": [],
       "watch_only": true,
-      "updated_at": "2026-10-26 13:48:11 ET"
+      "updated_at": "2026-10-26 13:48:44 ET"
     },
     "CBRS": {
       "price": {
         "last": 109.66,
         "bid": 102,
-        "ask": 120,
-        "spread": 18,
+        "ask": 109.71,
+        "spread": 7.71,
         "chg_pct": -1.05,
         "prior_close": 110.82,
         "src": "Alpaca",
-        "data_ts": 1793036888.4,
+        "data_ts": 1793036920.1,
         "bars_src": "Alpaca",
-        "bar_age_min": 2.2,
-        "volume": 5276126,
+        "bar_age_min": 2.8,
+        "volume": 5277105,
         "session_high": 111.2,
         "session_low": 106.34,
         "session_mid": 108.77
@@ -1236,15 +1212,15 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 300.0,
-          "ask_size": 100.0,
-          "ratio": 3.0,
+          "bid_size": 200.0,
+          "ask_size": 400.0,
+          "ratio": 0.5,
           "state": "BALANCED",
           "persist_samples": 0,
           "signal": null
         },
         "spread": {
-          "value": 0.24,
+          "value": 0.29,
           "state": "NORMAL"
         },
         "levels": {
@@ -1330,21 +1306,21 @@
       },
       "news": [],
       "watch_only": true,
-      "updated_at": "2026-10-26 13:48:12 ET"
+      "updated_at": "2026-10-26 13:48:45 ET"
     },
     "RGTI": {
       "price": {
-        "last": 11.5,
+        "last": 11.49,
         "bid": 11.49,
         "ask": 11.5,
         "spread": 0.01,
-        "chg_pct": -0.17,
+        "chg_pct": -0.26,
         "prior_close": 11.52,
         "src": "Alpaca",
-        "data_ts": 1793036892.8,
+        "data_ts": 1793036920.1,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.2,
-        "volume": 7716028,
+        "bar_age_min": 1.8,
+        "volume": 7733214,
         "session_high": 11.68,
         "session_low": 11.12,
         "session_mid": 11.4
@@ -1354,7 +1330,7 @@
         "upper": 11.72,
         "lower": 11.12,
         "slope": 0.0003,
-        "vs_vwap": 0.08,
+        "vs_vwap": 0.07,
         "above_vwap": true
       },
       "indicators": {
@@ -1479,10 +1455,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -0.5,
+        "max_pain_dist": -0.51,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 1.0,
-        "put_wall_dist": 0.5,
+        "call_wall_dist": 1.01,
+        "put_wall_dist": 0.49,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 0.15,
         "bias": "NEUTRAL",
@@ -1493,7 +1469,7 @@
           "call_wall": 12.5,
           "put_wall": 11.0,
           "gamma_flip": 10.5,
-          "current": 11.5,
+          "current": 11.49,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
@@ -1544,11 +1520,11 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 1400.0,
-          "ask_size": 8000.0,
-          "ratio": 0.17,
-          "state": "ASK_HEAVY",
-          "persist_samples": 1,
+          "bid_size": 3400.0,
+          "ask_size": 7800.0,
+          "ratio": 0.44,
+          "state": "BALANCED",
+          "persist_samples": 0,
           "signal": null
         },
         "spread": {
@@ -1560,13 +1536,13 @@
             "level": 11.0,
             "type": "PUT_WALL",
             "oi": 503.0,
-            "dist": -0.5
+            "dist": -0.49
           },
           "next": {
             "level": 12.0,
             "type": "PUT_WALL",
             "oi": 492.0,
-            "dist": 0.5
+            "dist": 0.51
           },
           "at_wall": false,
           "signal": null
@@ -1639,7 +1615,7 @@
       },
       "news": [],
       "watch_only": true,
-      "updated_at": "2026-10-26 13:48:12 ET"
+      "updated_at": "2026-10-26 13:48:45 ET"
     }
   },
   "futures": {
@@ -1649,24 +1625,24 @@
   },
   "sector": {
     "SOXX": {
-      "price": 495.43,
-      "chg_pct": 3.6
+      "price": 495.48,
+      "chg_pct": 3.61
     },
     "SMH": {
-      "price": 543.81,
-      "chg_pct": 3.15
+      "price": 543.87,
+      "chg_pct": 3.16
     },
     "QQQ": {
-      "price": 713.53,
-      "chg_pct": 1.3
+      "price": 713.68,
+      "chg_pct": 1.32
     },
     "SPY": {
-      "price": 765.72,
-      "chg_pct": 0.76
+      "price": 765.85,
+      "chg_pct": 0.77
     },
     "VIX": {
-      "price": 18.31,
-      "chg_pct": -5.86
+      "price": 18.29,
+      "chg_pct": -5.96
     }
   },
   "macro": {
