@@ -1,6 +1,6 @@
 {
   "meta": {
-    "timestamp": "2026-11-05 11:24:22 ET",
+    "timestamp": "2026-11-05 11:24:51 ET",
     "market_open": true,
     "watchlist": [
       "AMD",
@@ -28,17 +28,17 @@
   "symbols": {
     "AMD": {
       "price": {
-        "last": 429.26,
-        "bid": 427.78,
+        "last": 429.95,
+        "bid": 427.49,
         "ask": 430.59,
-        "spread": 2.81,
-        "chg_pct": -12.18,
+        "spread": 3.1,
+        "chg_pct": -12.04,
         "prior_close": 488.78,
         "src": "Alpaca",
-        "data_ts": 1793895859.5,
+        "data_ts": 1793895887.2,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.3,
-        "volume": 28813592,
+        "bar_age_min": 1.8,
+        "volume": 28916387,
         "session_high": 456.04,
         "session_low": 403.92,
         "session_mid": 429.98
@@ -48,7 +48,7 @@
         "upper": 445.83,
         "lower": 406.47,
         "slope": 0.0162,
-        "vs_vwap": 3.11,
+        "vs_vwap": 3.8,
         "above_vwap": true
       },
       "indicators": {
@@ -173,10 +173,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -73.24,
+        "max_pain_dist": -72.55,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 70.74,
-        "put_wall_dist": 29.26,
+        "call_wall_dist": 70.05,
+        "put_wall_dist": 29.95,
         "gamma_regime": "SHORT_GAMMA",
         "pc_ratio": 0.86,
         "bias": "NEUTRAL",
@@ -187,17 +187,17 @@
           "call_wall": 500.0,
           "put_wall": 400.0,
           "gamma_flip": 490.0,
-          "current": 429.26,
+          "current": 429.95,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
           "$73 BELOW max pain -> gravity UP toward $502.5",
-          "Call Wall $500.0 ($71 above)",
-          "Put Wall $400.0 ($29 below)",
+          "Call Wall $500.0 ($70 above)",
+          "Put Wall $400.0 ($30 below)",
           "Below gamma flip $490.0 -> short gamma, moves amplified",
           "Put imbalance -91% -> put pressure ceiling"
         ],
-        "summary": "$73 BELOW max pain -> gravity UP toward $502.5 | Call Wall $500.0 ($71 above) | Put Wall $400.0 ($29 below) | Below gamma flip $490.0 -> short gamma, moves amplified | Put imbalance -91% -> put pressure ceiling"
+        "summary": "$73 BELOW max pain -> gravity UP toward $502.5 | Call Wall $500.0 ($70 above) | Put Wall $400.0 ($30 below) | Below gamma flip $490.0 -> short gamma, moves amplified | Put imbalance -91% -> put pressure ceiling"
       },
       "bar_ctx": {
         "bias": "MILD_BULL",
@@ -233,7 +233,7 @@
       },
       "regime": {
         "name": "POST_SELLOFF_CHOP",
-        "note": "Day -12.2%, price 47% off low -- mean-reverting chop; counter-trend entries need a level",
+        "note": "Day -12.0%, price 47% off low -- mean-reverting chop; counter-trend entries need a level",
         "score_adj": 1
       },
       "eod": {
@@ -241,15 +241,15 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 40.0,
-          "ask_size": 280.0,
-          "ratio": 0.14,
-          "state": "ASK_HEAVY",
-          "persist_samples": 2,
-          "signal": "ASK_HEAVY x2 samples"
+          "bid_size": 120.0,
+          "ask_size": 40.0,
+          "ratio": 3.0,
+          "state": "BALANCED",
+          "persist_samples": 0,
+          "signal": null
         },
         "spread": {
-          "value": 0.15,
+          "value": 0.18,
           "state": "NORMAL"
         },
         "levels": {
@@ -257,16 +257,16 @@
             "level": 430.0,
             "type": "PUT_WALL",
             "oi": 1683.0,
-            "dist": 0.74
+            "dist": 0.05
           },
           "next": {
             "level": 425.0,
             "type": "CALL_WALL",
             "oi": 76.0,
-            "dist": -4.26
+            "dist": -4.95
           },
-          "at_wall": false,
-          "signal": null
+          "at_wall": true,
+          "signal": "AT PUT_WALL $430.0 (+0.05)"
         },
         "level_tests": {
           "$430": 4,
@@ -302,12 +302,12 @@
         "eod_adj": 0,
         "watch": {
           "dir": "LONG",
-          "state": "NEAR",
+          "state": "WATCH",
           "score": 4,
           "required": 5,
-          "missing": 1,
+          "missing": 2,
           "for": [
-            "price $429.26 above VWAP $426.15",
+            "price $429.95 above VWAP $426.15",
             "MACD BULLISH (hist +1.2100)",
             "OBV confirmed bullish trend",
             "Bars: 1 consecutive down bars | vol EXPANDING (1.6x) | momentum +1/9"
@@ -316,7 +316,8 @@
             "SOXX -11.2% QQQ -5.5% falling"
           ],
           "need": [
-            "1 more long vote (4/5) -- e.g. lower band $405.93 or below, SOXX > +0.3% and QQQ > +0.2%, RSI below 30 (now 70)"
+            "1 more long vote (4/5) -- e.g. lower band $405.93 or below, SOXX > +0.3% and QQQ > +0.2%, RSI below 30 (now 70)",
+            "entry: long at 30-bar low $407.33-$408.55 / lower band $408.90 or below / VWAP hold $426.15-$429.82 (now $429.95)"
           ]
         },
         "signals_blocked": false,
@@ -378,21 +379,21 @@
         }
       ],
       "watch_only": false,
-      "updated_at": "2026-11-05 11:24:20 ET"
+      "updated_at": "2026-11-05 11:24:50 ET"
     },
     "TSLA": {
       "price": {
-        "last": 350.51,
+        "last": 350.57,
         "bid": 349.72,
-        "ask": 350.87,
-        "spread": 1.15,
-        "chg_pct": -9.0,
+        "ask": 352,
+        "spread": 2.28,
+        "chg_pct": -8.99,
         "prior_close": 385.19,
         "src": "Alpaca",
-        "data_ts": 1793895860.5,
+        "data_ts": 1793895889.9,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.4,
-        "volume": 33933121,
+        "bar_age_min": 1.8,
+        "volume": 34013365,
         "session_high": 374.09,
         "session_low": 340.58,
         "session_mid": 357.33
@@ -402,7 +403,7 @@
         "upper": 362.51,
         "lower": 338.85,
         "slope": -0.0056,
-        "vs_vwap": -0.17,
+        "vs_vwap": -0.11,
         "above_vwap": false
       },
       "indicators": {
@@ -527,10 +528,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -41.99,
+        "max_pain_dist": -41.93,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 59.49,
-        "put_wall_dist": 20.51,
+        "call_wall_dist": 59.43,
+        "put_wall_dist": 20.57,
         "gamma_regime": "SHORT_GAMMA",
         "pc_ratio": 1.48,
         "bias": "LONG",
@@ -541,7 +542,7 @@
           "call_wall": 410.0,
           "put_wall": 330.0,
           "gamma_flip": 400.0,
-          "current": 350.51,
+          "current": 350.57,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
@@ -593,14 +594,14 @@
       "scalp": {
         "imbalance": {
           "bid_size": 40.0,
-          "ask_size": 400.0,
-          "ratio": 0.1,
+          "ask_size": 3000.0,
+          "ratio": 0.01,
           "state": "ASK_HEAVY",
-          "persist_samples": 1,
-          "signal": null
+          "persist_samples": 2,
+          "signal": "ASK_HEAVY x2 samples"
         },
         "spread": {
-          "value": 0.2,
+          "value": 0.15,
           "state": "NORMAL"
         },
         "levels": {
@@ -608,13 +609,13 @@
             "level": 350.0,
             "type": "CALL_WALL",
             "oi": 1342.0,
-            "dist": -0.51
+            "dist": -0.57
           },
           "next": {
             "level": 350.0,
             "type": "PUT_WALL",
             "oi": 5385.0,
-            "dist": -0.51
+            "dist": -0.57
           },
           "at_wall": false,
           "signal": null
@@ -663,12 +664,12 @@
             "Bars: 1 consecutive down bars | vol STEADY (1.0x) | momentum +3/9"
           ],
           "against": [
-            "price $350.51 retesting falling VWAP $350.68",
+            "price $350.57 retesting falling VWAP $350.68",
             "QQQ -5.5% falling"
           ],
           "need": [
             "1 more long vote (4/5) -- e.g. lower band $342.23 or below, price above VWAP $351.38, QQQ > +0.3%",
-            "entry: long at 30-bar low $340.63-$341.20 / lower band $343.25 or below / VWAP hold $350.68-$352.40 (now $350.51)"
+            "entry: long at 30-bar low $340.63-$341.20 / lower band $343.25 or below / VWAP hold $350.68-$352.40 (now $350.57)"
           ]
         },
         "signals_blocked": false,
@@ -709,21 +710,21 @@
       },
       "news": [],
       "watch_only": false,
-      "updated_at": "2026-11-05 11:24:21 ET"
+      "updated_at": "2026-11-05 11:24:50 ET"
     },
     "AVGO": {
       "price": {
-        "last": 305.31,
-        "bid": 305.14,
+        "last": 305.44,
+        "bid": 305.18,
         "ask": 308,
-        "spread": 2.86,
-        "chg_pct": -6.2,
+        "spread": 2.82,
+        "chg_pct": -6.16,
         "prior_close": 325.48,
         "src": "Alpaca",
-        "data_ts": 1793895860.3,
+        "data_ts": 1793895890.5,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.4,
-        "volume": 17656609,
+        "bar_age_min": 1.9,
+        "volume": 17693557,
         "session_high": 313.8,
         "session_low": 292.91,
         "session_mid": 303.36
@@ -733,7 +734,7 @@
         "upper": 314.27,
         "lower": 293.43,
         "slope": 0.0056,
-        "vs_vwap": 1.46,
+        "vs_vwap": 1.59,
         "above_vwap": true
       },
       "indicators": {
@@ -858,10 +859,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -32.19,
+        "max_pain_dist": -32.06,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 49.69,
-        "put_wall_dist": 5.31,
+        "call_wall_dist": 49.56,
+        "put_wall_dist": 5.44,
         "gamma_regime": "SHORT_GAMMA",
         "pc_ratio": 0.73,
         "bias": "NEUTRAL",
@@ -872,7 +873,7 @@
           "call_wall": 355.0,
           "put_wall": 300.0,
           "gamma_flip": 332.5,
-          "current": 305.31,
+          "current": 305.44,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
@@ -925,15 +926,15 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 160.0,
-          "ask_size": 640.0,
-          "ratio": 0.25,
-          "state": "ASK_HEAVY",
-          "persist_samples": 1,
+          "bid_size": 80.0,
+          "ask_size": 120.0,
+          "ratio": 0.67,
+          "state": "BALANCED",
+          "persist_samples": 0,
           "signal": null
         },
         "spread": {
-          "value": 0.19,
+          "value": 0.04,
           "state": "NORMAL"
         },
         "levels": {
@@ -941,13 +942,13 @@
             "level": 300.0,
             "type": "PUT_WALL",
             "oi": 2120.0,
-            "dist": -5.31
+            "dist": -5.44
           },
           "next": {
             "level": 315.0,
             "type": "CALL_WALL",
             "oi": 297.0,
-            "dist": 9.69
+            "dist": 9.56
           },
           "at_wall": false,
           "signal": null
@@ -1032,21 +1033,21 @@
         }
       ],
       "watch_only": true,
-      "updated_at": "2026-11-05 11:24:22 ET"
+      "updated_at": "2026-11-05 11:24:51 ET"
     },
     "CBRS": {
       "price": {
-        "last": 82.61,
+        "last": 82.81,
         "bid": 82.48,
-        "ask": 82.97,
-        "spread": 0.49,
-        "chg_pct": -10.06,
+        "ask": 82.76,
+        "spread": 0.28,
+        "chg_pct": -9.84,
         "prior_close": 91.85,
         "src": "Alpaca",
-        "data_ts": 1793895855.2,
+        "data_ts": 1793895884.6,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.4,
-        "volume": 6424165,
+        "bar_age_min": 1.9,
+        "volume": 6451876,
         "session_high": 89.24,
         "session_low": 77.99,
         "session_mid": 83.61
@@ -1056,7 +1057,7 @@
         "upper": 87.42,
         "lower": 76.98,
         "slope": 0.0014,
-        "vs_vwap": 0.41,
+        "vs_vwap": 0.61,
         "above_vwap": true
       },
       "indicators": {
@@ -1181,10 +1182,10 @@
       },
       "options_ctx": {
         "available": true,
-        "max_pain_dist": -17.39,
+        "max_pain_dist": -17.19,
         "max_pain_direction": "BELOW",
-        "call_wall_dist": 13.39,
-        "put_wall_dist": 2.61,
+        "call_wall_dist": 13.19,
+        "put_wall_dist": 2.81,
         "gamma_regime": "LONG_GAMMA",
         "pc_ratio": 0.74,
         "bias": "LONG",
@@ -1195,7 +1196,7 @@
           "call_wall": 96.0,
           "put_wall": 80.0,
           "gamma_flip": 81.0,
-          "current": 82.61,
+          "current": 82.81,
           "position": "BELOW_MAX_PAIN"
         },
         "notes": [
@@ -1237,7 +1238,7 @@
       },
       "regime": {
         "name": "POST_SELLOFF_CHOP",
-        "note": "Day -10.1%, price 41% off low -- mean-reverting chop; counter-trend entries need a level",
+        "note": "Day -9.8%, price 41% off low -- mean-reverting chop; counter-trend entries need a level",
         "score_adj": 1
       },
       "eod": {
@@ -1245,15 +1246,15 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 400.0,
-          "ask_size": 100.0,
-          "ratio": 4.0,
-          "state": "BID_HEAVY",
+          "bid_size": 100.0,
+          "ask_size": 2200.0,
+          "ratio": 0.05,
+          "state": "ASK_HEAVY",
           "persist_samples": 1,
           "signal": null
         },
         "spread": {
-          "value": 0.31,
+          "value": 0.15,
           "state": "NORMAL"
         },
         "levels": {
@@ -1261,13 +1262,13 @@
             "level": 85.0,
             "type": "PUT_WALL",
             "oi": 1196.0,
-            "dist": 2.39
+            "dist": 2.19
           },
           "next": {
             "level": 90.0,
             "type": "PUT_WALL",
             "oi": 1733.0,
-            "dist": 7.39
+            "dist": 7.19
           },
           "at_wall": false,
           "signal": null
@@ -1341,21 +1342,21 @@
       },
       "news": [],
       "watch_only": true,
-      "updated_at": "2026-11-05 11:24:22 ET"
+      "updated_at": "2026-11-05 11:24:51 ET"
     },
     "RGTI": {
       "price": {
         "last": 9.81,
-        "bid": 9.81,
-        "ask": 9.83,
+        "bid": 9.8,
+        "ask": 9.82,
         "spread": 0.02,
         "chg_pct": -12.49,
         "prior_close": 11.21,
         "src": "Alpaca",
-        "data_ts": 1793895857.5,
+        "data_ts": 1793895884.3,
         "bars_src": "Alpaca",
-        "bar_age_min": 1.4,
-        "volume": 10765035,
+        "bar_age_min": 1.9,
+        "volume": 10778891,
         "session_high": 10.89,
         "session_low": 9.2,
         "session_mid": 10.04
@@ -1555,12 +1556,12 @@
       },
       "scalp": {
         "imbalance": {
-          "bid_size": 5500.0,
-          "ask_size": 2600.0,
-          "ratio": 2.12,
-          "state": "BALANCED",
-          "persist_samples": 0,
-          "signal": null
+          "bid_size": 9000.0,
+          "ask_size": 500.0,
+          "ratio": 18.0,
+          "state": "BID_HEAVY",
+          "persist_samples": 6,
+          "signal": "BID_HEAVY x6 samples"
         },
         "spread": {
           "value": 0.01,
@@ -1650,7 +1651,7 @@
       },
       "news": [],
       "watch_only": true,
-      "updated_at": "2026-11-05 11:24:22 ET"
+      "updated_at": "2026-11-05 11:24:51 ET"
     }
   },
   "futures": {
@@ -1660,24 +1661,24 @@
   },
   "sector": {
     "SOXX": {
-      "price": 133.31,
-      "chg_pct": -11.21
+      "price": 133.4,
+      "chg_pct": -11.15
     },
     "SMH": {
-      "price": 452.81,
-      "chg_pct": -10.2
+      "price": 453.07,
+      "chg_pct": -10.15
     },
     "QQQ": {
-      "price": 653.79,
+      "price": 653.85,
       "chg_pct": -5.51
     },
     "SPY": {
-      "price": 741.55,
-      "chg_pct": -3.29
+      "price": 741.65,
+      "chg_pct": -3.28
     },
     "VIX": {
-      "price": 25.26,
-      "chg_pct": 52.08
+      "price": 25.09,
+      "chg_pct": 51.05
     }
   },
   "macro": {
